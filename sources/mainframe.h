@@ -3,6 +3,8 @@
 
 #include <wx/wx.h>
 
+class SettingsManager;
+
 class MainFrame: public wxFrame
 {
     public:
@@ -14,9 +16,11 @@ class MainFrame: public wxFrame
         void ConnectControls();
         // Events handlers
         void OnSize(wxSizeEvent &event);
+        void OnMove(wxMoveEvent &event);
         void OnClose(wxCloseEvent &event);
         // Controls vars
         // Misc vars
+        SettingsManager& m_settings;
 };
 
 #endif // __MAINFRAME_H_INCLUDED__

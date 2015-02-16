@@ -11,6 +11,7 @@ class MyApp : public wxApp
         virtual int OnRun();
         virtual int OnExit();
         wxString GetBuildInfos(bool all=false);
+        wxString GetVersionString(bool full=false, bool build=false);
     private:
         wxLocale m_locale;
 };

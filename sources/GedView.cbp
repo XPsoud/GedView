@@ -545,6 +545,12 @@
 			<Option compilerVar="WINDRES" />
 			<Option virtualFolder="Misc/" />
 		</Unit>
+		<Unit filename="settingsmanager.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="settingsmanager.h">
+			<Option virtualFolder="Datas/" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
