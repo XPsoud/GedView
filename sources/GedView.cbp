@@ -551,6 +551,12 @@
 		<Unit filename="settingsmanager.h">
 			<Option virtualFolder="Datas/" />
 		</Unit>
+		<Unit filename="toolbaricons.cpp">
+			<Option virtualFolder="Graphx/" />
+		</Unit>
+		<Unit filename="toolbaricons.h">
+			<Option virtualFolder="Graphx/" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
