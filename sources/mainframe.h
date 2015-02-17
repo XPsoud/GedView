@@ -18,6 +18,9 @@ class MainFrame: public wxFrame
         void OnSize(wxSizeEvent &event);
         void OnMove(wxMoveEvent &event);
         void OnClose(wxCloseEvent &event);
+        void OnOpenGedFileClicked(wxCommandEvent &event);
+        void OnPreferencesClicked(wxCommandEvent &event);
+        void OnAboutClicked(wxCommandEvent &event);
         // Controls vars
         // Misc vars
         SettingsManager& m_settings;

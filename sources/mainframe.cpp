@@ -1,6 +1,7 @@
 #include "mainframe.h"
 
 #include "main.h"
+#include "toolbaricons.h"
 #include "settingsmanager.h"
 
 #include <wx/display.h>
@@ -66,9 +67,22 @@ MainFrame::~MainFrame()
 
 void MainFrame::CreateControls()
 {
+    // Status bar
     CreateStatusBar(2);
     wxString sTxt=wxGetApp().GetBuildInfos();
     SetStatusText(sTxt, 1);
+    // Toolbar
+    wxToolBar* tb=CreateToolBar();
+
+        tb->AddTool(wxID_OPEN, wxGetStockLabel(wxID_OPEN), wxGet_open_png_Bitmap(), _("Open a ged file"));
+
+        tb->AddStretchableSpace();
+
+        tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
+
+        tb->AddTool(wxID_ABOUT, wxGetStockLabel(wxID_ABOUT), wxGet_about_png_Bitmap(), wxGetStockHelpString(wxID_ABOUT, wxSTOCK_MENU));
+
+    tb->Realize();
 }
 
 void MainFrame::ConnectControls()
@@ -77,7 +91,10 @@ void MainFrame::ConnectControls()
     Connect(wxEVT_SIZE, wxSizeEventHandler(MainFrame::OnSize));
     Connect(wxEVT_MOVE, wxMoveEventHandler(MainFrame::OnMove));
     Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
-    // Menus/Controls items
+    // Menus/Toolbar items
+    Connect(wxID_OPEN, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnOpenGedFileClicked));
+    Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
+    Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
 }
 
 void MainFrame::OnSize(wxSizeEvent& event)
@@ -107,4 +124,19 @@ void MainFrame::OnClose(wxCloseEvent& event)
     wxPrintf(_T("Closing the \"MainFrame\" object\n"));
 #endif // DEBUG
     Destroy();
+}
+
+void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Open a Ged file"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnPreferencesClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Preferences"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnAboutClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("About"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
