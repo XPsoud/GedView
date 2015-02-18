@@ -36,6 +36,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -78,6 +79,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
@@ -122,6 +124,7 @@
 					<Add directory="$(WX_DIR)/include" />
 				</ResourceCompiler>
 				<Linker>
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -166,6 +169,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
@@ -224,6 +228,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -285,6 +290,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -327,6 +333,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
@@ -370,6 +377,7 @@
 					<Add directory="$(WX_DIR)/include" />
 				</ResourceCompiler>
 				<Linker>
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -413,6 +421,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
@@ -471,6 +480,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -519,9 +529,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=gnu++11" />
+			<Add directory="../wxpdfdoc" />
 		</Compiler>
 		<Unit filename="appversion.h">
 			<Option virtualFolder="Misc/" />
+		</Unit>
+		<Unit filename="datasmanager.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="datasmanager.h">
+			<Option virtualFolder="Datas/" />
 		</Unit>
 		<Unit filename="dlgabout.cpp">
 			<Option virtualFolder="Dialogs/" />
@@ -535,6 +552,12 @@
 		<Unit filename="emptyclass.h">
 			<Option virtualFolder="Misc/" />
 		</Unit>
+		<Unit filename="gedtreeitem.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="gedtreeitem.h">
+			<Option virtualFolder="Datas/" />
+		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Misc/" />
 		</Unit>
@@ -546,6 +569,12 @@
 		</Unit>
 		<Unit filename="mainframe.h">
 			<Option virtualFolder="Interface/" />
+		</Unit>
+		<Unit filename="mypdfdoc.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="mypdfdoc.h">
+			<Option virtualFolder="Datas/" />
 		</Unit>
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
