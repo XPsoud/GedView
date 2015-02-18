@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="GedView">
-		<Project filename="sources/GedView.cbp" />
+        <Project filename="wxpdfdoc/wxPdfDoc.cbp" />
+		<Project filename="sources/GedView.cbp">
+			<Depends filename="wxpdfdoc/wxPdfDoc.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>

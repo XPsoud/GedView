@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="libwxPdfDoc" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="ReleaseGcc32">
+				<Option output="../bin/libwxPdfDoc-0.9.4-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-Wno-attributes" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-DwxDEBUG_LEVEL=0" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWXUSINGDLL" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXMAKINGDLL_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
+					<Add library="libwxregexu$(DBG_FLG).a" />
+					<Add library="libwxpng$(DBG_FLG).a" />
+					<Add library="libwxzlib$(DBG_FLG).a" />
+					<Add library="libwxtiff$(DBG_FLG).a" />
+					<Add library="libwxjpeg$(DBG_FLG).a" />
+					<Add library="libwxexpat$(DBG_FLG).a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libole32.a" />
+					<Add library="libuuid.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libgdi32.a" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Gcc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc32">
+				<Option output="../bin/libwxPdfDoc-0.9.4-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option type="3" />
+				<Option compiler="msvc10" />
+				<Option createStaticLib="1" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/MD" />
+					<Add option="/TP" />
+					<Add option="/GR" />
+					<Add option="/O2" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/DWXUSINGDLL" />
+					<Add option="/D__WXMSW__" />
+					<Add option="/DWXMAKINGDLL_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/MANIFEST:no" />
+					<Add option="/IMPLIB:..\build\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
+					<Add library="wxregexu$(DBG_FLG).lib" />
+					<Add library="wxpng$(DBG_FLG).lib" />
+					<Add library="wxzlib$(DBG_FLG).lib" />
+					<Add library="wxtiff$(DBG_FLG).lib" />
+					<Add library="wxjpeg$(DBG_FLG).lib" />
+					<Add library="wxexpat$(DBG_FLG).lib" />
+					<Add library="comctl32.lib" />
+					<Add library="ole32.lib" />
+					<Add library="uuid.lib" />
+					<Add library="oleaut32.lib" />
+					<Add library="winspool.lib" />
+					<Add library="gdi32.lib" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Vc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="DebugGcc32">
+				<Option output="../bin/libwxPdfDoc-0.9.4-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Debug$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-Wno-attributes" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-D__WXDEBUG__" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWXUSINGDLL" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXMAKINGDLL_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
+					<Add library="libwxregexu$(DBG_FLG).a" />
+					<Add library="libwxpng$(DBG_FLG).a" />
+					<Add library="libwxzlib$(DBG_FLG).a" />
+					<Add library="libwxtiff$(DBG_FLG).a" />
+					<Add library="libwxjpeg$(DBG_FLG).a" />
+					<Add library="libwxexpat$(DBG_FLG).a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libole32.a" />
+					<Add library="libuuid.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libgdi32.a" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Gcc" />
+					<Variable name="DBG_FLG" value="d" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseGcc32S">
+				<Option platforms="Windows;" />
+				<Option output="../build/wxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-Wno-attributes" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-DwxDEBUG_LEVEL=0" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXMAKINGLIB_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
+					<Add library="libwxregexu$(DBG_FLG).a" />
+					<Add library="libwxpng$(DBG_FLG).a" />
+					<Add library="libwxzlib$(DBG_FLG).a" />
+					<Add library="libwxtiff$(DBG_FLG).a" />
+					<Add library="libwxjpeg$(DBG_FLG).a" />
+					<Add library="libwxexpat$(DBG_FLG).a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libole32.a" />
+					<Add library="libuuid.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libgdi32.a" />
+					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Gcc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc32S">
+				<Option output="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option type="2" />
+				<Option compiler="msvc10" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/O2" />
+					<Add option="/MD" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/D__WXMSW__" />
+					<Add option="/DWXMAKINGLIB_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker />
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Vc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseGcc64">
+				<Option output="../bin/libwxPdfDoc-0.9.4-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option type="3" />
+				<Option compiler="gcc_tdm" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-Wno-attributes" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-DwxDEBUG_LEVEL=0" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWXUSINGDLL" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXMAKINGDLL_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
+					<Add library="libwxregexu$(DBG_FLG).a" />
+					<Add library="libwxpng$(DBG_FLG).a" />
+					<Add library="libwxzlib$(DBG_FLG).a" />
+					<Add library="libwxtiff$(DBG_FLG).a" />
+					<Add library="libwxjpeg$(DBG_FLG).a" />
+					<Add library="libwxexpat$(DBG_FLG).a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libole32.a" />
+					<Add library="libuuid.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libgdi32.a" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Gcc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc64">
+				<Option output="../bin/libwxPdfDoc-0.9.4-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option type="3" />
+				<Option compiler="microsoft_visual_c_2010-x64" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/MD" />
+					<Add option="/TP" />
+					<Add option="/GR" />
+					<Add option="/O2" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/DWXUSINGDLL" />
+					<Add option="/D__WXMSW__" />
+					<Add option="/DWXMAKINGDLL_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="/MANIFEST:no" />
+					<Add option="/IMPLIB:..\build\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
+					<Add library="wxregexu$(DBG_FLG).lib" />
+					<Add library="wxpng$(DBG_FLG).lib" />
+					<Add library="wxzlib$(DBG_FLG).lib" />
+					<Add library="wxtiff$(DBG_FLG).lib" />
+					<Add library="wxjpeg$(DBG_FLG).lib" />
+					<Add library="wxexpat$(DBG_FLG).lib" />
+					<Add library="comctl32.lib" />
+					<Add library="ole32.lib" />
+					<Add library="uuid.lib" />
+					<Add library="oleaut32.lib" />
+					<Add library="winspool.lib" />
+					<Add library="gdi32.lib" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Vc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="DebugGcc64">
+				<Option output="../bin/libwxPdfDoc-0.9.4-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Debug$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option type="3" />
+				<Option compiler="gcc_tdm" />
+				<Option createStaticLib="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-Wno-attributes" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-D__WXDEBUG__" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-DWXUSINGDLL" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXMAKINGDLL_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
+					<Add library="libwxregexu$(DBG_FLG).a" />
+					<Add library="libwxpng$(DBG_FLG).a" />
+					<Add library="libwxzlib$(DBG_FLG).a" />
+					<Add library="libwxtiff$(DBG_FLG).a" />
+					<Add library="libwxjpeg$(DBG_FLG).a" />
+					<Add library="libwxexpat$(DBG_FLG).a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libole32.a" />
+					<Add library="libuuid.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libgdi32.a" />
+					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Gcc" />
+					<Variable name="DBG_FLG" value="d" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseGcc64S">
+				<Option platforms="Windows;" />
+				<Option output="../build/wxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option type="2" />
+				<Option compiler="gcc_tdm" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-Wno-attributes" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-DwxDEBUG_LEVEL=0" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-D__WXMSW__" />
+					<Add option="-DWXMAKINGLIB_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
+					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
+					<Add library="libwxregexu$(DBG_FLG).a" />
+					<Add library="libwxpng$(DBG_FLG).a" />
+					<Add library="libwxzlib$(DBG_FLG).a" />
+					<Add library="libwxtiff$(DBG_FLG).a" />
+					<Add library="libwxjpeg$(DBG_FLG).a" />
+					<Add library="libwxexpat$(DBG_FLG).a" />
+					<Add library="libcomctl32.a" />
+					<Add library="libole32.a" />
+					<Add library="libuuid.a" />
+					<Add library="liboleaut32.a" />
+					<Add library="libwinspool.a" />
+					<Add library="libgdi32.a" />
+					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Gcc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc64S">
+				<Option output="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option type="2" />
+				<Option compiler="microsoft_visual_c_2010-x64" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/O2" />
+					<Add option="/MD" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/D__WXMSW__" />
+					<Add option="/DWXMAKINGLIB_PDFDOC" />
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</Compiler>
+				<Linker />
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Vc" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Environment>
+				<Variable name="WX_DIR" value="C:\wx$(WX_VERSION)" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All Gcc" targets="ReleaseGcc32;DebugGcc32;ReleaseGcc32S;ReleaseGcc64;DebugGcc64;ReleaseGcc64S;" />
+			<Add alias="All Vc" targets="ReleaseVc32;ReleaseVc32S;ReleaseVc64;ReleaseVc64S;" />
+			<Add alias="All Gcc Dynamic" targets="ReleaseGcc32;DebugGcc32;ReleaseGcc64;DebugGcc64;" />
+			<Add alias="All Gcc Release" targets="ReleaseGcc64;ReleaseGcc32;" />
+			<Add alias="All Vc Release" targets="ReleaseVc64;ReleaseVc32;" />
+			<Add alias="All Gcc ReleaseS" targets="ReleaseGcc32S;ReleaseGcc64S;" />
+			<Add alias="All Vc ReleaseS" targets="ReleaseVc32S;ReleaseVc64S;" />
+			<Add alias="All-Targets" targets="ReleaseGcc32;ReleaseVc32;DebugGcc32;ReleaseGcc32S;ReleaseVc32S;ReleaseGcc64;ReleaseVc64;DebugGcc64;ReleaseGcc64S;ReleaseVc64S;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wno-unused-local-typedefs" />
+			<Add option="-std=gnu++11" />
+			<Add option="-DEXPORT_LIB" />
+			<Add directory="../wxpdfdoc" />
+		</Compiler>
+		<Unit filename="pdfannotation.cpp" />
+		<Unit filename="pdfbarcode.cpp" />
+		<Unit filename="pdfcffdecoder.cpp" />
+		<Unit filename="pdfcffindex.cpp" />
+		<Unit filename="pdfcolour.cpp" />
+		<Unit filename="pdfdc.cpp" />
+		<Unit filename="pdfdecode.cpp" />
+		<Unit filename="pdfdocument.cpp" />
+		<Unit filename="pdfencoding.cpp" />
+		<Unit filename="pdfencrypt.cpp" />
+		<Unit filename="pdffont.cpp" />
+		<Unit filename="pdffontdata.cpp" />
+		<Unit filename="pdffontdatacore.cpp" />
+		<Unit filename="pdffontdataopentype.cpp" />
+		<Unit filename="pdffontdatatruetype.cpp" />
+		<Unit filename="pdffontdatatype0.cpp" />
+		<Unit filename="pdffontdatatype1.cpp" />
+		<Unit filename="pdffontdescription.cpp" />
+		<Unit filename="pdffontdetails.cpp" />
+		<Unit filename="pdffontextended.cpp" />
+		<Unit filename="pdffontmanager.cpp" />
+		<Unit filename="pdffontparser.cpp" />
+		<Unit filename="pdffontparsertruetype.cpp" />
+		<Unit filename="pdffontparsertype1.cpp" />
+		<Unit filename="pdffontsubsetcff.cpp" />
+		<Unit filename="pdffontsubsettruetype.cpp" />
+		<Unit filename="pdffontvolt.cpp" />
+		<Unit filename="pdfform.cpp" />
+		<Unit filename="pdfgradient.cpp" />
+		<Unit filename="pdfgraphics.cpp" />
+		<Unit filename="pdfimage.cpp" />
+		<Unit filename="pdfkernel.cpp" />
+		<Unit filename="pdflayer.cpp" />
+		<Unit filename="pdfobjects.cpp" />
+		<Unit filename="pdfocg.cpp" />
+		<Unit filename="pdfparser.cpp" />
+		<Unit filename="pdfpattern.cpp" />
+		<Unit filename="pdfrijndael.cpp" />
+		<Unit filename="pdftemplate.cpp" />
+		<Unit filename="pdfutility.cpp" />
+		<Unit filename="pdfxml.cpp" />
+		<Unit filename="wx/pdfannotation.h" />
+		<Unit filename="wx/pdfarraydouble.h" />
+		<Unit filename="wx/pdfarraytypes.h" />
+		<Unit filename="wx/pdfbarcode.h" />
+		<Unit filename="wx/pdfbookmark.h" />
+		<Unit filename="wx/pdfcffdecoder.h" />
+		<Unit filename="wx/pdfcffindex.h" />
+		<Unit filename="wx/pdfcjkfontdata.h" />
+		<Unit filename="wx/pdfcolour.h" />
+		<Unit filename="wx/pdfcoonspatchmesh.h" />
+		<Unit filename="wx/pdfcorefontdata.h" />
+		<Unit filename="wx/pdfdc.h" />
+		<Unit filename="wx/pdfdc28.h" />
+		<Unit filename="wx/pdfdc29.h" />
+		<Unit filename="wx/pdfdoc.h" />
+		<Unit filename="wx/pdfdocdef.h" />
+		<Unit filename="wx/pdfdocument.h" />
+		<Unit filename="wx/pdfencoding.h" />
+		<Unit filename="wx/pdfencrypt.h" />
+		<Unit filename="wx/pdffont.h" />
+		<Unit filename="wx/pdffontdata.h" />
+		<Unit filename="wx/pdffontdatacore.h" />
+		<Unit filename="wx/pdffontdataopentype.h" />
+		<Unit filename="wx/pdffontdatatruetype.h" />
+		<Unit filename="wx/pdffontdatatype0.h" />
+		<Unit filename="wx/pdffontdatatype1.h" />
+		<Unit filename="wx/pdffontdescription.h" />
+		<Unit filename="wx/pdffontdetails.h" />
+		<Unit filename="wx/pdffontextended.h" />
+		<Unit filename="wx/pdffontmacosx.h" />
+		<Unit filename="wx/pdffontmanager.h" />
+		<Unit filename="wx/pdffontparser.h" />
+		<Unit filename="wx/pdffontparsertruetype.h" />
+		<Unit filename="wx/pdffontparsertype1.h" />
+		<Unit filename="wx/pdffontsubsetcff.h" />
+		<Unit filename="wx/pdffontsubsettruetype.h" />
+		<Unit filename="wx/pdffontvolt.h" />
+		<Unit filename="wx/pdfform.h" />
+		<Unit filename="wx/pdfgradient.h" />
+		<Unit filename="wx/pdfgraphics.h" />
+		<Unit filename="wx/pdfimage.h" />
+		<Unit filename="wx/pdfinfo.h" />
+		<Unit filename="wx/pdflayer.h" />
+		<Unit filename="wx/pdflinestyle.h" />
+		<Unit filename="wx/pdflinks.h" />
+		<Unit filename="wx/pdfobjects.h" />
+		<Unit filename="wx/pdfparser.h" />
+		<Unit filename="wx/pdfpattern.h" />
+		<Unit filename="wx/pdfproperties.h" />
+		<Unit filename="wx/pdfrijndael.h" />
+		<Unit filename="wx/pdfshape.h" />
+		<Unit filename="wx/pdfspotcolour.h" />
+		<Unit filename="wx/pdftemplate.h" />
+		<Unit filename="wx/pdfutility.h" />
+		<Unit filename="wx/pdfxml.h" />
+		<Unit filename="wxmemdbg.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
