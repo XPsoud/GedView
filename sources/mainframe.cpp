@@ -1,6 +1,7 @@
 #include "mainframe.h"
 
 #include "main.h"
+#include "dlgabout.h"
 #include "toolbaricons.h"
 #include "settingsmanager.h"
 
@@ -138,5 +139,6 @@ void MainFrame::OnPreferencesClicked(wxCommandEvent& event)
 
 void MainFrame::OnAboutClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("About"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    DlgAbout dlg(this);
+    dlg.ShowModal();
 }

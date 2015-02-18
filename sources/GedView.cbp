@@ -523,6 +523,12 @@
 		<Unit filename="appversion.h">
 			<Option virtualFolder="Misc/" />
 		</Unit>
+		<Unit filename="dlgabout.cpp">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
+		<Unit filename="dlgabout.h">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
 		<Unit filename="emptyclass.cpp">
 			<Option virtualFolder="Misc/" />
 		</Unit>
@@ -555,6 +561,12 @@
 			<Option virtualFolder="Graphx/" />
 		</Unit>
 		<Unit filename="toolbaricons.h">
+			<Option virtualFolder="Graphx/" />
+		</Unit>
+		<Unit filename="xpsi.png.cpp">
+			<Option virtualFolder="Graphx/" />
+		</Unit>
+		<Unit filename="xpsi.png.h">
 			<Option virtualFolder="Graphx/" />
 		</Unit>
 		<Extensions>
