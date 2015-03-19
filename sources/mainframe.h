@@ -2,6 +2,7 @@
 #define __MAINFRAME_H_INCLUDED__
 
 #include <wx/wx.h>
+#include <wx/listctrl.h>
 
 class SettingsManager;
 class DatasManager;
@@ -16,6 +17,8 @@ class MainFrame: public wxFrame
         void CreateControls();
         void ConnectControls();
         void UpdateSummary();
+        void UpdateList();
+        void UpdateListItem(long item);
         // Events handlers
         void OnSize(wxSizeEvent &event);
         void OnMove(wxMoveEvent &event);
@@ -27,6 +30,7 @@ class MainFrame: public wxFrame
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         // Controls vars
         wxStaticText *m_lblSummary;
+        wxListView *m_lstItems;
         // Misc vars
         SettingsManager& m_settings;
         DatasManager& m_datas;

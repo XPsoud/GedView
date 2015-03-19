@@ -25,6 +25,7 @@ class DatasManager
         bool HasDatas();
         const wxString& GetCurrentFileName() { return m_sFileName; }
         int GetItemsCount(GEDITEMTYPE type=GIT_ALL);
+        wxXmlNode *GetDatas() { return m_datas; }
         // Reading and saving datas
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);

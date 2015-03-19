@@ -13,6 +13,16 @@
 #include "../graphx/wxwin32x32.xpm"
 #endif // __WXMSW__
 
+enum
+{
+    LST_COL_SEX,
+    LST_COL_ID,
+    LST_COL_LASTNAME,
+    LST_COL_FIRSTNAME,
+
+    LST_COL_COUNT
+};
+
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
 {
@@ -108,6 +118,17 @@ void MainFrame::CreateControls()
 
     szrMain->Add(stbszr, 0, wxALL|wxEXPAND, 5);
 
+    wxBoxSizer *lnszr=new wxBoxSizer(wxHORIZONTAL);
+
+        m_lstItems=new wxListView(pnl, -1);
+            m_lstItems->AppendColumn(_("Sex"), wxLIST_FORMAT_LEFT, 30);
+            m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT);
+            m_lstItems->AppendColumn(_("Last Name"));
+            m_lstItems->AppendColumn(_("First Name"));
+        lnszr->Add(m_lstItems, 0, wxALL|wxEXPAND, 0);
+
+    szrMain->Add(lnszr, 1, wxALL|wxEXPAND, 5);
+
     pnl->SetSizer(szrMain);
 }
 
@@ -140,6 +161,73 @@ void MainFrame::UpdateSummary()
     }
 
     m_lblSummary->SetLabel(sTxt);
+}
+
+void MainFrame::UpdateList()
+{
+    m_lstItems->DeleteAllItems();
+
+    if (!m_datas.HasDatas()) return;
+
+    wxXmlNode *node=m_datas.GetDatas()->GetChildren(), *subnode;
+    wxString sType, sTxt, sName;
+    long lItem=0;
+
+    while(node!=NULL)
+    {
+        sType=node->GetAttribute(_T("Type"));
+        if (sType==_T("INDI"))
+        {
+            sTxt=node->GetAttribute(_T("GedId"));
+
+            lItem=m_lstItems->InsertItem(lItem+1, _T(""));
+            m_lstItems->SetItem(lItem, LST_COL_ID, sTxt);
+            m_lstItems->SetItemPtrData(lItem, (wxUIntPtr)node);
+
+            UpdateListItem(lItem);
+        }
+
+        node=node->GetNext();
+    }
+}
+
+void MainFrame::UpdateListItem(long item)
+{
+    wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(item);
+    if (node==NULL) return;
+
+    wxXmlNode *subNode=node->GetChildren();
+
+    while(subNode)
+    {
+        wxString sType=subNode->GetAttribute(_T("Type"));
+
+        if (sType==_T("NAME"))
+        {
+            wxString sName=subNode->GetAttribute(_T("Value"));
+            int iPos=sName.Find(_T('/'));
+            if (iPos!=wxNOT_FOUND)
+            {
+                wxString sFirstName=sName.Left(iPos);
+                wxString sLastName=sName.Mid(iPos+1);
+                if (sLastName.EndsWith(_T("/")))
+                    sLastName.RemoveLast(1);
+                m_lstItems->SetItem(item, LST_COL_LASTNAME, sLastName);
+                m_lstItems->SetItem(item, LST_COL_FIRSTNAME, sFirstName);
+            }
+            else
+            {
+                m_lstItems->SetItem(item, LST_COL_LASTNAME, wxEmptyString);
+                m_lstItems->SetItem(item, LST_COL_FIRSTNAME, sName);
+            }
+        }
+        if (sType==_T("SEX"))
+        {
+            m_lstItems->SetItem(item, LST_COL_SEX, subNode->GetAttribute(_T("Value")));
+        }
+
+        subNode=subNode->GetNext();
+    }
 }
 
 void MainFrame::OnSize(wxSizeEvent& event)
@@ -184,6 +272,8 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
     }
 
     UpdateSummary();
+
+    UpdateList();
 
     wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
