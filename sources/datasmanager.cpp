@@ -78,6 +78,40 @@ bool DatasManager::HasDatas()
     return (m_datas->GetChildren()!=NULL);
 }
 
+int DatasManager::GetItemsCount(GEDITEMTYPE type)
+{
+    int iRes=0;
+
+    wxXmlNode *node=m_datas->GetChildren();
+
+    wxString sType;
+
+    while(node!=NULL)
+    {
+        sType=node->GetAttribute(_T("Type"));
+        if (type==GIT_ALL)
+        {
+            ++iRes;
+        }
+        else
+        {
+            switch(type)
+            {
+                case GIT_INDI:
+                    if (sType==_T("INDI")) ++iRes;
+                    break;
+                case GIT_FAM:
+                    if (sType==_T("FAM")) ++iRes;
+                        break;
+            }
+        }
+
+        node=node->GetNext();
+    }
+
+    return iRes;
+}
+
 bool DatasManager::ReadGedFile(const wxString& filename)
 {
     // Clean-up all remaining datas

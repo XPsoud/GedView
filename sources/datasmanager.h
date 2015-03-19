@@ -7,6 +7,14 @@ class wxXmlNode;
 #include "gedtreeitem.h"
 #include "mypdfdoc.h"
 
+enum GEDITEMTYPE
+{
+    GIT_UNKNOWN = 0,
+    GIT_ALL=GIT_UNKNOWN,
+    GIT_INDI,
+    GIT_FAM
+};
+
 class DatasManager
 {
     public:
@@ -15,6 +23,8 @@ class DatasManager
         // Accessors
         bool IsModified();
         bool HasDatas();
+        const wxString& GetCurrentFileName() { return m_sFileName; }
+        int GetItemsCount(GEDITEMTYPE type=GIT_ALL);
         // Reading and saving datas
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);

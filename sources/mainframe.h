@@ -15,6 +15,7 @@ class MainFrame: public wxFrame
         // Misc functions
         void CreateControls();
         void ConnectControls();
+        void UpdateSummary();
         // Events handlers
         void OnSize(wxSizeEvent &event);
         void OnMove(wxMoveEvent &event);
@@ -25,6 +26,7 @@ class MainFrame: public wxFrame
         void OnAboutClicked(wxCommandEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         // Controls vars
+        wxStaticText *m_lblSummary;
         // Misc vars
         SettingsManager& m_settings;
         DatasManager& m_datas;

@@ -24,6 +24,8 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
 
     CreateControls();
 
+    UpdateSummary();
+
     int iStartPos=m_settings.GetMainWndStartupPos();
     if (iStartPos==wxALIGN_NOT)
     {
@@ -88,6 +90,25 @@ void MainFrame::CreateControls()
         tb->AddTool(wxID_ABOUT, wxGetStockLabel(wxID_ABOUT), wxGet_about_png_Bitmap(), wxGetStockHelpString(wxID_ABOUT, wxSTOCK_MENU));
 
     tb->Realize();
+
+    // Controls
+    wxPanel *pnl=new wxPanel(this, -1);
+    wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
+
+        wxStaticBoxSizer *stbszr=new wxStaticBoxSizer(wxVERTICAL, pnl, _("Datas summary:"));
+
+            stbszr->AddSpacer(1);
+
+            m_lblSummary=new wxStaticText(pnl, -1, _T(" \n "), wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
+                wxFont fnt=m_lblSummary->GetFont();
+                fnt.MakeBold();
+                m_lblSummary->SetFont(fnt);
+
+        stbszr->Add(m_lblSummary, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
+
+    szrMain->Add(stbszr, 0, wxALL|wxEXPAND, 5);
+
+    pnl->SetSizer(szrMain);
 }
 
 void MainFrame::ConnectControls()
@@ -103,6 +124,22 @@ void MainFrame::ConnectControls()
     Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
+}
+
+void MainFrame::UpdateSummary()
+{
+    wxString sTxt=_("Gedcom file:");
+    if (m_datas.HasDatas())
+    {
+        sTxt << _T(" ") << m_datas.GetCurrentFileName() << _T("\n");
+        sTxt << wxString::Format(_("Total items: %d - Individuals: %d - Family events: %d"), m_datas.GetItemsCount(), m_datas.GetItemsCount(GIT_INDI), m_datas.GetItemsCount(GIT_FAM));
+    }
+    else
+    {
+        sTxt << _T(" ") << _("No file loaded") << _T("\n") << _("No datas present in memory");
+    }
+
+    m_lblSummary->SetLabel(sTxt);
 }
 
 void MainFrame::OnSize(wxSizeEvent& event)
@@ -145,6 +182,8 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
         return;
     }
+
+    UpdateSummary();
 
     wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
