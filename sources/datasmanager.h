@@ -27,6 +27,9 @@ class DatasManager
         int GetItemsCount(GEDITEMTYPE type=GIT_ALL);
         wxXmlNode *GetDatas() { return m_datas; }
         wxXmlNode *FindItemByGedId(const wxString& gedId);
+        // Parsing items datas
+        wxString ParseEvent(wxXmlNode* event);
+        wxString ParseDate(const wxString& value);
         // Reading and saving datas
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);

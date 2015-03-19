@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "dlgabout.h"
+#include "appversion.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
 #include "settingsmanager.h"
@@ -35,6 +36,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     CreateControls();
 
     UpdateSummary();
+    UpdateItemDetails();
 
     int iStartPos=m_settings.GetMainWndStartupPos();
     if (iStartPos==wxALIGN_NOT)
@@ -120,16 +122,22 @@ void MainFrame::CreateControls()
 
     wxBoxSizer *lnszr=new wxBoxSizer(wxHORIZONTAL);
 
-        m_lstItems=new wxListView(pnl, -1);
+        m_lstItems=new wxListView(pnl, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
             m_lstItems->AppendColumn(_("Sex"), wxLIST_FORMAT_LEFT, 30);
-            m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT);
+            m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT, 60);
             m_lstItems->AppendColumn(_("Last Name"));
             m_lstItems->AppendColumn(_("First Name"));
         lnszr->Add(m_lstItems, 0, wxALL|wxEXPAND, 0);
 
+        m_htwDetails=new wxHtmlWindow(pnl, -1);
+        lnszr->Add(m_htwDetails, 1, wxLEFT|wxEXPAND, 5);
+
     szrMain->Add(lnszr, 1, wxALL|wxEXPAND, 5);
 
     pnl->SetSizer(szrMain);
+
+    // Timer to check for selected item
+    m_tmrLstSel.SetOwner(this, wxID_ANY);
 }
 
 void MainFrame::ConnectControls()
@@ -143,6 +151,10 @@ void MainFrame::ConnectControls()
     Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
     Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
     Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
+    // Other controls events handlers
+    m_lstItems->Connect(wxEVT_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListItemSelected), NULL, this);
+    m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
+    Connect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnTimerSelectionCheck));
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
 }
@@ -230,6 +242,57 @@ void MainFrame::UpdateListItem(long item)
     }
 }
 
+void MainFrame::UpdateItemDetails()
+{
+    long lItem=m_lstItems->GetFirstSelected();
+    if (lItem==wxNOT_FOUND)
+    {
+        wxString sPage=_T("<html><body>");
+        sPage << _T("<center><h1>") << _T(PRODUCTNAME) << _T(" (v") << VERSION_MAJOR << _T(".") << VERSION_MINOR << _T(".") << VERSION_REV << _T(")");
+        sPage << _T("</h1><h2>");
+        sPage << wxGetApp().GetBuildInfos(false);
+        sPage << _T("</h2></center></body></html>");
+        m_htwDetails->SetPage(sPage);
+
+        return;
+    }
+    // Clear the content of the wxHtmlWindow
+    m_htwDetails->SetPage(_T("<html><body></body></html>"));
+
+    wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(lItem);
+    if (node==NULL) return;
+
+    wxString sPage=wxEmptyString;
+    wxXmlNode *subNode=node->GetChildren();
+    while(subNode)
+    {
+        wxString sType=subNode->GetAttribute(_T("Type"));
+        if (sType==_T("NAME"))
+        {
+            wxString sName=subNode->GetAttribute(_T("Value"));
+            int iPos=sName.Find(_T('/'));
+            if (iPos!=wxNOT_FOUND)
+            {
+                wxString sFirstName=sName.Left(iPos);
+                wxString sLastName=sName.Mid(iPos+1);
+                if (sLastName.EndsWith(_T("/")))
+                    sLastName.RemoveLast(1);
+                sPage << _T("<h3>") << sLastName << _T(" ") << sFirstName << _T("</h3>");
+            }
+            else
+            {
+                sPage << _T("<h3>") << sName << _T("</h3>");
+            }
+        }
+        if (subNode->GetName()==_T("Event"))
+            sPage << _T("<br />") << m_datas.ParseEvent(subNode);
+        subNode=subNode->GetNext();
+    }
+
+    sPage << _T("</body></html>");
+    m_htwDetails->SetPage(_T("<html><body>") + sPage);
+}
+
 void MainFrame::OnSize(wxSizeEvent& event)
 {
     if (!IsShown()) return;
@@ -309,4 +372,22 @@ void MainFrame::OnAboutClicked(wxCommandEvent& event)
 void MainFrame::OnUpdateUI_Save(wxUpdateUIEvent& event)
 {
     event.Enable(m_datas.HasDatas());
+}
+
+void MainFrame::OnListItemSelected(wxListEvent& event)
+{
+    UpdateItemDetails();
+}
+
+void MainFrame::OnListItemDeselected(wxListEvent& event)
+{
+    // Clear the content of the wxHtmlWindow
+    m_htwDetails->SetPage(_T("<html><body></body></html>"));
+    m_tmrLstSel.Start(250, true);
+}
+
+void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)
+{
+    if (m_lstItems->GetFirstSelected()==wxNOT_FOUND)
+        UpdateItemDetails();
 }

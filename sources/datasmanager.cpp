@@ -876,3 +876,38 @@ bool DatasManager::SaveTree2TxtFile(const wxString& filename)
 #endif // __WXDEBUG__
     return true;
 }
+
+wxString DatasManager::ParseEvent(wxXmlNode* event)
+{
+    if (event==NULL) return wxEmptyString;
+    wxString sRes=wxEmptyString;
+    wxString sType=event->GetAttribute(_T("Type"));
+    if (sType.IsEmpty()) return wxEmptyString;
+
+    if (sType==_T("BIRT"))
+        sRes << _("Birth:");
+    else if (sType==_T("DEAT"))
+        sRes << _("Death:");
+    else
+        sRes << _("Unknown event:");
+
+    wxXmlNode *subNode=event->GetChildren();
+    while(subNode)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("DATE"))
+            sRes << ParseDate(subNode->GetAttribute(_T("Value")));
+
+        subNode=subNode->GetNext();
+    }
+
+    return sRes;
+}
+
+wxString DatasManager::ParseDate(const wxString& value)
+{
+    static const wxChar* szSpec[]={_T("AFT"), _T("BEF"), _T("ABT"), _T("CAL"), _T("EST")};
+
+    wxString sRes=wxEmptyString;
+
+    return value;
+}
