@@ -19,4 +19,9 @@ extern unsigned char preferences_png[];
 
 wxBitmap wxGet_preferences_png_Bitmap();
 
+#define save_png_Length 1915
+extern unsigned char save_png[];
+
+wxBitmap wxGet_save_png_Bitmap();
+
 #endif //TOOLBARICONS_H_INCLUDED

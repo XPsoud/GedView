@@ -3,16 +3,18 @@
 #include "main.h"
 #include "dlgabout.h"
 #include "toolbaricons.h"
+#include "datasmanager.h"
 #include "settingsmanager.h"
 
 #include <wx/display.h>
+#include <wx/filedlg.h>
 
 #ifndef __WXMSW__
 #include "../graphx/wxwin32x32.xpm"
 #endif // __WXMSW__
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
-    m_settings(SettingsManager::Get())
+    m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
 {
 #ifdef __WXDEBUG__
     wxPrintf(_T("Creating a \"MainFrame\" object\n"));
@@ -77,6 +79,8 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_OPEN, wxGetStockLabel(wxID_OPEN), wxGet_open_png_Bitmap(), _("Open a ged file"));
 
+        tb->AddTool(wxID_SAVE, wxGetStockLabel(wxID_SAVE), wxGet_save_png_Bitmap(), _("Save datas to xml file"));
+
         tb->AddStretchableSpace();
 
         tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
@@ -94,8 +98,11 @@ void MainFrame::ConnectControls()
     Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
     // Menus/Toolbar items
     Connect(wxID_OPEN, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnOpenGedFileClicked));
+    Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
     Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
     Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
+    // UpdateUI events handlers
+    Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
 }
 
 void MainFrame::OnSize(wxSizeEvent& event)
@@ -129,7 +136,34 @@ void MainFrame::OnClose(wxCloseEvent& event)
 
 void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Open a Ged file"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    wxString sMsg=_("Select the \"GED\" file to open");
+    wxString sWlcrd=_("Gedcom files (*.ged)|*.ged|All files (*.*)|*.*");
+    wxString sFName=wxFileSelector(sMsg, wxGetCwd(), _T("base.ged"), _T("ged"), sWlcrd, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    if (sFName.IsEmpty()) return;
+    if (!m_datas.ReadGedFile(sFName))
+    {
+        wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        return;
+    }
+
+    wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnSaveXmlFileClicked(wxCommandEvent& event)
+{
+    if (!m_datas.HasDatas()) return;
+
+    wxString sMsg=_("Select the \"XML\" file to create");
+    wxString sWlcrd=_("Xml files (*.xml)|*.xml|All files (*.*)|*.*");
+    wxString sFName=wxFileSelector(sMsg, wxGetCwd(), _T("base.xml"), _T("xml"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    if (sFName.IsEmpty()) return;
+
+    if (!m_datas.SaveXmlFile(sFName))
+    {
+        wxMessageBox(_("An error occurred while writing the xml file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        return;
+    }
+    wxMessageBox(_("Datas successfully saved to") + _T("\n") + sFName, _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
 
 void MainFrame::OnPreferencesClicked(wxCommandEvent& event)
@@ -141,4 +175,9 @@ void MainFrame::OnAboutClicked(wxCommandEvent& event)
 {
     DlgAbout dlg(this);
     dlg.ShowModal();
+}
+
+void MainFrame::OnUpdateUI_Save(wxUpdateUIEvent& event)
+{
+    event.Enable(m_datas.HasDatas());
 }

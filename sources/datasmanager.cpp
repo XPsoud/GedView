@@ -73,6 +73,11 @@ bool DatasManager::IsModified()
     return m_bModified;
 }
 
+bool DatasManager::HasDatas()
+{
+    return (m_datas->GetChildren()!=NULL);
+}
+
 bool DatasManager::ReadGedFile(const wxString& filename)
 {
     // Clean-up all remaining datas
@@ -529,7 +534,7 @@ bool DatasManager::SaveTree2TxtFile(const wxString& filename, GedTreeItem *base,
     //TreeBase=TreeBase->m_parent1; iTreeLevels--;
     //TreeBase=TreeBase->m_parent1; iTreeLevels--;
 
-    ListOfGedTreeItems lstLvl[iTreeLevels+1];
+    ListOfGedTreeItems *lstLvl=new ListOfGedTreeItems[iTreeLevels+1];
 
     lstLvl[0].Append(TreeBase);
 
@@ -589,7 +594,7 @@ bool DatasManager::SaveTree2TxtFile(const wxString& filename, GedTreeItem *base,
                 if (item!=NullItem)
                 {
                     getItemNames(item->GetRelatedXmlNode(), sFirstName, sLastName);
-                    if (sLastName.Length()>iWdth) iWdth=sLastName.Length();
+                    if (sLastName.Length()>(size_t)iWdth) iWdth=sLastName.Length();
                 }
             }
         }
@@ -708,6 +713,7 @@ bool DatasManager::SaveTree2TxtFile(const wxString& filename, GedTreeItem *base,
     {
         lstLvl[i].DeleteContents(false);
     }
+    delete [] lstLvl;
 /*
     mdc.SelectObject(wxNullBitmap);
 #ifdef __WXDEBUG__

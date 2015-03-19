@@ -14,6 +14,7 @@ class DatasManager
         void Clear();
         // Accessors
         bool IsModified();
+        bool HasDatas();
         // Reading and saving datas
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);
