@@ -6,7 +6,7 @@
 #include <wx/wfstream.h>
 #include <wx/filename.h>
 
-const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX")};
+const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS")};
 const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR")};
 const wxChar* szKnownFamItems[] = { _T("HUSB"), _T("WIFE"), _T("CHIL")};
 DatasManager DatasManager::m_instance;
@@ -110,6 +110,23 @@ int DatasManager::GetItemsCount(GEDITEMTYPE type)
     }
 
     return iRes;
+}
+
+wxXmlNode* DatasManager::FindItemByGedId(const wxString& gedId)
+{
+    if (gedId.IsEmpty()) return NULL;
+
+    wxXmlNode *node=m_datas->GetChildren();
+
+    while(node)
+    {
+        if (node->GetAttribute(_T("GedId"))==gedId)
+            return node;
+
+        node=node->GetNext();
+    }
+
+    return NULL;
 }
 
 bool DatasManager::ReadGedFile(const wxString& filename)
