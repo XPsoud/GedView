@@ -37,6 +37,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_html.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -80,6 +81,7 @@
 				<Linker>
 					<Add option="/MANIFEST:no" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
@@ -125,6 +127,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_html.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -170,6 +173,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_html.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
@@ -229,6 +233,7 @@
 				<Linker>
 					<Add option="/MANIFEST:no" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -291,6 +296,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_html.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -334,6 +340,7 @@
 				<Linker>
 					<Add option="/MANIFEST:no" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
@@ -378,6 +385,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_html.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG).a" />
@@ -422,6 +430,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).a" />
+					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_html.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_adv.a" />
 					<Add library="libwxbase$(WX_VERSION)u$(DBG_FLG)_xml.a" />
 					<Add library="libwxmsw$(WX_VERSION)u$(DBG_FLG)_core.a" />
@@ -481,6 +490,7 @@
 				<Linker>
 					<Add option="/MANIFEST:no" />
 					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
