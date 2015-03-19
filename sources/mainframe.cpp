@@ -24,6 +24,8 @@ enum
     LST_COL_COUNT
 };
 
+const int wxID_PDF = wxNewId();
+
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
 {
@@ -95,6 +97,8 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_SAVE, wxGetStockLabel(wxID_SAVE), wxGet_save_png_Bitmap(), _("Save datas to xml file"));
 
+        tb->AddTool(wxID_PDF, _("Export as pdf file"), wxGet_pdf_png_Bitmap(), _("Export the datas to a pdf file"));
+
         tb->AddStretchableSpace();
 
         tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
@@ -149,6 +153,7 @@ void MainFrame::ConnectControls()
     // Menus/Toolbar items
     Connect(wxID_OPEN, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnOpenGedFileClicked));
     Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
+    Connect(wxID_PDF, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
     Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
     Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
     // Other controls events handlers
@@ -157,6 +162,7 @@ void MainFrame::ConnectControls()
     Connect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnTimerSelectionCheck));
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
+    Connect(wxID_PDF, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
 }
 
 void MainFrame::UpdateSummary()
@@ -390,4 +396,9 @@ void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)
 {
     if (m_lstItems->GetFirstSelected()==wxNOT_FOUND)
         UpdateItemDetails();
+}
+
+void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Export as PDF"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
