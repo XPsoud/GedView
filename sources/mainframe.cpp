@@ -3,6 +3,7 @@
 #include "main.h"
 #include "dlgabout.h"
 #include "appversion.h"
+#include "dlgexportpdf.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
 #include "settingsmanager.h"
@@ -400,5 +401,7 @@ void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)
 
 void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Export as PDF"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    DlgExportPdf dlg(this);
+
+    dlg.ShowModal();
 }

@@ -556,6 +556,12 @@
 		<Unit filename="dlgabout.h">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>
+		<Unit filename="dlgexportpdf.cpp">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
+		<Unit filename="dlgexportpdf.h">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
 		<Unit filename="emptyclass.cpp">
 			<Option virtualFolder="Misc/" />
 		</Unit>
