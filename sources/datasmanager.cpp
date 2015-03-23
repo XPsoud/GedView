@@ -887,15 +887,21 @@ wxString DatasManager::ParseEvent(wxXmlNode* event)
     if (sType==_T("BIRT"))
         sRes << _("Birth:");
     else if (sType==_T("DEAT"))
-        sRes << _("Death:");
+        if (event->HasAttribute(_T("Value")))
+            sRes << _("Dead");
+        else
+            sRes << _("Death:");
     else
         sRes << _("Unknown event:");
 
     wxXmlNode *subNode=event->GetChildren();
     while(subNode)
     {
-        if (subNode->GetAttribute(_T("Type"))==_T("DATE"))
+        wxString sSubType=subNode->GetAttribute(_T("Type"));
+        if (sSubType==_T("DATE"))
             sRes << ParseDate(subNode->GetAttribute(_T("Value")));
+        else if (sSubType==_T("PLAC"))
+            sRes << _T(" ") << _("in") << _T(" ") << subNode->GetAttribute(_T("Value"));
 
         subNode=subNode->GetNext();
     }

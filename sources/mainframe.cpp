@@ -293,6 +293,15 @@ void MainFrame::UpdateItemDetails()
         }
         if (subNode->GetName()==_T("Event"))
             sPage << _T("<br />") << m_datas.ParseEvent(subNode);
+
+        if (sType==_T("FAMC"))
+        {
+            sPage << _T("<br /><hr /><h4>") << _("Parents") << _T("</h4>");
+        }
+        if (sType==_T("FAMS"))
+        {
+            sPage << _T("<br /><hr /><h4>") << _("Union(s)") << _T("</h4>");
+        }
         subNode=subNode->GetNext();
     }
 
