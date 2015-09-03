@@ -269,12 +269,12 @@ void MainFrame::UpdateItemDetails()
     wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(lItem);
     if (node==NULL) return;
 
-    wxXmlNode itmNode;
     wxString sItmID=node->GetAttribute(_T("GedId"));
     if (sItmID.IsEmpty()) return;
 
     wxString sPage=_T("<h3>") + m_datas.GetItemFullName(sItmID) + _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
+    bool bUnions=false;
     while(subNode)
     {
         wxString sType=subNode->GetAttribute(_T("Type"));
@@ -317,7 +317,42 @@ void MainFrame::UpdateItemDetails()
         }
         if (sType==_T("FAMS"))
         {
-            sPage << _T("<br /><hr /><h4>") << _("Union(s)") << _T("</h4>");
+            if (!bUnions)
+            {
+                sPage << _T("<br /><hr /><h4>") << _("Union(s)") << _T("</h4>");
+                bUnions=true;
+            }
+            wxXmlNode* evtNode=m_datas.FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            if (evtNode!=NULL)
+            {
+                wxXmlNode *subEvt=evtNode->GetChildren();
+                wxString sSubTyp;
+                bool bChild=false;
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
+                    if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
+                    {
+                        sPage << _T("<br /> <b>") << m_datas.GetItemFullName(sEvtId) << _T("</b>");
+                    }
+                    if (sSubTyp==_T("CHIL"))
+                    {
+                        if (bChild==false)
+                        {
+                            sPage << _T("<ul>");
+                            bChild=true;
+                        }
+                        sPage << _T("<li>") << m_datas.GetItemFirstName(sEvtId) << _T("</li>");
+                    }
+                    subEvt=subEvt->GetNext();
+                }
+                if (bChild)
+                {
+                    sPage << _T("</ul>");
+                    bChild=false;
+                }
+            }
         }
         subNode=subNode->GetNext();
     }
