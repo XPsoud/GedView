@@ -269,34 +269,51 @@ void MainFrame::UpdateItemDetails()
     wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(lItem);
     if (node==NULL) return;
 
-    wxString sPage=wxEmptyString;
+    wxXmlNode itmNode;
+    wxString sItmID=node->GetAttribute(_T("GedId"));
+    if (sItmID.IsEmpty()) return;
+
+    wxString sPage=_T("<h3>") + m_datas.GetItemFullName(sItmID) + _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
     while(subNode)
     {
         wxString sType=subNode->GetAttribute(_T("Type"));
-        if (sType==_T("NAME"))
-        {
-            wxString sName=subNode->GetAttribute(_T("Value"));
-            int iPos=sName.Find(_T('/'));
-            if (iPos!=wxNOT_FOUND)
-            {
-                wxString sFirstName=sName.Left(iPos);
-                wxString sLastName=sName.Mid(iPos+1);
-                if (sLastName.EndsWith(_T("/")))
-                    sLastName.RemoveLast(1);
-                sPage << _T("<h3>") << sLastName << _T(" ") << sFirstName << _T("</h3>");
-            }
-            else
-            {
-                sPage << _T("<h3>") << sName << _T("</h3>");
-            }
-        }
         if (subNode->GetName()==_T("Event"))
             sPage << _T("<br />") << m_datas.ParseEvent(subNode);
 
         if (sType==_T("FAMC"))
         {
             sPage << _T("<br /><hr /><h4>") << _("Parents") << _T("</h4>");
+            wxArrayString arsSiblings;
+            arsSiblings.Clear();
+            wxXmlNode* evtNode=m_datas.FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            if (evtNode!=NULL)
+            {
+                wxXmlNode *subEvt=evtNode->GetChildren();
+                wxString sSubTyp;
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
+                    {
+                        sPage << _T("<br />") << (sSubTyp==_T("HUSB")?_("Father"):_("Mother")) << _T(" : <b>") << m_datas.GetItemFullName(subEvt->GetAttribute(_T("GedId"))) << _T("</b>");
+                    }
+                    if (sSubTyp==_T("CHIL"))
+                    {
+                        arsSiblings.Add(subEvt->GetAttribute(_T("GedId")));
+                    }
+                    subEvt=subEvt->GetNext();
+                }
+                if (arsSiblings.GetCount()>1)
+                {
+                    sPage << _T("<br /><hr /><h4>") << _("Siblings") << _T("</h4>");
+                    for (size_t s=0; s<arsSiblings.GetCount(); s++)
+                    {
+                        if (arsSiblings[s]!=sItmID)
+                            sPage << _T("<br /> <b>") << m_datas.GetItemFirstName(arsSiblings[s]) << _T("</b>");
+                    }
+                }
+            }
         }
         if (sType==_T("FAMS"))
         {

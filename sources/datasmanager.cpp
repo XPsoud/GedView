@@ -917,3 +917,123 @@ wxString DatasManager::ParseDate(const wxString& value)
 
     return value;
 }
+
+wxString DatasManager::GetItemFirstName(const wxString& itmId)
+{
+    wxString sResult=wxEmptyString;
+    wxXmlNode *node=m_datas->GetChildren(), *subNode;
+    while(node)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            subNode=node->GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
+                {
+                    wxString sName=subNode->GetAttribute(_T("Value"));
+                    int iPos=sName.Find(_T('/'));
+                    if (iPos!=wxNOT_FOUND)
+                    {
+                        sResult=sName.Left(iPos);
+
+                        return sResult;
+                    }
+                    else
+                    {
+                        return sName;
+                    }
+                }
+                subNode=subNode->GetNext();
+            }
+        }
+
+        node=node->GetNext();
+    }
+
+    return sResult;
+}
+
+wxString DatasManager::GetItemLastName(const wxString& itmId)
+{
+    wxString sResult=wxEmptyString;
+    wxXmlNode *node=m_datas->GetChildren(), *subNode;
+    while(node)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            subNode=node->GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
+                {
+                    wxString sName=subNode->GetAttribute(_T("Value"));
+                    int iPos=sName.Find(_T('/'));
+                    if (iPos!=wxNOT_FOUND)
+                    {
+                        sResult=sName.Mid(iPos+1);
+                        if (sResult.EndsWith(_T("/")))
+                            sResult.RemoveLast(1);
+
+                        return sResult;
+                    }
+                    else
+                    {
+                        return sName;
+                    }
+                }
+                subNode=subNode->GetNext();
+            }
+        }
+
+        node=node->GetNext();
+    }
+
+    return sResult;
+}
+
+wxString DatasManager::GetItemFullName(const wxString& itmId, bool lastFirst)
+{
+    wxString sFirst=wxEmptyString, sLast=wxEmptyString;
+
+    wxXmlNode *node=m_datas->GetChildren(), *subNode;
+    while(node)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            subNode=node->GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
+                {
+                    wxString sName=subNode->GetAttribute(_T("Value"));
+                    int iPos=sName.Find(_T('/'));
+                    if (iPos!=wxNOT_FOUND)
+                    {
+                        sLast=sName.Mid(iPos+1);
+                        if (sLast.EndsWith(_T("/")))
+                            sLast.RemoveLast(1);
+                        sFirst=sName.Left(iPos);
+                    }
+                    else
+                    {
+                        sLast=sName;
+                    }
+                }
+                subNode=subNode->GetNext();
+            }
+        }
+
+        node=node->GetNext();
+    }
+
+    if (sFirst.IsEmpty()) return sLast;
+
+    wxString sResult=wxEmptyString;
+    if (lastFirst)
+        sResult << sLast << _T(" ") << sFirst;
+    else
+        sResult << sFirst << _T(" ") << sLast;
+
+    return sResult;
+}
