@@ -525,5 +525,6 @@ void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
         dlg.SetSelectedItem(node);
     }
 
-    dlg.ShowModal();
+    if (dlg.ShowModal()==wxID_OK)
+        wxMessageBox(_("The pdf file creation terminated !"), _("Success"), wxICON_INFORMATION|wxOK|wxCENTER);
 }

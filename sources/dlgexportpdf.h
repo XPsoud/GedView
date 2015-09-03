@@ -1,11 +1,13 @@
 #ifndef __DLGEXPORTPDF_H_INCLUDED__
 #define __DLGEXPORTPDF_H_INCLUDED__
 
-#include "wx/wx.h"
+#include <wx/wx.h>
 
 #include <wx/dialog.h>
 
 class wxXmlNode;
+class DatasManager;
+class wxPdfDocument;
 
 class DlgExportPdf : public wxDialog
 {
@@ -18,6 +20,8 @@ class DlgExportPdf : public wxDialog
         void CreateControls();
         void ConnectControls();
         void UpdateControlsStates();
+        void Summary2Pdf(wxPdfDocument *doc);
+        void GedItem2Pdf(wxXmlNode* itmNode, wxPdfDocument *doc);
         // Events handlers
         void OnOptExportTypeClicked(wxCommandEvent &event);
         void OnBtnExportClicked(wxCommandEvent &event);
@@ -27,6 +31,7 @@ class DlgExportPdf : public wxDialog
         wxButton *m_btnExport, *m_btnCancel;
         // Misc vars
         wxXmlNode *m_SelectedItem;
+        DatasManager& m_datas;
 };
 
 #endif // __DLGEXPORTPDF_H_INCLUDED__

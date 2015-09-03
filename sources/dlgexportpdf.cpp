@@ -1,16 +1,13 @@
 #include "dlgexportpdf.h"
 
-#include "main.h"
-#include "appversion.h"
+#include "datasmanager.h"
 
-#include <wx/bitmap.h>
+#include <wx/pdfdoc.h>
 #include <wx/xml/xml.h>
-#include <wx/statbmp.h>
 #include <wx/statline.h>
 
-#include "xpsi.png.h"
-
-DlgExportPdf::DlgExportPdf(wxWindow *parent) : wxDialog(parent, -1, _("Export as pdf file"), wxDefaultPosition, wxDefaultSize)
+DlgExportPdf::DlgExportPdf(wxWindow *parent) : wxDialog(parent, -1, _("Export as pdf file"), wxDefaultPosition, wxDefaultSize),
+    m_datas(DatasManager::Get())
 {
 #ifdef __WXDEBUG__
     wxPrintf(_T("Creating a \"DlgExportPdf\" object\n"));
@@ -121,5 +118,65 @@ void DlgExportPdf::OnOptExportTypeClicked(wxCommandEvent& event)
 
 void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Export as Pdf"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    wxFileName fname=m_datas.GetCurrentFileName();
+    fname.SetExt(_T("pdf"));
+
+    wxString sMsg=_("Select the \"PDF\" file to create");
+    wxString sWlcrd=_("Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*");
+    wxString sFName=wxFileSelector(sMsg, fname.GetPath(), fname.GetFullName(), _T("pdf"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    if (sFName.IsEmpty()) return;
+
+    wxPdfDocument doc(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+    doc.SetFont(_T("Helvetica"), _T(""), 14);
+    doc.AliasNbPages();
+
+    if ((m_optExportType[1]->GetValue() && (m_chkSummary->IsChecked())))
+    {
+        Summary2Pdf(&doc);
+    }
+
+    doc.SaveAsFile(sFName);
+
+    EndModal(wxID_OK);
+}
+
+void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc)
+{
+    doc->AddPage();
+    doc->SetFont(_T("Helvetica"), _T(""), 20);
+    wxString sHtml=_T("<table border=\"0\" width=\"100%\"><tbody><tr><td align=\"center\">");
+    sHtml << _("Alphabetical Index") << _T("</td></tr></tbody></table><br />");
+    doc->WriteXml(sHtml);
+    doc->SetFont(_T("Helvetica"), _T(""), 12);
+    doc->SetLineHeight(5);
+    sHtml=_T("<table border=\"1\" cellpadding=\"2\"><colgroup><col width=\"30\" span=\"1\" /><col width=\"160\" span=\"1\" /></colgroup><thead><tr><td align=\"center\"><b>");
+    sHtml << _("Id") << _T("</b></td><td align=\"center\"><b>") << _("Full name") << _T("</b></td></tr></thead>");
+    sHtml << _T("<tbody>");
+    wxXmlNode *root=m_datas.GetDatas();
+    wxXmlNode *node=root->GetChildren();
+    wxArrayString arsItems;
+    arsItems.Clear();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("Type"))==_T("INDI"))
+        {
+            arsItems.Add(m_datas.GetItemFullName(node) + wxString(_T("          ") + node->GetAttribute(_T("GedId"))).Right(10));
+        }
+        node=node->GetNext();
+    }
+    arsItems.Sort();
+    for (size_t i=0; i<arsItems.GetCount(); ++i)
+    {
+        sHtml << _T("<tr>");
+        sHtml << _T("<td align=\"right\">") << arsItems[i].Right(10) << _T("</td>");
+        sHtml << _T("<td>") << arsItems[i].Left(arsItems[i].Length()-10).Trim(false) << _T("</td>");
+        sHtml << _T("</tr>");
+    }
+    sHtml << _T("</tbody></table>"),
+    doc->WriteXml(sHtml);
+}
+
+void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
+{
+    //
 }
