@@ -518,5 +518,12 @@ void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
 {
     DlgExportPdf dlg(this);
 
+    long lItem=m_lstItems->GetFirstSelected();
+    if (lItem!=wxNOT_FOUND)
+    {
+        wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(lItem);
+        dlg.SetSelectedItem(node);
+    }
+
     dlg.ShowModal();
 }
