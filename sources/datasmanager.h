@@ -32,8 +32,15 @@ class DatasManager
         wxString ParseDate(const wxString& value);
         // Accessing items entries
         wxString GetItemFirstName(const wxString& itmId);
+        wxString GetItemFirstName(wxXmlNode* itmNode);
         wxString GetItemLastName(const wxString& itmId);
+        wxString GetItemLastName(wxXmlNode* itmNode);
         wxString GetItemFullName(const wxString& itmId, bool lastFirst=true);
+        wxString GetItemFullName(wxXmlNode* itmNode, bool lastFirst=true);
+        wxString GetItemBirth(const wxString& itmId);
+        wxString GetItemBirth(const wxXmlNode *itmNode);
+        wxString GetItemDeath(const wxString& itmId);
+        wxString GetItemDeath(const wxXmlNode *itmNode);
         // Reading and saving datas
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);

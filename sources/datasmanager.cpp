@@ -885,12 +885,21 @@ wxString DatasManager::ParseEvent(wxXmlNode* event)
     if (sType.IsEmpty()) return wxEmptyString;
 
     if (sType==_T("BIRT"))
+    {
         sRes << _("Birth:");
+    }
     else if (sType==_T("DEAT"))
+    {
         if (event->HasAttribute(_T("Value")))
             sRes << _("Dead");
         else
             sRes << _("Death:");
+    }
+    else if (sType==_T("MARR"))
+    {
+        if (!event->HasAttribute(_T("Value")))
+            sRes << _("Marriage:");
+    }
     else
         sRes << _("Unknown event:");
 
@@ -899,7 +908,7 @@ wxString DatasManager::ParseEvent(wxXmlNode* event)
     {
         wxString sSubType=subNode->GetAttribute(_T("Type"));
         if (sSubType==_T("DATE"))
-            sRes << ParseDate(subNode->GetAttribute(_T("Value")));
+            sRes << (sRes.IsEmpty()?_T(""):_T(" ")) << ParseDate(subNode->GetAttribute(_T("Value")));
         else if (sSubType==_T("PLAC"))
             sRes << _T(" ") << _("in") << _T(" ") << subNode->GetAttribute(_T("Value"));
 
@@ -920,73 +929,87 @@ wxString DatasManager::ParseDate(const wxString& value)
 
 wxString DatasManager::GetItemFirstName(const wxString& itmId)
 {
-    wxString sResult=wxEmptyString;
-    wxXmlNode *node=m_datas->GetChildren(), *subNode;
-    while(node)
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
     {
         if (node->GetAttribute(_T("GedId"))==itmId)
         {
-            subNode=node->GetChildren();
-            while(subNode!=NULL)
-            {
-                if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
-                {
-                    wxString sName=subNode->GetAttribute(_T("Value"));
-                    int iPos=sName.Find(_T('/'));
-                    if (iPos!=wxNOT_FOUND)
-                    {
-                        sResult=sName.Left(iPos);
-
-                        return sResult;
-                    }
-                    else
-                    {
-                        return sName;
-                    }
-                }
-                subNode=subNode->GetNext();
-            }
+            return GetItemFirstName(node);
         }
-
         node=node->GetNext();
     }
 
-    return sResult;
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemFirstName(wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
+        {
+            wxString sName=subNode->GetAttribute(_T("Value"));
+            int iPos=sName.Find(_T('/'));
+            if (iPos!=wxNOT_FOUND)
+            {
+                return sName.Left(iPos);
+            }
+            else
+            {
+                return sName;
+            }
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
 }
 
 wxString DatasManager::GetItemLastName(const wxString& itmId)
 {
-    wxString sResult=wxEmptyString;
-    wxXmlNode *node=m_datas->GetChildren(), *subNode;
-    while(node)
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
     {
         if (node->GetAttribute(_T("GedId"))==itmId)
         {
-            subNode=node->GetChildren();
-            while(subNode!=NULL)
-            {
-                if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
-                {
-                    wxString sName=subNode->GetAttribute(_T("Value"));
-                    int iPos=sName.Find(_T('/'));
-                    if (iPos!=wxNOT_FOUND)
-                    {
-                        sResult=sName.Mid(iPos+1);
-                        if (sResult.EndsWith(_T("/")))
-                            sResult.RemoveLast(1);
+            return GetItemLastName(node);
+        }
+        node=node->GetNext();
+    }
 
-                        return sResult;
-                    }
-                    else
-                    {
-                        return sName;
-                    }
-                }
-                subNode=subNode->GetNext();
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemLastName(wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxString sResult=wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
+        {
+            wxString sName=subNode->GetAttribute(_T("Value"));
+            int iPos=sName.Find(_T('/'));
+            if (iPos!=wxNOT_FOUND)
+            {
+                sResult=sName.Mid(iPos+1);
+                if (sResult.EndsWith(_T("/")))
+                    sResult.RemoveLast(1);
+
+                return sResult;
+            }
+            else
+            {
+                return sName;
             }
         }
-
-        node=node->GetNext();
+        subNode=subNode->GetNext();
     }
 
     return sResult;
@@ -994,37 +1017,44 @@ wxString DatasManager::GetItemLastName(const wxString& itmId)
 
 wxString DatasManager::GetItemFullName(const wxString& itmId, bool lastFirst)
 {
-    wxString sFirst=wxEmptyString, sLast=wxEmptyString;
-
-    wxXmlNode *node=m_datas->GetChildren(), *subNode;
-    while(node)
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
     {
         if (node->GetAttribute(_T("GedId"))==itmId)
         {
-            subNode=node->GetChildren();
-            while(subNode!=NULL)
+            return GetItemFullName(node, lastFirst);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemFullName(wxXmlNode* itmNode, bool lastFirst)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxString sFirst=wxEmptyString, sLast=wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
+        {
+            wxString sName=subNode->GetAttribute(_T("Value"));
+            int iPos=sName.Find(_T('/'));
+            if (iPos!=wxNOT_FOUND)
             {
-                if (subNode->GetAttribute(_T("Type"))==_T("NAME"))
-                {
-                    wxString sName=subNode->GetAttribute(_T("Value"));
-                    int iPos=sName.Find(_T('/'));
-                    if (iPos!=wxNOT_FOUND)
-                    {
-                        sLast=sName.Mid(iPos+1);
-                        if (sLast.EndsWith(_T("/")))
-                            sLast.RemoveLast(1);
-                        sFirst=sName.Left(iPos);
-                    }
-                    else
-                    {
-                        sLast=sName;
-                    }
-                }
-                subNode=subNode->GetNext();
+                sLast=sName.Mid(iPos+1);
+                if (sLast.EndsWith(_T("/")))
+                    sLast.RemoveLast(1);
+                sFirst=sName.Left(iPos);
+            }
+            else
+            {
+                sLast=sName;
             }
         }
-
-        node=node->GetNext();
+        subNode=subNode->GetNext();
     }
 
     if (sFirst.IsEmpty()) return sLast;
@@ -1036,4 +1066,66 @@ wxString DatasManager::GetItemFullName(const wxString& itmId, bool lastFirst)
         sResult << sFirst << _T(" ") << sLast;
 
     return sResult;
+}
+
+wxString DatasManager::GetItemBirth(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemBirth(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemBirth(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BIRT")))
+        {
+            return ParseEvent(subNode);
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemDeath(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemDeath(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemDeath(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("DEAT")))
+        {
+            return ParseEvent(subNode);
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
 }

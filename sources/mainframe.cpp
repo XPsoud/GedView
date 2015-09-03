@@ -273,7 +273,7 @@ void MainFrame::UpdateItemDetails()
     wxString sItmID=node->GetAttribute(_T("GedId"));
     if (sItmID.IsEmpty()) return;
 
-    wxString sPage=_T("<h3>") + m_datas.GetItemFullName(sItmID) + _T("</h3>");
+    wxString sPage=_T("<h3>") + m_datas.GetItemFullName(node) + _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
     bool bUnions=false;
     while(subNode)
@@ -291,7 +291,7 @@ void MainFrame::UpdateItemDetails()
             if (evtNode!=NULL)
             {
                 wxXmlNode *subEvt=evtNode->GetChildren();
-                wxString sSubTyp, sSubId;
+                wxString sSubTyp, sSubId, sEvent;
                 while(subEvt!=NULL)
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
@@ -299,10 +299,16 @@ void MainFrame::UpdateItemDetails()
                     if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
                     {
                         sPage << _T("<br />") << (sSubTyp==_T("HUSB")?_("Father"):_("Mother")) << _T(" : <b><a href=\"") << sSubId << _T("\">") << m_datas.GetItemFullName(sSubId) << _T("</a></b>");
+                        sEvent=m_datas.GetItemBirth(sSubId);
+                        if (!sEvent.IsEmpty())
+                            sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        sEvent=m_datas.GetItemDeath(sSubId);
+                        if (!sEvent.IsEmpty())
+                            sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
-                        arsSiblings.Add(subEvt->GetAttribute(_T("GedId")));
+                        arsSiblings.Add(sSubId);
                     }
                     subEvt=subEvt->GetNext();
                 }
@@ -312,7 +318,15 @@ void MainFrame::UpdateItemDetails()
                     for (size_t s=0; s<arsSiblings.GetCount(); s++)
                     {
                         if (arsSiblings[s]!=sItmID)
+                        {
                             sPage << _T("<br /> <b><a href=\"") << arsSiblings[s] << _T("\">")<< m_datas.GetItemFirstName(arsSiblings[s]) << _T("</a></b>");
+                            sEvent=m_datas.GetItemBirth(arsSiblings[s]);
+                            if (!sEvent.IsEmpty())
+                                sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                            sEvent=m_datas.GetItemDeath(arsSiblings[s]);
+                            if (!sEvent.IsEmpty())
+                                sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        }
                     }
                 }
             }
@@ -325,6 +339,7 @@ void MainFrame::UpdateItemDetails()
                 bUnions=true;
             }
             wxXmlNode* evtNode=m_datas.FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            wxString sEvent;
             if (evtNode!=NULL)
             {
                 wxXmlNode *subEvt=evtNode->GetChildren();
@@ -334,9 +349,21 @@ void MainFrame::UpdateItemDetails()
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
                     wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
+                    if (subEvt->GetName()==_T("Event"))
+                    {
+                        wxString sTmp=m_datas.ParseEvent(subEvt);
+                        if (!sTmp.IsEmpty())
+                            sPage << _T("<br /><small>") << sTmp << _T("</small>");
+                    }
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
                         sPage << _T("<br /> <b><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFullName(sEvtId) << _T("</a></b>");
+                        sEvent=m_datas.GetItemBirth(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        sEvent=m_datas.GetItemDeath(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
@@ -345,7 +372,14 @@ void MainFrame::UpdateItemDetails()
                             sPage << _T("<ul>");
                             bChild=true;
                         }
-                        sPage << _T("<li><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFirstName(sEvtId) << _T("</a></li>");
+                        sPage << _T("<li><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFirstName(sEvtId) << _T("</a>");
+                        sEvent=m_datas.GetItemBirth(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        sEvent=m_datas.GetItemDeath(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        sPage << _T("</li>");
                     }
                     subEvt=subEvt->GetNext();
                 }
