@@ -188,7 +188,7 @@ void MainFrame::UpdateList()
 
     if (!m_datas.HasDatas()) return;
 
-    wxXmlNode *node=m_datas.GetDatas()->GetChildren(), *subnode;
+    wxXmlNode *node=m_datas.GetDatas()->GetChildren();
     wxString sType, sTxt, sName;
     long lItem=0;
 
@@ -361,9 +361,12 @@ void MainFrame::OnSaveXmlFileClicked(wxCommandEvent& event)
 {
     if (!m_datas.HasDatas()) return;
 
+    wxFileName fname=m_datas.GetCurrentFileName();
+    fname.SetExt(_T("xml"));
+
     wxString sMsg=_("Select the \"XML\" file to create");
     wxString sWlcrd=_("Xml files (*.xml)|*.xml|All files (*.*)|*.*");
-    wxString sFName=wxFileSelector(sMsg, wxGetCwd(), _T("base.xml"), _T("xml"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    wxString sFName=wxFileSelector(sMsg, fname.GetPath(), fname.GetFullName(), _T("xml"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (sFName.IsEmpty()) return;
 
     if (!m_datas.SaveXmlFile(sFName))
