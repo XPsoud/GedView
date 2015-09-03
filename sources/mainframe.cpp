@@ -161,6 +161,7 @@ void MainFrame::ConnectControls()
     m_lstItems->Connect(wxEVT_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListItemSelected), NULL, this);
     m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
     Connect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnTimerSelectionCheck));
+    m_htwDetails->Connect(wxEVT_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(MainFrame::OnHtmlLinkClicked), NULL, this);
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_PDF, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
@@ -290,13 +291,14 @@ void MainFrame::UpdateItemDetails()
             if (evtNode!=NULL)
             {
                 wxXmlNode *subEvt=evtNode->GetChildren();
-                wxString sSubTyp;
+                wxString sSubTyp, sSubId;
                 while(subEvt!=NULL)
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    sSubId=subEvt->GetAttribute(_T("GedId"));
                     if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
                     {
-                        sPage << _T("<br />") << (sSubTyp==_T("HUSB")?_("Father"):_("Mother")) << _T(" : <b>") << m_datas.GetItemFullName(subEvt->GetAttribute(_T("GedId"))) << _T("</b>");
+                        sPage << _T("<br />") << (sSubTyp==_T("HUSB")?_("Father"):_("Mother")) << _T(" : <b><a href=\"") << sSubId << _T("\">") << m_datas.GetItemFullName(sSubId) << _T("</a></b>");
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
@@ -310,7 +312,7 @@ void MainFrame::UpdateItemDetails()
                     for (size_t s=0; s<arsSiblings.GetCount(); s++)
                     {
                         if (arsSiblings[s]!=sItmID)
-                            sPage << _T("<br /> <b>") << m_datas.GetItemFirstName(arsSiblings[s]) << _T("</b>");
+                            sPage << _T("<br /> <b><a href=\"") << arsSiblings[s] << _T("\">")<< m_datas.GetItemFirstName(arsSiblings[s]) << _T("</a></b>");
                     }
                 }
             }
@@ -334,7 +336,7 @@ void MainFrame::UpdateItemDetails()
                     wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
-                        sPage << _T("<br /> <b>") << m_datas.GetItemFullName(sEvtId) << _T("</b>");
+                        sPage << _T("<br /> <b><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFullName(sEvtId) << _T("</a></b>");
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
@@ -343,7 +345,7 @@ void MainFrame::UpdateItemDetails()
                             sPage << _T("<ul>");
                             bChild=true;
                         }
-                        sPage << _T("<li>") << m_datas.GetItemFirstName(sEvtId) << _T("</li>");
+                        sPage << _T("<li><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFirstName(sEvtId) << _T("</a></li>");
                     }
                     subEvt=subEvt->GetNext();
                 }
@@ -461,6 +463,21 @@ void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)
 {
     if (m_lstItems->GetFirstSelected()==wxNOT_FOUND)
         UpdateItemDetails();
+}
+
+void MainFrame::OnHtmlLinkClicked(wxHtmlLinkEvent& event)
+{
+    wxString sLink=event.GetLinkInfo().GetHref();
+    if (sLink.IsEmpty()) return;
+    int iCount=m_lstItems->GetItemCount();
+    for (int i=0; i<iCount; ++i)
+    {
+        if (m_lstItems->GetItemText(i, 1)==sLink)
+        {
+            m_lstItems->Select(i, true);
+            m_lstItems->EnsureVisible(i);
+        }
+    }
 }
 
 void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)

@@ -33,6 +33,7 @@ class MainFrame: public wxFrame
         void OnListItemSelected(wxListEvent &event);
         void OnListItemDeselected(wxListEvent &event);
         void OnTimerSelectionCheck(wxTimerEvent &event);
+        void OnHtmlLinkClicked(wxHtmlLinkEvent& event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         // Controls vars
         wxStaticText *m_lblSummary;
