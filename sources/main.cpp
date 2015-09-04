@@ -17,6 +17,14 @@ bool MyApp::OnInit()
     SetAppName(_T(PRODUCTNAME));
     // Init the SettingManager instance
     SettingsManager& settings=SettingsManager::Get();
+    // Initialize the local if possible
+    wxString sDir=settings.GetAppPath();
+    if (!sDir.EndsWith(wxFileName::GetPathSeparator()))
+        sDir.Append(wxFileName::GetPathSeparator());
+    sDir.Append(_T("langs"));
+    m_locale.AddCatalogLookupPathPrefix(sDir);
+    m_locale.Init(wxLANGUAGE_DEFAULT, wxLOCALE_LOAD_DEFAULT);
+    m_locale.AddCatalog(_T("GedView"));
     // Read the settings file
     settings.ReadSettings();
 
