@@ -3,6 +3,7 @@
 #include "datasmanager.h"
 
 #include <wx/pdfdoc.h>
+#include <wx/pdffont.h>
 #include <wx/xml/xml.h>
 #include <wx/statline.h>
 
@@ -134,10 +135,43 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
     {
         Summary2Pdf(&doc);
     }
+    if ((m_optExportType[0]->GetValue()) && (m_SelectedItem!=NULL))
+    {
+        GedItem2Pdf(m_SelectedItem, &doc);
+    }
+    else
+    {
+        // Create a page for each individual item
+        wxXmlNode *root=m_datas.GetDatas();
+        wxXmlNode *item=root->GetChildren();
+        while(item!=NULL)
+        {
+            if (item->GetAttribute(_T("Type"))==_T("INDI"))
+                GedItem2Pdf(item, &doc);
+
+            item=item->GetNext();
+        }
+    }
 
     doc.SaveAsFile(sFName);
 
     EndModal(wxID_OK);
+}
+
+
+void DlgExportPdf::AddHrTitle(double Y, const wxString& title, wxPdfDocument *doc)
+{
+    wxString sName=doc->GetFontFamily();
+    wxString sStyle=doc->GetFontStyle();
+    double dSize=doc->GetFontSize();
+
+    doc->SetFont(_T("Helvetica"), _T("BI"), 16);
+    double dWidth=doc->GetStringWidth(title);
+    doc->SetXY(10, Y);
+    doc->Cell(dWidth, 15, title, wxPDF_BORDER_NONE, 1);
+    doc->Line(dWidth+15, Y+7.5, 200, Y+7.5);
+
+    doc->SetFont(sName, sStyle, dSize);
 }
 
 void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc)
@@ -178,5 +212,148 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc)
 
 void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
 {
-    //
+    if (itmNode==NULL) return;
+    wxString sItmID=itmNode->GetAttribute(_T("GedId"));
+
+    doc->AddPage();
+    wxPdfArrayDouble dash;
+    wxPdfLineStyle lstyle(0.5, wxPDF_LINECAP_BUTT, wxPDF_LINEJOIN_MITER, dash, 0., wxColour(0, 0, 0));
+    doc->SetLineStyle(lstyle);
+
+    doc->SetXY(10, 10);
+
+    doc->SetCellMargin(2);
+
+    doc->SetFont(_T("Arial"), _T(" "), 15);
+    doc->Cell(30, 10, sItmID, wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_RIGHT);
+    doc->SetFont(_T("Helvetica"), _T("B"), 18);
+    doc->Cell(160, 10, m_datas.GetItemFullName(itmNode), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT);
+
+    wxString sTxt;
+    doc->SetFont(_T("Arial"), _T(" "), 12);
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    bool bUnions=false;
+    while(subNode!=NULL)
+    {
+        wxString sType=subNode->GetAttribute(_T("Type"));
+        if (subNode->GetName()==_T("Event"))
+        {
+            doc->Cell(190, 10, m_datas.ParseEvent(subNode), wxPDF_BORDER_NONE, 1);
+        }
+        if (sType==_T("FAMC"))
+        {
+            AddHrTitle(doc->GetY(), _("Parents"), doc);
+            wxArrayString arsSiblings;
+            arsSiblings.Clear();
+            wxXmlNode* evtNode=m_datas.FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            if (evtNode!=NULL)
+            {
+                wxXmlNode *subEvt=evtNode->GetChildren();
+                wxString sSubTyp, sSubId, sEvent;
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    sSubId=subEvt->GetAttribute(_T("GedId"));
+                    if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
+                    {
+                        sTxt=(sSubTyp==_T("HUSB")?_("Father:"):_("Mother:")) + _T(" ") + sSubId + _T(" - ") + m_datas.GetItemFullName(sSubId);
+                        doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+                        sEvent=m_datas.GetItemBirth(sSubId);
+                        doc->SetFontSize(10);
+                        if (!sEvent.IsEmpty())
+                            doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        sEvent=m_datas.GetItemDeath(sSubId);
+                        if (!sEvent.IsEmpty())
+                            doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        doc->SetFontSize(12);
+                    }
+                    if (sSubTyp==_T("CHIL"))
+                    {
+                        arsSiblings.Add(sSubId);
+                    }
+                    subEvt=subEvt->GetNext();
+                }
+
+                if (arsSiblings.GetCount()>1)
+                {
+                    AddHrTitle(doc->GetY(), _("Siblings"), doc);
+                    for (size_t s=0; s<arsSiblings.GetCount(); s++)
+                    {
+                        if (arsSiblings[s]!=sItmID)
+                        {
+                            sTxt=arsSiblings[s] + _T(" - ") + m_datas.GetItemFirstName(arsSiblings[s]);
+                            doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+                            sEvent=m_datas.GetItemBirth(arsSiblings[s]);
+                            doc->SetFontSize(10);
+                            if (!sEvent.IsEmpty())
+                                doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                            sEvent=m_datas.GetItemDeath(arsSiblings[s]);
+                            if (!sEvent.IsEmpty())
+                                doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                            doc->SetFontSize(12);
+                        }
+                    }
+                }
+            }
+        }
+        if (sType==_T("FAMS"))
+        {
+            if (!bUnions)
+            {
+                AddHrTitle(doc->GetY(), _("Union(s)"), doc);
+                bUnions=true;
+            }
+            wxXmlNode* evtNode=m_datas.FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            wxString sEvent;
+            if (evtNode!=NULL)
+            {
+                wxXmlNode *subEvt=evtNode->GetChildren();
+                wxString sSubTyp;
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
+                    if (subEvt->GetName()==_T("Event"))
+                    {
+                        sTxt=m_datas.ParseEvent(subEvt);
+                        if (!sTxt.IsEmpty())
+                        {
+                            doc->SetFontSize(10);
+                            doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                            doc->SetFontSize(12);
+                        }
+                    }
+                    if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
+                    {
+                        doc->Cell(190, 8, sEvtId + _T(" - ") + m_datas.GetItemFullName(sEvtId), wxPDF_BORDER_NONE, 1);
+                        sEvent=m_datas.GetItemBirth(sEvtId);
+                        doc->SetFontSize(10);
+                        if (!sEvent.IsEmpty())
+                            doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        sEvent=m_datas.GetItemDeath(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        doc->SetFontSize(12);
+                    }
+                    if (sSubTyp==_T("CHIL"))
+                    {
+                        sTxt=_T("      ") + sEvtId + m_datas.GetItemFirstName(sEvtId);
+                        doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+                        sEvent=m_datas.GetItemBirth(sEvtId);
+                        doc->SetFontSize(10);
+                        if (!sEvent.IsEmpty())
+                            doc->Cell(190, 5, _T("         ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        sEvent=m_datas.GetItemDeath(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            doc->Cell(190, 5, _T("         ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        doc->SetFontSize(12);
+                    }
+                    subEvt=subEvt->GetNext();
+                }
+            }
+        }
+
+        subNode=subNode->GetNext();
+    }
 }

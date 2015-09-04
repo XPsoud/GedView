@@ -22,6 +22,7 @@ class DlgExportPdf : public wxDialog
         void UpdateControlsStates();
         void Summary2Pdf(wxPdfDocument *doc);
         void GedItem2Pdf(wxXmlNode* itmNode, wxPdfDocument *doc);
+        void AddHrTitle(double Y, const wxString& title, wxPdfDocument *doc);
         // Events handlers
         void OnOptExportTypeClicked(wxCommandEvent &event);
         void OnBtnExportClicked(wxCommandEvent &event);

@@ -276,7 +276,7 @@ void MainFrame::UpdateItemDetails()
     wxString sPage=_T("<h3>") + m_datas.GetItemFullName(node) + _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
     bool bUnions=false;
-    while(subNode)
+    while(subNode!=NULL)
     {
         wxString sType=subNode->GetAttribute(_T("Type"));
         if (subNode->GetName()==_T("Event"))
@@ -298,7 +298,7 @@ void MainFrame::UpdateItemDetails()
                     sSubId=subEvt->GetAttribute(_T("GedId"));
                     if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
                     {
-                        sPage << _T("<br />") << (sSubTyp==_T("HUSB")?_("Father"):_("Mother")) << _T(" : <b><a href=\"") << sSubId << _T("\">") << m_datas.GetItemFullName(sSubId) << _T("</a></b>");
+                        sPage << _T("<br />") << (sSubTyp==_T("HUSB")?_("Father:"):_("Mother:")) << _T(" <b><a href=\"") << sSubId << _T("\">") << m_datas.GetItemFullName(sSubId) << _T("</a></b>");
                         sEvent=m_datas.GetItemBirth(sSubId);
                         if (!sEvent.IsEmpty())
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
