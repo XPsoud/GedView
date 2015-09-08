@@ -205,6 +205,8 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
 
     m_pgbProgress->SetValue(100);
     m_pgbProgress->Refresh();
+    if (m_optExportType[1]->GetValue() && !m_chkSplitPdf->IsChecked())
+        doc->SaveAsFile(fname.GetFullPath());
     delete doc;
 
     EndModal(wxID_OK);
