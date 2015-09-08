@@ -15,6 +15,13 @@ enum GEDITEMTYPE
     GIT_FAM
 };
 
+enum GEDITEMSEX
+{
+    GIS_UNKNOWN = wxID_ANY,
+    GIS_MALE = 0,
+    GIS_FEMALE =1
+};
+
 class DatasManager
 {
     public:

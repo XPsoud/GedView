@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-04 11:47+0100\n"
-"PO-Revision-Date: 2015-09-04 11:57+0100\n"
+"POT-Creation-Date: 2015-09-08 07:28+0100\n"
+"PO-Revision-Date: 2015-09-08 07:28+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Birth:"
 msgstr "Naissance :"
 
-#: sources/datasmanager.cpp:894
+#: sources/datasmanager.cpp:894 sources/mainframe.cpp:286
 msgid "Dead"
 msgstr "Décédé"
 
@@ -94,23 +94,23 @@ msgstr "Id"
 msgid "Full name"
 msgstr "Nom complet"
 
-#: sources/dlgexportpdf.cpp:246 sources/mainframe.cpp:287
+#: sources/dlgexportpdf.cpp:246 sources/mainframe.cpp:301
 msgid "Parents"
 msgstr "Parents"
 
-#: sources/dlgexportpdf.cpp:260 sources/mainframe.cpp:301
+#: sources/dlgexportpdf.cpp:260 sources/mainframe.cpp:315
 msgid "Father:"
 msgstr "Père :"
 
-#: sources/dlgexportpdf.cpp:260 sources/mainframe.cpp:301
+#: sources/dlgexportpdf.cpp:260 sources/mainframe.cpp:315
 msgid "Mother:"
 msgstr "Mère :"
 
-#: sources/dlgexportpdf.cpp:280 sources/mainframe.cpp:317
+#: sources/dlgexportpdf.cpp:280 sources/mainframe.cpp:331
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
-#: sources/dlgexportpdf.cpp:304 sources/mainframe.cpp:338
+#: sources/dlgexportpdf.cpp:304 sources/mainframe.cpp:352
 msgid "Union(s)"
 msgstr "Union(s)"
 
@@ -167,59 +167,63 @@ msgstr "Pas de fichier chargé"
 msgid "No datas present in memory"
 msgstr "Pas de données présentes en mémoire"
 
-#: sources/mainframe.cpp:431
+#: sources/mainframe.cpp:288
+msgid "Dead_F"
+msgstr "Décédée"
+
+#: sources/mainframe.cpp:445
 msgid "Select the \"GED\" file to open"
 msgstr "Sélectionnez le fichier \"GED\" à ouvrir"
 
-#: sources/mainframe.cpp:432
+#: sources/mainframe.cpp:446
 msgid "Gedcom files (*.ged)|*.ged|All files (*.*)|*.*"
 msgstr "Fichiers Gedcom (*.ged)|*.ged|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:437
+#: sources/mainframe.cpp:451
 msgid "An error occurred while reading the ged file !"
 msgstr "Une erreur est survenue lors de la lecture du fichier ged !"
 
-#: sources/mainframe.cpp:437 sources/mainframe.cpp:462
+#: sources/mainframe.cpp:451 sources/mainframe.cpp:476
 msgid "Error"
 msgstr "Erreur"
 
-#: sources/mainframe.cpp:445
+#: sources/mainframe.cpp:459
 msgid "Ged file read successfully !"
 msgstr "Fichier ged lu avec succès !"
 
-#: sources/mainframe.cpp:445 sources/mainframe.cpp:465
+#: sources/mainframe.cpp:459 sources/mainframe.cpp:479
 msgid "Done"
 msgstr "Fait"
 
-#: sources/mainframe.cpp:455
+#: sources/mainframe.cpp:469
 msgid "Select the \"XML\" file to create"
 msgstr "Sélectionnez le fichier \"XML\" à créer"
 
-#: sources/mainframe.cpp:456
+#: sources/mainframe.cpp:470
 msgid "Xml files (*.xml)|*.xml|All files (*.*)|*.*"
 msgstr "Fichiers xml (*.xml)|*.xml|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:462
+#: sources/mainframe.cpp:476
 msgid "An error occurred while writing the xml file !"
 msgstr "Une erreur est survenue lors de l'écriture du fichier xml !"
 
-#: sources/mainframe.cpp:465
+#: sources/mainframe.cpp:479
 msgid "Datas successfully saved to"
 msgstr "Données sauvées avec succès vers"
 
-#: sources/mainframe.cpp:470
+#: sources/mainframe.cpp:484
 msgid "Sorry, but this function isn't implemented yet !"
 msgstr "Désolé, mais cette fonction n'est pas encore implémentée !"
 
-#: sources/mainframe.cpp:470
+#: sources/mainframe.cpp:484
 msgid "Preferences"
 msgstr "Préférences"
 
-#: sources/mainframe.cpp:529
+#: sources/mainframe.cpp:543
 msgid "The pdf file creation terminated !"
 msgstr "Création du fichier pdf terminée !"
 
-#: sources/mainframe.cpp:529
+#: sources/mainframe.cpp:543
 msgid "Success"
 msgstr "Succès"
 

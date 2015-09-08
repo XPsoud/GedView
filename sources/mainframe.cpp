@@ -275,12 +275,26 @@ void MainFrame::UpdateItemDetails()
 
     wxString sPage=_T("<h3>") + m_datas.GetItemFullName(node) + _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
+    int iSex=GIS_UNKNOWN;
     bool bUnions=false;
     while(subNode!=NULL)
     {
         wxString sType=subNode->GetAttribute(_T("Type"));
         if (subNode->GetName()==_T("Event"))
-            sPage << _T("<br />") << m_datas.ParseEvent(subNode);
+        {
+            wxString sEvt=m_datas.ParseEvent(subNode);
+            if ((sEvt==_("Dead"))&&(iSex==GIS_FEMALE))
+            {
+                sEvt=_("Dead_F");
+            }
+            sPage << _T("<br />") << sEvt;
+        }
+
+        if (sType==_T("SEX"))
+        {
+            wxString sSex=subNode->GetAttribute(_T("Value")).Upper();
+            iSex=(sSex==_T("M")?GIS_MALE:(sSex==_T("F")?GIS_FEMALE:GIS_UNKNOWN));
+        }
 
         if (sType==_T("FAMC"))
         {

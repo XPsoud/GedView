@@ -234,12 +234,23 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
 
     wxXmlNode *subNode=itmNode->GetChildren();
     bool bUnions=false;
+    int iSex=GIS_UNKNOWN;
     while(subNode!=NULL)
     {
         wxString sType=subNode->GetAttribute(_T("Type"));
         if (subNode->GetName()==_T("Event"))
         {
-            doc->Cell(190, 10, m_datas.ParseEvent(subNode), wxPDF_BORDER_NONE, 1);
+            wxString sEvt=m_datas.ParseEvent(subNode);
+            if ((sEvt==_("Dead"))&&(iSex==GIS_FEMALE))
+            {
+                sEvt=_("Dead_F");
+            }
+            doc->Cell(190, 10, sEvt, wxPDF_BORDER_NONE, 1);
+        }
+        if (sType==_T("SEX"))
+        {
+            wxString sSex=subNode->GetAttribute(_T("Value")).Upper();
+            iSex=(sSex==_T("M")?GIS_MALE:(sSex==_T("F")?GIS_FEMALE:GIS_UNKNOWN));
         }
         if (sType==_T("FAMC"))
         {
