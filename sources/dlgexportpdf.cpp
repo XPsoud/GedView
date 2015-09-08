@@ -168,8 +168,8 @@ void DlgExportPdf::AddHrTitle(double Y, const wxString& title, wxPdfDocument *do
     doc->SetFont(_T("Helvetica"), _T("BI"), 16);
     double dWidth=doc->GetStringWidth(title);
     doc->SetXY(10, Y);
-    doc->Cell(dWidth, 15, title, wxPDF_BORDER_NONE, 1);
-    doc->Line(dWidth+15, Y+7.5, 200, Y+7.5);
+    doc->Cell(dWidth, 10, title, wxPDF_BORDER_NONE, 1);
+    doc->Line(dWidth+15, Y+5, 200, Y+5);
 
     doc->SetFont(sName, sStyle, dSize);
 }
@@ -349,7 +349,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
-                        sTxt=_T("      ") + sEvtId + m_datas.GetItemFirstName(sEvtId);
+                        sTxt=_T("      ") + sEvtId + _T(" - ") + m_datas.GetItemFirstName(sEvtId);
                         doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemBirth(sEvtId);
                         doc->SetFontSize(10);
