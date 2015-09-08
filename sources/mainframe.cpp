@@ -339,7 +339,11 @@ void MainFrame::UpdateItemDetails()
                                 sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
                             sEvent=m_datas.GetItemDeath(arsSiblings[s]);
                             if (!sEvent.IsEmpty())
+                            {
+                                if ((sEvent==_("Dead"))&&(m_datas.GetItemSex(arsSiblings[s])==GIS_FEMALE))
+                                    sEvent=_("Dead_F");
                                 sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                            }
                         }
                     }
                 }
@@ -377,7 +381,13 @@ void MainFrame::UpdateItemDetails()
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
                         sEvent=m_datas.GetItemDeath(sEvtId);
                         if (!sEvent.IsEmpty())
+                        {
+                            if (sEvent==_("Dead") && (sSubTyp==_T("WIFE")))
+                            {
+                                sEvent=_("Dead_F");
+                            }
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        }
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
@@ -392,7 +402,11 @@ void MainFrame::UpdateItemDetails()
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
                         sEvent=m_datas.GetItemDeath(sEvtId);
                         if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead")) && (m_datas.GetItemSex(sEvtId)==GIS_FEMALE))
+                                sEvent=_("Dead_F");
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        }
                         sPage << _T("</li>");
                     }
                     subEvt=subEvt->GetNext();

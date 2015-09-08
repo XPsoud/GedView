@@ -1068,6 +1068,38 @@ wxString DatasManager::GetItemFullName(wxXmlNode* itmNode, bool lastFirst)
     return sResult;
 }
 
+GEDITEMSEX DatasManager::GetItemSex(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemSex(node);
+        }
+        node=node->GetNext();
+    }
+    return GIS_UNKNOWN;
+}
+
+GEDITEMSEX DatasManager::GetItemSex(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return GIS_UNKNOWN;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("SEX"))
+        {
+            wxString sVal=subNode->GetAttribute(_T("Value")).Upper();
+            return (sVal==_T("M")?GIS_MALE:(sVal==_T("F")?GIS_FEMALE:GIS_UNKNOWN));
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return GIS_UNKNOWN;
+}
+
 wxString DatasManager::GetItemBirth(const wxString& itmId)
 {
     wxXmlNode *node=m_datas->GetChildren();

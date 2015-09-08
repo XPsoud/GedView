@@ -328,7 +328,11 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                             doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemDeath(sSubId);
                         if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead")) && (sSubTyp==_T("WIFE")))
+                                sEvent=_("Dead_F");
                             doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        }
                         doc->SetFontSize(12);
                     }
                     if (sSubTyp==_T("CHIL"))
@@ -353,7 +357,11 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                                 doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
                             sEvent=m_datas.GetItemDeath(arsSiblings[s]);
                             if (!sEvent.IsEmpty())
+                            {
+                                if ((sEvent==_("Dead")) && (m_datas.GetItemSex(arsSiblings[s])==GIS_FEMALE))
+                                    sEvent=_("Dead_F");
                                 doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                            }
                             doc->SetFontSize(12);
                         }
                     }
@@ -396,7 +404,11 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                             doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemDeath(sEvtId);
                         if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead")) && (sSubTyp==_T("WIFE")))
+                                sEvent=_("Dead_F");
                             doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        }
                         doc->SetFontSize(12);
                     }
                     if (sSubTyp==_T("CHIL"))
@@ -409,7 +421,11 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                             doc->Cell(190, 5, _T("         ") + sEvent, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemDeath(sEvtId);
                         if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead")) && (m_datas.GetItemSex(sEvtId)==GIS_FEMALE))
+                                sEvent=_("Dead_F");
                             doc->Cell(190, 5, _T("         ") + sEvent, wxPDF_BORDER_NONE, 1);
+                        }
                         doc->SetFontSize(12);
                     }
                     subEvt=subEvt->GetNext();
