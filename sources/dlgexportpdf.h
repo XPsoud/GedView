@@ -30,6 +30,7 @@ class DlgExportPdf : public wxDialog
         wxRadioButton *m_optExportType[2];
         wxCheckBox *m_chkSummary, *m_chkSplitPdf;
         wxButton *m_btnExport, *m_btnCancel;
+        wxGauge *m_pgbProgress;
         // Misc vars
         wxXmlNode *m_SelectedItem;
         DatasManager& m_datas;

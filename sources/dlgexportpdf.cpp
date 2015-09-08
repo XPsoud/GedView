@@ -57,6 +57,9 @@ void DlgExportPdf::CreateControls()
         m_chkSplitPdf=new wxCheckBox(this, -1, _("Create one pdf file per item"));
         szrMain->Add(m_chkSplitPdf, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
+        m_pgbProgress=new wxGauge(this, -1, 100);
+        szrMain->Add(m_pgbProgress, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
+
         szrMain->Add(new wxStaticLine(this, -1), 0, wxALL|wxEXPAND, 5);
 
         hszr=new wxBoxSizer(wxHORIZONTAL);
@@ -135,6 +138,8 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
     if (sFName.IsEmpty()) return;
     fname.Assign(sFName);
 
+    double dTotal=m_datas.GetItemsCount(GIT_INDI), dDone=0., dPrct;
+
     wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
     doc->SetFont(_T("Helvetica"), _T(""), 14);
     doc->AliasNbPages();
@@ -144,6 +149,8 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
         Summary2Pdf(doc);
         if (m_chkSplitPdf->IsChecked())
         {
+            dTotal++;
+            dDone=1;
             wxString sName=fname.GetName() + _T("-") + _("Summary");
             fname.SetName(sName);
             doc->SaveAsFile(fname.GetFullPath());
@@ -151,12 +158,18 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
             doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
             doc->SetFont(_T("Helvetica"), _T(""), 14);
             doc->AliasNbPages();
+            dPrct=100./dTotal;
+            m_pgbProgress->SetValue(dPrct);
+            m_pgbProgress->Refresh();
+            wxTheApp->Yield();
         }
     }
     if ((m_optExportType[0]->GetValue()) && (m_SelectedItem!=NULL))
     {
         GedItem2Pdf(m_SelectedItem, doc);
         doc->SaveAsFile(sFName);
+        m_pgbProgress->SetValue(100);
+        m_pgbProgress->Refresh();
     }
     else
     {
@@ -167,6 +180,11 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
         {
             if (item->GetAttribute(_T("Type"))==_T("INDI"))
             {
+                dDone++;
+                dPrct=dDone*100./dTotal;
+                m_pgbProgress->SetValue(dPrct);
+                m_pgbProgress->Refresh();
+                wxTheApp->Yield();
                 GedItem2Pdf(item, doc);
                 if (m_chkSplitPdf->IsChecked())
                 {
@@ -185,6 +203,8 @@ void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
         }
     }
 
+    m_pgbProgress->SetValue(100);
+    m_pgbProgress->Refresh();
     delete doc;
 
     EndModal(wxID_OK);
