@@ -28,7 +28,7 @@ class DlgExportPdf : public wxDialog
         void OnBtnExportClicked(wxCommandEvent &event);
         // Controls vars
         wxRadioButton *m_optExportType[2];
-        wxCheckBox *m_chkSummary;
+        wxCheckBox *m_chkSummary, *m_chkSplitPdf;
         wxButton *m_btnExport, *m_btnCancel;
         // Misc vars
         wxXmlNode *m_SelectedItem;
