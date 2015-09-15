@@ -15,6 +15,8 @@
 #include "../graphx/wxwin32x32.xpm"
 #endif // __WXMSW__
 
+const wxEventType wxEVT_FILEOPEN = wxNewEventType();
+
 enum
 {
     LST_COL_SEX,
@@ -162,6 +164,8 @@ void MainFrame::ConnectControls()
     m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
     Connect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnTimerSelectionCheck));
     m_htwDetails->Connect(wxEVT_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(MainFrame::OnHtmlLinkClicked), NULL, this);
+    // Custom events handlers
+    Connect(wxEVT_FILEOPEN, wxCommandEventHandler(MainFrame::OnAutoOpenGedFile));
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_PDF, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
@@ -471,6 +475,21 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
     UpdateList();
 
     wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
+{
+    wxString sFName=event.GetString();
+    if ((sFName.IsEmpty())||(!wxFileExists(sFName))) return;
+    if (!m_datas.ReadGedFile(sFName))
+    {
+        wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        return;
+    }
+
+    UpdateSummary();
+
+    UpdateList();
 }
 
 void MainFrame::OnSaveXmlFileClicked(wxCommandEvent& event)

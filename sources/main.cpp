@@ -33,6 +33,24 @@ bool MyApp::OnInit()
     frame->Show();
     frame->Raise();
 
+    // Is there a file to open given by command line ?
+    if (argc>1)
+    {
+        wxFileName FName(argv[1]);
+        if ((!FName.IsOk()) || (!FName.FileExists()) || (FName.GetExt().Upper()!=_T("GED")))
+        {
+            wxString sErr=_("Invalid file given to command line!");
+            sErr << _T("\n") << argv[1];
+            wxMessageBox(sErr, _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        }
+        else
+        {
+            wxCommandEvent evt(wxEVT_FILEOPEN, -1);
+            evt.SetString(FName.GetFullPath());
+            frame->GetEventHandler()->AddPendingEvent(evt);
+        }
+    }
+
     return true;
 }
 
