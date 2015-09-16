@@ -37,13 +37,19 @@ class MainFrame: public wxFrame
         void OnListItemDeselected(wxListEvent &event);
         void OnTimerSelectionCheck(wxTimerEvent &event);
         void OnHtmlLinkClicked(wxHtmlLinkEvent& event);
+        void OnHistoryBackClicked(wxCommandEvent &event);
+        void OnHistoryNextClicked(wxCommandEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
+        void OnUpdateUI_Backward(wxUpdateUIEvent& event);
+        void OnUpdateUI_Forward(wxUpdateUIEvent& event);
         // Controls vars
         wxStaticText *m_lblSummary;
         wxListView *m_lstItems;
         wxHtmlWindow *m_htwDetails;
         wxTimer m_tmrLstSel;
         // Misc vars
+        wxArrayString m_arsHistory;
+        int m_iHistPos;
         SettingsManager& m_settings;
         DatasManager& m_datas;
 };

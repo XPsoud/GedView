@@ -10,6 +10,7 @@
 
 #include <wx/display.h>
 #include <wx/filedlg.h>
+#include <wx/artprov.h>
 
 #ifndef __WXMSW__
 #include "../graphx/wxwin32x32.xpm"
@@ -37,6 +38,9 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
 #endif // DEBUG
 
     SetIcon(wxICON(appIcon)); // Defining app icon
+
+    m_arsHistory.Clear();
+    m_iHistPos=-1;
 
     CreateControls();
 
@@ -102,6 +106,12 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_PDF, _("Export as pdf file"), wxGet_pdf_png_Bitmap(), _("Export the datas to a pdf file"));
 
+        tb->AddSeparator();
+
+        tb->AddTool(wxID_BACKWARD, _T(""), wxArtProvider::GetBitmap(wxART_GO_BACK, wxART_TOOLBAR));
+
+        tb->AddTool(wxID_FORWARD, _T(""), wxArtProvider::GetBitmap(wxART_GO_FORWARD, wxART_TOOLBAR));
+
         tb->AddStretchableSpace();
 
         tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
@@ -157,6 +167,8 @@ void MainFrame::ConnectControls()
     Connect(wxID_OPEN, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnOpenGedFileClicked));
     Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
     Connect(wxID_PDF, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
+    Connect(wxID_BACKWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryBackClicked));
+    Connect(wxID_FORWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryNextClicked));
     Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
     Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
     // Other controls events handlers
@@ -169,6 +181,8 @@ void MainFrame::ConnectControls()
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_PDF, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
+    Connect(wxID_BACKWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Backward));
+    Connect(wxID_FORWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Forward));
 }
 
 void MainFrame::UpdateSummary()
@@ -469,6 +483,8 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
         return;
     }
+    m_arsHistory.Clear();
+    m_iHistPos=-1;
 
     UpdateSummary();
 
@@ -486,6 +502,8 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
         return;
     }
+    m_arsHistory.Clear();
+    m_iHistPos=-1;
 
     UpdateSummary();
 
@@ -526,6 +544,16 @@ void MainFrame::OnAboutClicked(wxCommandEvent& event)
 void MainFrame::OnUpdateUI_Save(wxUpdateUIEvent& event)
 {
     event.Enable(m_datas.HasDatas());
+}
+
+void MainFrame::OnUpdateUI_Backward(wxUpdateUIEvent& event)
+{
+    event.Enable(false);
+}
+
+void MainFrame::OnUpdateUI_Forward(wxUpdateUIEvent& event)
+{
+    event.Enable(false);
 }
 
 void MainFrame::OnListItemSelected(wxListEvent& event)
@@ -574,4 +602,14 @@ void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
 
     if (dlg.ShowModal()==wxID_OK)
         wxMessageBox(_("The pdf file creation terminated !"), _("Success"), wxICON_INFORMATION|wxOK|wxCENTER);
+}
+
+void MainFrame::OnHistoryBackClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _T("Go Backward"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnHistoryNextClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _T("Go Forward"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
