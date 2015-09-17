@@ -343,7 +343,11 @@ void MainFrame::UpdateItemDetails()
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
                         sEvent=m_datas.GetItemDeath(sSubId);
                         if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead"))&&(m_datas.GetItemSex(sSubId)==GIS_FEMALE))
+                                sEvent=_("Dead_F");
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
+                        }
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
