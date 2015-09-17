@@ -50,6 +50,7 @@ class DatasManager
         wxString GetItemBirth(const wxXmlNode *itmNode);
         wxString GetItemDeath(const wxString& itmId);
         wxString GetItemDeath(const wxXmlNode *itmNode);
+        wxString GetItemInfos(wxXmlNode *itmNode);
         // Reading and saving datas
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);

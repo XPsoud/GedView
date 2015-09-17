@@ -1171,3 +1171,149 @@ wxString DatasManager::GetItemDeath(const wxXmlNode* itmNode)
 
     return wxEmptyString;
 }
+
+wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxString sItmID=itmNode->GetAttribute(_T("GedId"));
+    if (!sItmID.Matches(_T("@I*@"))) return wxEmptyString;
+
+    wxString sResult=wxEmptyString;
+    int iSex=GetItemSex(itmNode);
+
+    sResult << sItmID << wxString::Format(_T(" (%c) : "), (iSex==GIS_MALE?_T('M'):(iSex==GIS_FEMALE?_T('F'):_T('?')))) << GetItemFullName(itmNode) << _T("\n");
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    bool bUnions=false;
+    while(subNode!=NULL)
+    {
+        wxString sType=subNode->GetAttribute(_T("Type"));
+        if (subNode->GetName()==_T("Event"))
+        {
+            wxString sEvt=ParseEvent(subNode);
+            if ((sEvt==_("Dead"))&&(iSex==GIS_FEMALE))
+            {
+                sEvt=_("Dead_F");
+            }
+            sResult << _T(" ") << sEvt << _T("\n");
+        }
+        if (sType==_T("FAMC"))
+        {
+            sResult << _("Parents") << _T("\n");
+            wxArrayString arsSiblings;
+            arsSiblings.Clear();
+            wxXmlNode* evtNode=FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            if (evtNode!=NULL)
+            {
+                wxXmlNode *subEvt=evtNode->GetChildren();
+                wxString sSubTyp, sSubId, sEvent;
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    sSubId=subEvt->GetAttribute(_T("GedId"));
+                    if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
+                    {
+                        sResult << (sSubTyp==_T("HUSB")?_("Father:"):_("Mother:")) << sSubId << _T(" - ") << GetItemFullName(sSubId) << _T("\n");
+                        sEvent=GetItemBirth(sSubId);
+                        if (!sEvent.IsEmpty())
+                            sResult << _T(" ") << sEvent << _T("\n");
+                        sEvent=GetItemDeath(sSubId);
+                        if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead"))&&(GetItemSex(sSubId)==GIS_FEMALE))
+                                sEvent=_("Dead_F");
+                            sResult << _T(" ") << sEvent << _T("\n");
+                        }
+                    }
+                    if (sSubTyp==_T("CHIL"))
+                    {
+                        arsSiblings.Add(sSubId);
+                    }
+                    subEvt=subEvt->GetNext();
+                }
+                if (arsSiblings.GetCount()>1)
+                {
+                    sResult << _("Siblings") << _T("\n");
+                    for (size_t s=0; s<arsSiblings.GetCount(); s++)
+                    {
+                        if (arsSiblings[s]!=sItmID)
+                        {
+                            sResult << arsSiblings[s] << _T(" - ")<< GetItemFirstName(arsSiblings[s]) << _T("\n");
+                            sEvent=GetItemBirth(arsSiblings[s]);
+                            if (!sEvent.IsEmpty())
+                                sResult << _T(" ") << sEvent << _T("\n");
+                            sEvent=GetItemDeath(arsSiblings[s]);
+                            if (!sEvent.IsEmpty())
+                            {
+                                if ((sEvent==_("Dead"))&&(GetItemSex(arsSiblings[s])==GIS_FEMALE))
+                                    sEvent=_("Dead_F");
+                                sResult << _T(" ") << sEvent << _T("\n");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (sType==_T("FAMS"))
+        {
+            if (!bUnions)
+            {
+                sResult << _("Union(s)") << _T("\n");
+                bUnions=true;
+            }
+            wxXmlNode* evtNode=FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            wxString sEvent;
+            if (evtNode!=NULL)
+            {
+                wxXmlNode *subEvt=evtNode->GetChildren();
+                wxString sSubTyp;
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
+                    if (subEvt->GetName()==_T("Event"))
+                    {
+                        wxString sTmp=ParseEvent(subEvt);
+                        if (!sTmp.IsEmpty())
+                            sResult << _T(" ") << sTmp << _T("\n");
+                    }
+                    if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
+                    {
+                        sResult << sEvtId << _T(" - ") << GetItemFullName(sEvtId) << _T("\n");
+                        sEvent=GetItemBirth(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            sResult << _T(" ") << sEvent << _T("\n");
+                        sEvent=GetItemDeath(sEvtId);
+                        if (!sEvent.IsEmpty())
+                        {
+                            if (sEvent==_("Dead") && (sSubTyp==_T("WIFE")))
+                            {
+                                sEvent=_("Dead_F");
+                            }
+                            sResult << _T(" ") << sEvent << _T("\n");
+                        }
+                    }
+                    if (sSubTyp==_T("CHIL"))
+                    {
+                        sResult << _T(" -> ") << sEvtId << _T(" - ") << GetItemFirstName(sEvtId) << _T("\n");
+                        sEvent=GetItemBirth(sEvtId);
+                        if (!sEvent.IsEmpty())
+                            sResult << _T("     ") << sEvent << _T("\n");
+                        sEvent=GetItemDeath(sEvtId);
+                        if (!sEvent.IsEmpty())
+                        {
+                            if ((sEvent==_("Dead")) && (GetItemSex(sEvtId)==GIS_FEMALE))
+                                sEvent=_("Dead_F");
+                            sResult << _T("     ") << sEvent << _T("\n");
+                        }
+                    }
+                    subEvt=subEvt->GetNext();
+                }
+            }
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return sResult;
+}
