@@ -41,6 +41,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
 
     m_arsHistory.Clear();
     m_iHistPos=-1;
+    m_bHistClicked=false;
 
     CreateControls();
 
@@ -108,9 +109,9 @@ void MainFrame::CreateControls()
 
         tb->AddSeparator();
 
-        tb->AddTool(wxID_BACKWARD, _T(""), wxArtProvider::GetBitmap(wxART_GO_BACK, wxART_TOOLBAR));
+        tb->AddTool(wxID_BACKWARD, wxGetStockLabel(wxID_BACKWARD), wxArtProvider::GetBitmap(wxART_GO_BACK, wxART_TOOLBAR), _("Go backward in shown items history"));
 
-        tb->AddTool(wxID_FORWARD, _T(""), wxArtProvider::GetBitmap(wxART_GO_FORWARD, wxART_TOOLBAR));
+        tb->AddTool(wxID_FORWARD, wxGetStockLabel(wxID_FORWARD), wxArtProvider::GetBitmap(wxART_GO_FORWARD, wxART_TOOLBAR), _("Go forward in shown items history"));
 
         tb->AddStretchableSpace();
 
@@ -485,6 +486,7 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
     }
     m_arsHistory.Clear();
     m_iHistPos=-1;
+    m_bHistClicked=false;
 
     UpdateSummary();
 
@@ -504,6 +506,7 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
     }
     m_arsHistory.Clear();
     m_iHistPos=-1;
+    m_bHistClicked=false;
 
     UpdateSummary();
 
@@ -548,17 +551,46 @@ void MainFrame::OnUpdateUI_Save(wxUpdateUIEvent& event)
 
 void MainFrame::OnUpdateUI_Backward(wxUpdateUIEvent& event)
 {
-    event.Enable(false);
+    int iCount=m_arsHistory.GetCount();
+    event.Enable((m_iHistPos>0) && (iCount>=m_iHistPos));
 }
 
 void MainFrame::OnUpdateUI_Forward(wxUpdateUIEvent& event)
 {
-    event.Enable(false);
+    int iCount=m_arsHistory.GetCount();
+    event.Enable((m_iHistPos>-1) && (m_iHistPos<(iCount-1)));
 }
 
 void MainFrame::OnListItemSelected(wxListEvent& event)
 {
     UpdateItemDetails();
+    if (m_bHistClicked)
+    {
+        m_bHistClicked=false;
+        return;
+    }
+
+    long lItem=m_lstItems->GetFirstSelected();
+    if (lItem==wxNOT_FOUND) return;
+
+    wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(lItem);
+    if (node==NULL) return;
+
+    wxString sItmID=node->GetAttribute(_T("GedId"));
+    if (sItmID.IsEmpty()) return;
+
+    int iCount=m_arsHistory.GetCount();
+
+    if (m_iHistPos==(iCount-1))
+    {
+        m_arsHistory.Add(sItmID);
+        m_iHistPos++;
+        return;
+    }
+    m_iHistPos++;
+    if (m_arsHistory[m_iHistPos]==sItmID) return;
+    m_arsHistory.RemoveAt(m_iHistPos, iCount-m_iHistPos);
+    m_arsHistory.Add(sItmID);
 }
 
 void MainFrame::OnListItemDeselected(wxListEvent& event)
@@ -606,10 +638,34 @@ void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
 
 void MainFrame::OnHistoryBackClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _T("Go Backward"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    if (m_iHistPos<1) return;
+    m_iHistPos--;
+
+    int iCount=m_lstItems->GetItemCount();
+    for (int i=0; i<iCount; ++i)
+    {
+        if (m_lstItems->GetItemText(i, 1)==m_arsHistory[m_iHistPos])
+        {
+            m_bHistClicked=true;
+            m_lstItems->Select(i, true);
+            m_lstItems->EnsureVisible(i);
+        }
+    }
 }
 
 void MainFrame::OnHistoryNextClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _T("Go Forward"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    int iCount=m_arsHistory.GetCount();
+    if (m_iHistPos>=(iCount-1)) return;
+    m_iHistPos++;
+    iCount=m_lstItems->GetItemCount();
+    for (int i=0; i<iCount; ++i)
+    {
+        if (m_lstItems->GetItemText(i, 1)==m_arsHistory[m_iHistPos])
+        {
+            m_bHistClicked=true;
+            m_lstItems->Select(i, true);
+            m_lstItems->EnsureVisible(i);
+        }
+    }
 }

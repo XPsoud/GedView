@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 13:03+0100\n"
-"PO-Revision-Date: 2015-09-15 13:03+0100\n"
+"POT-Creation-Date: 2015-09-17 11:09+0100\n"
+"PO-Revision-Date: 2015-09-17 11:09+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -25,8 +25,8 @@ msgstr "Naissance :"
 #: sources/datasmanager.cpp:894 sources/dlgexportpdf.cpp:298
 #: sources/dlgexportpdf.cpp:334 sources/dlgexportpdf.cpp:363
 #: sources/dlgexportpdf.cpp:410 sources/dlgexportpdf.cpp:427
-#: sources/mainframe.cpp:290 sources/mainframe.cpp:347
-#: sources/mainframe.cpp:389 sources/mainframe.cpp:410
+#: sources/mainframe.cpp:305 sources/mainframe.cpp:362
+#: sources/mainframe.cpp:404 sources/mainframe.cpp:425
 msgid "Dead"
 msgstr "Décédé"
 
@@ -50,7 +50,7 @@ msgstr "à"
 msgid "Made with"
 msgstr "Créé avec"
 
-#: sources/dlgexportpdf.cpp:10 sources/mainframe.cpp:103
+#: sources/dlgexportpdf.cpp:10 sources/mainframe.cpp:108
 msgid "Export as pdf file"
 msgstr "Exporter comme fichier pdf"
 
@@ -108,29 +108,29 @@ msgstr "Nom complet"
 
 #: sources/dlgexportpdf.cpp:300 sources/dlgexportpdf.cpp:335
 #: sources/dlgexportpdf.cpp:364 sources/dlgexportpdf.cpp:411
-#: sources/dlgexportpdf.cpp:428 sources/mainframe.cpp:292
-#: sources/mainframe.cpp:348 sources/mainframe.cpp:391
-#: sources/mainframe.cpp:411
+#: sources/dlgexportpdf.cpp:428 sources/mainframe.cpp:307
+#: sources/mainframe.cpp:363 sources/mainframe.cpp:406
+#: sources/mainframe.cpp:426
 msgid "Dead_F"
 msgstr "Décédée"
 
-#: sources/dlgexportpdf.cpp:311 sources/mainframe.cpp:305
+#: sources/dlgexportpdf.cpp:311 sources/mainframe.cpp:320
 msgid "Parents"
 msgstr "Parents"
 
-#: sources/dlgexportpdf.cpp:325 sources/mainframe.cpp:319
+#: sources/dlgexportpdf.cpp:325 sources/mainframe.cpp:334
 msgid "Father:"
 msgstr "Père :"
 
-#: sources/dlgexportpdf.cpp:325 sources/mainframe.cpp:319
+#: sources/dlgexportpdf.cpp:325 sources/mainframe.cpp:334
 msgid "Mother:"
 msgstr "Mère :"
 
-#: sources/dlgexportpdf.cpp:349 sources/mainframe.cpp:335
+#: sources/dlgexportpdf.cpp:349 sources/mainframe.cpp:350
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
-#: sources/dlgexportpdf.cpp:377 sources/mainframe.cpp:360
+#: sources/dlgexportpdf.cpp:377 sources/mainframe.cpp:375
 msgid "Union(s)"
 msgstr "Union(s)"
 
@@ -138,113 +138,121 @@ msgstr "Union(s)"
 msgid "Invalid file given to command line!"
 msgstr "Fichier passé à la ligne de commande invalide !"
 
-#: sources/main.cpp:44 sources/mainframe.cpp:469 sources/mainframe.cpp:486
-#: sources/mainframe.cpp:509
+#: sources/main.cpp:44 sources/mainframe.cpp:484 sources/mainframe.cpp:504
+#: sources/mainframe.cpp:530
 msgid "Error"
 msgstr "Erreur"
 
-#: sources/mainframe.cpp:99
+#: sources/mainframe.cpp:104
 msgid "Open a ged file"
 msgstr "Ouvrir un fichier ged"
 
-#: sources/mainframe.cpp:101
+#: sources/mainframe.cpp:106
 msgid "Save datas to xml file"
 msgstr "Sauver les données dans un fichier xml"
 
-#: sources/mainframe.cpp:103
+#: sources/mainframe.cpp:108
 msgid "Export the datas to a pdf file"
 msgstr "Exporter les données dans un fichier pdf"
 
-#: sources/mainframe.cpp:107
+#: sources/mainframe.cpp:112
+msgid "Go backward in shown items history"
+msgstr "Reculer dans l'historique des éléments affichés"
+
+#: sources/mainframe.cpp:114
+msgid "Go forward in shown items history"
+msgstr "Avancer dans l'historique des éléments affichés"
+
+#: sources/mainframe.cpp:118
 msgid "Edit application settings"
 msgstr "Éditer les réglages de l'application"
 
-#: sources/mainframe.cpp:117
+#: sources/mainframe.cpp:128
 msgid "Datas summary:"
 msgstr "Résumé des données :"
 
-#: sources/mainframe.cpp:133
+#: sources/mainframe.cpp:144
 msgid "Sex"
 msgstr "Sexe"
 
-#: sources/mainframe.cpp:134
+#: sources/mainframe.cpp:145
 msgid "ID"
 msgstr "ID"
 
-#: sources/mainframe.cpp:135
+#: sources/mainframe.cpp:146
 msgid "Last Name"
 msgstr "Nom de famille"
 
-#: sources/mainframe.cpp:136
+#: sources/mainframe.cpp:147
 msgid "First Name"
 msgstr "Prénom"
 
-#: sources/mainframe.cpp:176
+#: sources/mainframe.cpp:191
 msgid "Gedcom file:"
 msgstr "Fichier Gedcom :"
 
-#: sources/mainframe.cpp:180
+#: sources/mainframe.cpp:195
 #, c-format
 msgid "Total items: %d - Individuals: %d - Family events: %d"
 msgstr "Éléments en tout : %d - Individus : %d - Événements familiaux : %d"
 
-#: sources/mainframe.cpp:184
+#: sources/mainframe.cpp:199
 msgid "No file loaded"
 msgstr "Pas de fichier chargé"
 
-#: sources/mainframe.cpp:184
+#: sources/mainframe.cpp:199
 msgid "No datas present in memory"
 msgstr "Pas de données présentes en mémoire"
 
-#: sources/mainframe.cpp:463
+#: sources/mainframe.cpp:478
 msgid "Select the \"GED\" file to open"
 msgstr "Sélectionnez le fichier \"GED\" à ouvrir"
 
-#: sources/mainframe.cpp:464
+#: sources/mainframe.cpp:479
 msgid "Gedcom files (*.ged)|*.ged|All files (*.*)|*.*"
 msgstr "Fichiers Gedcom (*.ged)|*.ged|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:469 sources/mainframe.cpp:486
+#: sources/mainframe.cpp:484 sources/mainframe.cpp:504
 msgid "An error occurred while reading the ged file !"
 msgstr "Une erreur est survenue lors de la lecture du fichier ged !"
 
-#: sources/mainframe.cpp:477
+#: sources/mainframe.cpp:495
 msgid "Ged file read successfully !"
 msgstr "Fichier ged lu avec succès !"
 
-#: sources/mainframe.cpp:477 sources/mainframe.cpp:512
+#: sources/mainframe.cpp:495 sources/mainframe.cpp:533
 msgid "Done"
 msgstr "Fait"
 
-#: sources/mainframe.cpp:502
+#: sources/mainframe.cpp:523
 msgid "Select the \"XML\" file to create"
 msgstr "Sélectionnez le fichier \"XML\" à créer"
 
-#: sources/mainframe.cpp:503
+#: sources/mainframe.cpp:524
 msgid "Xml files (*.xml)|*.xml|All files (*.*)|*.*"
 msgstr "Fichiers xml (*.xml)|*.xml|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:509
+#: sources/mainframe.cpp:530
 msgid "An error occurred while writing the xml file !"
 msgstr "Une erreur est survenue lors de l'écriture du fichier xml !"
 
-#: sources/mainframe.cpp:512
+#: sources/mainframe.cpp:533
 msgid "Datas successfully saved to"
 msgstr "Données sauvées avec succès vers"
 
-#: sources/mainframe.cpp:517
+#: sources/mainframe.cpp:538
 msgid "Sorry, but this function isn't implemented yet !"
 msgstr "Désolé, mais cette fonction n'est pas encore implémentée !"
 
-#: sources/mainframe.cpp:517
+#: sources/mainframe.cpp:538
 msgid "Preferences"
 msgstr "Préférences"
 
-#: sources/mainframe.cpp:576
+#: sources/mainframe.cpp:636
 msgid "The pdf file creation terminated !"
 msgstr "Création du fichier pdf terminée !"
 
-#: sources/mainframe.cpp:576
+#: sources/mainframe.cpp:636
 msgid "Success"
 msgstr "Succès"
 

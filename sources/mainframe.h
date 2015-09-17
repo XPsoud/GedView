@@ -50,6 +50,7 @@ class MainFrame: public wxFrame
         // Misc vars
         wxArrayString m_arsHistory;
         int m_iHistPos;
+        bool m_bHistClicked;
         SettingsManager& m_settings;
         DatasManager& m_datas;
 };
