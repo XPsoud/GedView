@@ -129,27 +129,19 @@ wxXmlNode* DatasManager::FindItemByGedId(const wxString& gedId)
     return NULL;
 }
 
-bool DatasManager::ReadGedFile(const wxString& filename)
+bool DatasManager::ParseGedToXml(wxInputStream* source, wxXmlNode* dest)
 {
-    // Clean-up all remaining datas
-    Clear();
-    // Try to open the source file
-    if (!wxFileExists(filename)) return false;
-    wxFileInputStream f_in(filename);
-    if (!f_in.IsOk()) return false;
-    // We can now store the souce file name
-    m_sFileName=filename;
+    if (source==NULL) return false;
+    if (!source->IsOk()) return false;
+    if (dest==NULL) return false;
 
-    // Start reading the source file
-    wxTextInputStream t_in(f_in);
+    // Start reading the source stream
+    wxTextInputStream t_in(*source);
 
     wxString sLine=wxEmptyString, sID, sValue;
     wxChar c=_T('0'), lastC=_T('0');
     wxXmlNode *node=NULL;
 
-
-    // The file has just been read : it hasn't been modified yet
-    m_bModified=false;
     while(sLine!=_T("TRLR"))
     {
         sLine=t_in.ReadLine();
@@ -174,7 +166,7 @@ bool DatasManager::ReadGedFile(const wxString& filename)
             if (node==NULL)
             {
                 node=new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T(""));
-                m_datas->AddChild(node);
+                dest->AddChild(node);
             }
             else
             {
@@ -278,7 +270,25 @@ bool DatasManager::ReadGedFile(const wxString& filename)
                 node->AddAttribute(_T("RawStr"), sLine);
         }
     }
+
     return true;
+}
+
+bool DatasManager::ReadGedFile(const wxString& filename)
+{
+    // Clean-up all remaining datas
+    Clear();
+    // Try to open the source file
+    if (!wxFileExists(filename)) return false;
+    wxFileInputStream f_in(filename);
+    if (!f_in.IsOk()) return false;
+    // We can now store the souce file name
+    m_sFileName=filename;
+
+    // The file will just been read : it won't been modified yet
+    m_bModified=false;
+
+    return ParseGedToXml(&f_in, m_datas);
 }
 
 bool DatasManager::SaveXmlFile(const wxString& filename, int compLevel)

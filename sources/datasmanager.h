@@ -64,6 +64,7 @@ class DatasManager
         virtual ~DatasManager();
         void Initialize();
         GedTreeItem *FindTreeItem(const wxString& itemID);
+        bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
         // Unique instance of the singleton
         static DatasManager m_instance;
         // Misc vars
