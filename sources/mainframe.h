@@ -39,9 +39,11 @@ class MainFrame: public wxFrame
         void OnHtmlLinkClicked(wxHtmlLinkEvent& event);
         void OnHistoryBackClicked(wxCommandEvent &event);
         void OnHistoryNextClicked(wxCommandEvent &event);
+        void OnCompareClicked(wxCommandEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         void OnUpdateUI_Backward(wxUpdateUIEvent& event);
         void OnUpdateUI_Forward(wxUpdateUIEvent& event);
+        void OnUpdateUI_Compare(wxUpdateUIEvent& event);
         // Controls vars
         wxStaticText *m_lblSummary;
         wxListView *m_lstItems;

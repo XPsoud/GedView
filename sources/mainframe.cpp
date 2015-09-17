@@ -113,6 +113,10 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_FORWARD, wxGetStockLabel(wxID_FORWARD), wxArtProvider::GetBitmap(wxART_GO_FORWARD, wxART_TOOLBAR), _("Go forward in shown items history"));
 
+        tb->AddSeparator();
+
+        tb->AddTool(wxID_SPELL_CHECK, _("Compare"), wxGet_compare_png_Bitmap(), _("Compare datas with an other ged file"));
+
         tb->AddStretchableSpace();
 
         tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
@@ -170,6 +174,7 @@ void MainFrame::ConnectControls()
     Connect(wxID_PDF, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
     Connect(wxID_BACKWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryBackClicked));
     Connect(wxID_FORWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryNextClicked));
+    Connect(wxID_SPELL_CHECK, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnCompareClicked));
     Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
     Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
     // Other controls events handlers
@@ -184,6 +189,7 @@ void MainFrame::ConnectControls()
     Connect(wxID_PDF, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_BACKWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Backward));
     Connect(wxID_FORWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Forward));
+    Connect(wxID_SPELL_CHECK, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Compare));
 }
 
 void MainFrame::UpdateSummary()
@@ -561,6 +567,11 @@ void MainFrame::OnUpdateUI_Forward(wxUpdateUIEvent& event)
     event.Enable((m_iHistPos>-1) && (m_iHistPos<(iCount-1)));
 }
 
+void MainFrame::OnUpdateUI_Compare(wxUpdateUIEvent& event)
+{
+    event.Enable(m_datas.HasDatas());
+}
+
 void MainFrame::OnListItemSelected(wxListEvent& event)
 {
     UpdateItemDetails();
@@ -668,4 +679,9 @@ void MainFrame::OnHistoryNextClicked(wxCommandEvent& event)
             m_lstItems->EnsureVisible(i);
         }
     }
+}
+
+void MainFrame::OnCompareClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Compare"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
