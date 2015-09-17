@@ -99,7 +99,7 @@ void MainFrame::CreateControls()
     wxString sTxt=wxGetApp().GetBuildInfos();
     SetStatusText(sTxt, 1);
     // Toolbar
-    wxToolBar* tb=CreateToolBar();
+    wxToolBar* tb=CreateToolBar(wxTB_FLAT);
 
         tb->AddTool(wxID_OPEN, wxGetStockLabel(wxID_OPEN), wxGet_open_png_Bitmap(), _("Open a ged file"));
 
