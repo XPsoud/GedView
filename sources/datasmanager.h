@@ -52,6 +52,7 @@ class DatasManager
         wxString GetItemDeath(const wxXmlNode *itmNode);
         wxString GetItemInfos(wxXmlNode *itmNode);
         // Reading and saving datas
+        bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);
         bool SaveTree2TxtFile(const wxString& filename);
@@ -59,13 +60,19 @@ class DatasManager
         bool SaveTree2PdfFile(const wxString& filename);
         // Creating a tree form the datas
         bool CreateTree();
+        // Comparison with another gedcom file
+        bool CompareWithGedFile(const wxString& filename);
+        bool HasCompResults(bool deleted=false);
+        wxString GetCompResultsSummary();
+        const wxArrayString& GetModifiedCompResults() { return m_arsCompModified; }
+        const wxArrayString& GetAddedCompResults() { return m_arsCompAdded; }
+        const wxArrayString& GetRemovedCompResults() { return m_arsCompRemoved; }
     protected:
     private:
         DatasManager();
         virtual ~DatasManager();
         void Initialize();
         GedTreeItem *FindTreeItem(const wxString& itemID);
-        bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
         // Unique instance of the singleton
         static DatasManager m_instance;
         // Misc vars
@@ -75,6 +82,8 @@ class DatasManager
         ListOfGedTreeItems m_treeItems;
         GedTreeItem *m_baseItem;
         int m_iMaxLevels;
+        wxArrayString m_arsCompAdded, m_arsCompRemoved, m_arsCompModified;
+        wxString m_sCmpFile;
 };
 
 #endif // __DATASMANAGER_H_INCLUDED__

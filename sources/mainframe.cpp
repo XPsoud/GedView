@@ -11,6 +11,7 @@
 #include <wx/display.h>
 #include <wx/filedlg.h>
 #include <wx/artprov.h>
+#include <wx/wfstream.h>
 
 #ifndef __WXMSW__
 #include "../graphx/wxwin32x32.xpm"
@@ -514,6 +515,7 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
         return;
     }
+    wxSetWorkingDirectory(wxPathOnly(sFName));
     m_arsHistory.Clear();
     m_iHistPos=-1;
     m_bHistClicked=false;
@@ -687,5 +689,12 @@ void MainFrame::OnHistoryNextClicked(wxCommandEvent& event)
 
 void MainFrame::OnCompareClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Compare"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    wxString sMsg=_("Select the \"GED\" file to open");
+    wxString sWlcrd=_("Gedcom files (*.ged)|*.ged|All files (*.*)|*.*");
+    wxString sFName=wxFileSelector(sMsg, wxGetCwd(), wxEmptyString, _T("ged"), sWlcrd, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+    if (sFName.IsEmpty()) return;
+
+    if (!m_datas.CompareWithGedFile(sFName)) return;
+
+    wxMessageBox(m_datas.GetCompResultsSummary(), _("Results"), wxICON_INFORMATION|wxCENTER|wxOK);
 }

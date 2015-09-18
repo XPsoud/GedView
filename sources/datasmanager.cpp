@@ -65,6 +65,12 @@ void DatasManager::Clear()
         m_treeItems.DeleteContents(true);
         m_treeItems.Clear();
     }
+
+    m_arsCompAdded.Clear();
+    m_arsCompModified.Clear();
+    m_arsCompRemoved.Clear();
+    m_sCmpFile.Clear();
+
     m_bModified=false;
 }
 
@@ -1316,4 +1322,194 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
     }
 
     return sResult;
+}
+
+bool DatasManager::CompareWithGedFile(const wxString& filename)
+{
+    if (!HasDatas()) return false;
+    if (filename==m_sFileName) return false;
+
+    wxFileInputStream f_in(filename);
+    if (!f_in.IsOk()) return false;
+
+    wxXmlNode cmpNode, *subNode;
+    if (!ParseGedToXml(&f_in, &cmpNode)) return false;
+
+    wxArrayString arsSrc, arsCmp;
+
+    // Get the lists of the items
+    subNode=m_datas->GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("INDI"))
+            arsSrc.Add(subNode->GetAttribute(_T("GedId")));
+        subNode=subNode->GetNext();
+    }
+    subNode=cmpNode.GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("INDI"))
+            arsCmp.Add(subNode->GetAttribute(_T("GedId")));
+        subNode=subNode->GetNext();
+    }
+    // Check for added / removed items
+    int iSrcCount=arsSrc.GetCount(), iCmpCount=arsCmp.GetCount();
+    for (int i=0; i<iSrcCount; ++i)
+    {
+        if (arsCmp.Index(arsSrc[i])==wxNOT_FOUND)
+            m_arsCompAdded.Add(arsSrc[i]);
+        else
+            m_arsCompModified.Add(arsSrc[i]);
+    }
+    for (int i=0; i<iCmpCount; ++i)
+    {
+        if (arsSrc.Index(arsCmp[i])==wxNOT_FOUND)
+            m_arsCompRemoved.Add(arsCmp[i]);
+    }
+    // Check for modified items
+    wxString sSrc, sCmp;
+    int iCount=m_arsCompModified.GetCount();
+    for (int i=iCount-1; i>=0; i--)
+    {
+        sSrc.Empty();
+        sCmp.Empty();
+        subNode=m_datas->GetChildren();
+        while(subNode!=NULL)
+        {
+            if (subNode->GetAttribute(_T("GedId"))==m_arsCompModified[i])
+            {
+                sSrc=GetItemInfos(subNode);
+                subNode=NULL;
+            }
+            else
+            {
+                subNode=subNode->GetNext();
+            }
+        }
+        subNode=cmpNode.GetChildren();
+        while(subNode!=NULL)
+        {
+            if (subNode->GetAttribute(_T("GedId"))==m_arsCompModified[i])
+            {
+                sCmp=GetItemInfos(subNode);
+                subNode=NULL;
+            }
+            else
+            {
+                subNode=subNode->GetNext();
+            }
+        }
+        if (!sSrc.IsEmpty() && !sCmp.IsEmpty())
+        {
+            if (sSrc==sCmp)
+                m_arsCompModified.RemoveAt(i);
+        }
+    }
+    if (!m_arsCompAdded.IsEmpty())
+    {
+        iCount=m_arsCompAdded.GetCount();
+        for (int i=0; i<iCount; ++i)
+        {
+            subNode=m_datas->GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("GedId"))==m_arsCompAdded[i])
+                {
+                    m_arsCompAdded[i] << _T(" - ") << GetItemFullName(subNode);
+                    subNode=NULL;
+                }
+                else
+                {
+                    subNode=subNode->GetNext();
+                }
+            }
+        }
+    }
+    if (!m_arsCompRemoved.IsEmpty())
+    {
+        iCount=m_arsCompRemoved.GetCount();
+        for (int i=0; i<iCount; ++i)
+        {
+            subNode=cmpNode.GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("GedId"))==m_arsCompRemoved[i])
+                {
+                    m_arsCompRemoved[i] << _T(" - ") << GetItemFullName(subNode);
+                    subNode=NULL;
+                }
+                else
+                {
+                    subNode=subNode->GetNext();
+                }
+            }
+        }
+    }
+    if (!m_arsCompModified.IsEmpty())
+    {
+        iCount=m_arsCompModified.GetCount();
+        for (int i=0; i<iCount; ++i)
+        {
+            subNode=m_datas->GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("GedId"))==m_arsCompModified[i])
+                {
+                    m_arsCompModified[i] << _T(" - ") << GetItemFullName(subNode);
+                    subNode=NULL;
+                }
+                else
+                {
+                    subNode=subNode->GetNext();
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
+wxString DatasManager::GetCompResultsSummary()
+{
+    wxString sResult=_("Changes from file:");
+    sResult << _T("\n") << m_sCmpFile;
+
+    if (!m_arsCompAdded.IsEmpty())
+    {
+        int iCount=m_arsCompAdded.GetCount();
+        sResult << _T("\n") << iCount << (iCount==1? _("item added:"):_("items added:"));
+        for (int i=0; i<iCount; ++i)
+        {
+            sResult << _T("\n - ") << m_arsCompAdded[i];
+        }
+    }
+    if (!m_arsCompRemoved.IsEmpty())
+    {
+        int iCount=m_arsCompRemoved.GetCount();
+        sResult << _T("\n") << iCount << (iCount==1? _("item removed:"):_("items removed:"));
+        for (int i=0; i<iCount; ++i)
+        {
+            sResult << _T("\n - ") << m_arsCompRemoved[i];
+        }
+    }
+    if (!m_arsCompModified.IsEmpty())
+    {
+        int iCount=m_arsCompModified.GetCount();
+        sResult << _T("\n") << iCount << (iCount==1? _("item modified:"):_("items modified:"));
+        for (int i=0; i<iCount; ++i)
+        {
+            sResult << _T("\n - ") << m_arsCompModified[i];
+        }
+    }
+
+    return sResult;
+}
+
+bool DatasManager::HasCompResults(bool deleted)
+{
+    if (!m_arsCompAdded.IsEmpty()) return true;
+    if (!m_arsCompModified.IsEmpty()) return true;
+    if (deleted && !m_arsCompRemoved.IsEmpty()) return true;
+
+    return false;
 }
