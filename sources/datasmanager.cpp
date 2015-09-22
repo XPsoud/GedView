@@ -1,10 +1,12 @@
 #include "datasmanager.h"
 
+#include <wx/artprov.h>
 #include <wx/xml/xml.h>
 #include <wx/txtstrm.h>
 #include <wx/zstream.h>
 #include <wx/wfstream.h>
 #include <wx/filename.h>
+#include <wx/busyinfo.h>
 
 const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS")};
 const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR")};
@@ -1352,6 +1354,19 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
         return false;
     }
 
+    wxStopWatch sw;
+    sw.Start();
+    wxWindowDisabler disableAll;
+    wxBusyInfo info(
+                    wxBusyInfoFlags()
+                    .Parent(wxTheApp->GetTopWindow())
+                    .Title(_T("<b>") + _("Comparing datas") + _T("</b>"))
+                    .Text(_("Please wait..."))
+                    .Foreground(*wxWHITE)
+                    .Background(*wxBLACK)
+                    .Transparency(3*wxALPHA_OPAQUE/5)
+                    );
+
     wxArrayString arsSrc, arsCmp;
     m_sCmpFile=filename;
 
@@ -1484,6 +1499,8 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
         }
     }
 
+    while(sw.Time()<2000)
+        wxMilliSleep(150);
     return true;
 }
 
