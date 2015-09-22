@@ -46,6 +46,7 @@ void DatasManager::Initialize()
     m_sFileName=wxEmptyString;
     m_iMaxLevels=-1;
     m_baseItem=NULL;
+    m_sLastError=wxEmptyString;
 
     // Mark the manager as initialized
     m_bInitialized=true;
@@ -1326,16 +1327,33 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
 
 bool DatasManager::CompareWithGedFile(const wxString& filename)
 {
-    if (!HasDatas()) return false;
-    if (filename==m_sFileName) return false;
+    if (!HasDatas())
+    {
+        m_sLastError=_("No datas in memory can be compared");
+        return false;
+    }
+    if (filename==m_sFileName)
+    {
+        m_sLastError=_("The selected file is already loaded in memory");
+        return false;
+    }
 
     wxFileInputStream f_in(filename);
-    if (!f_in.IsOk()) return false;
+    if (!f_in.IsOk())
+    {
+        m_sLastError=_("Unable to open the selected file");
+        return false;
+    }
 
     wxXmlNode cmpNode, *subNode;
-    if (!ParseGedToXml(&f_in, &cmpNode)) return false;
+    if (!ParseGedToXml(&f_in, &cmpNode))
+    {
+        m_sLastError=_("Unable to parse the selected file");
+        return false;
+    }
 
     wxArrayString arsSrc, arsCmp;
+    m_sCmpFile=filename;
 
     // Get the lists of the items
     subNode=m_datas->GetChildren();
@@ -1477,7 +1495,10 @@ wxString DatasManager::GetCompResultsSummary()
     if (!m_arsCompAdded.IsEmpty())
     {
         int iCount=m_arsCompAdded.GetCount();
-        sResult << _T("\n") << iCount << (iCount==1? _("item added:"):_("items added:"));
+        if (iCount==1)
+            sResult << _T("\n") << _("1 item added:");
+        else
+            sResult << _T("\n") << wxString::Format(_("%d items added:"), iCount);
         for (int i=0; i<iCount; ++i)
         {
             sResult << _T("\n - ") << m_arsCompAdded[i];
@@ -1486,7 +1507,10 @@ wxString DatasManager::GetCompResultsSummary()
     if (!m_arsCompRemoved.IsEmpty())
     {
         int iCount=m_arsCompRemoved.GetCount();
-        sResult << _T("\n") << iCount << (iCount==1? _("item removed:"):_("items removed:"));
+        if (iCount==1)
+            sResult << _T("\n") << _("1 item removed:");
+        else
+            sResult << _T("\n") << wxString::Format(_("%d items removed:"), iCount);
         for (int i=0; i<iCount; ++i)
         {
             sResult << _T("\n - ") << m_arsCompRemoved[i];
@@ -1495,7 +1519,10 @@ wxString DatasManager::GetCompResultsSummary()
     if (!m_arsCompModified.IsEmpty())
     {
         int iCount=m_arsCompModified.GetCount();
-        sResult << _T("\n") << iCount << (iCount==1? _("item modified:"):_("items modified:"));
+        if (iCount==1)
+            sResult << _T("\n") << _("1 item modified:");
+        else
+            sResult << _T("\n") << wxString::Format(_("%d items modified:"), iCount);
         for (int i=0; i<iCount; ++i)
         {
             sResult << _T("\n - ") << m_arsCompModified[i];

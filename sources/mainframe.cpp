@@ -694,7 +694,11 @@ void MainFrame::OnCompareClicked(wxCommandEvent& event)
     wxString sFName=wxFileSelector(sMsg, wxGetCwd(), wxEmptyString, _T("ged"), sWlcrd, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
     if (sFName.IsEmpty()) return;
 
-    if (!m_datas.CompareWithGedFile(sFName)) return;
+    if (!m_datas.CompareWithGedFile(sFName))
+    {
+        wxMessageBox(m_datas.GetLastError(), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        return;
+    }
 
     wxMessageBox(m_datas.GetCompResultsSummary(), _("Results"), wxICON_INFORMATION|wxCENTER|wxOK);
 }

@@ -34,6 +34,7 @@ class DatasManager
         int GetItemsCount(GEDITEMTYPE type=GIT_ALL);
         wxXmlNode *GetDatas() { return m_datas; }
         wxXmlNode *FindItemByGedId(const wxString& gedId);
+        const wxString& GetLastError() { return m_sLastError; }
         // Parsing items datas
         wxString ParseEvent(wxXmlNode* event);
         wxString ParseDate(const wxString& value);
@@ -83,7 +84,7 @@ class DatasManager
         GedTreeItem *m_baseItem;
         int m_iMaxLevels;
         wxArrayString m_arsCompAdded, m_arsCompRemoved, m_arsCompModified;
-        wxString m_sCmpFile;
+        wxString m_sCmpFile, m_sLastError;
 };
 
 #endif // __DATASMANAGER_H_INCLUDED__
