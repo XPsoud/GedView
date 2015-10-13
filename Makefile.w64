@@ -1,0 +1,87 @@
+# Path to the wxWidgets base install dir
+WXWIN=C:\wx31
+# Sub path of the wxWidgets libs config file
+WXCFG=gcc_lib64\mswu
+# Path of the wx-config executable
+WXCONFIG_EXE=wx-config.exe
+# Name of the executable to create
+BASE_EXEC_NAME = GedView64
+
+BASE_SRCDIR = .
+CPP_SRCDIR = sources
+PDF_SRCDIR = wxpdfdoc
+OUTPUT_DIR = bin
+
+WXCONFIG=wx-config.exe --prefix=$(WXWIN) --wxcfg=$(WXCFG)
+CFLAGS = $(shell $(WXCONFIG) --cppflags) -O2 -DwxDEBUG_LEVEL=0 -Wno-attributes -pipe
+RCFLAGS = -I$(WXWIN)/lib/$(WXCFG) -I$(WXWIN)\include
+
+EXEC_NAME = $(BASE_SRCDIR)/$(OUTPUT_DIR)/$(BASE_EXEC_NAME).exe
+INCLUDES = -I$(BASE_SRCDIR)/$(PDF_SRCDIR)
+
+BUILD_DIR = Release-w64
+BASE_OBJDIR = build/$(BUILD_DIR)
+SRC_OBJDIR = $(BASE_OBJDIR)/$(CPP_SRCDIR)
+
+PDF_LIB_FILE1 = wxPdfDocument64
+PDF_LIB_FILE = $(BASE_SRCDIR)/$(BASE_OBJDIR)/lib$(PDF_LIB_FILE1).a
+
+CPP_SRC_FILES = $(wildcard $(BASE_SRCDIR)/$(CPP_SRCDIR)/*.cpp)
+OBJ_SRC_FILES = $(CPP_SRC_FILES:$(BASE_SRCDIR)/$(CPP_SRCDIR)/%.cpp=$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.o)
+
+WINRES_SRC_FILES = $(wildcard $(BASE_SRCDIR)/$(CPP_SRCDIR)/*.rc)
+OBJ_WINRES_FILES = $(WINRES_SRC_FILES:$(BASE_SRCDIR)/$(CPP_SRCDIR)/%.rc=$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.res)
+
+CPP_PDF_FILES = $(wildcard $(BASE_SRCDIR)/$(PDF_SRCDIR)/*.cpp)
+OBJ_PDF_FILES = $(CPP_PDF_FILES:$(BASE_SRCDIR)/$(PDF_SRCDIR)/%.cpp=$(BASE_OBJDIR)/$(PDF_SRCDIR)/%.o)
+
+WXLIBS = $(shell $(WXCONFIG) --libs base,core,xml,html)
+LIBS = -L$(BASE_OBJDIR) -l$(PDF_LIB_FILE1) $(WXLIBS)
+
+all : $(EXEC_NAME)
+
+clean : pdfclean appclean
+
+appclean :
+	del build\$(BUILD_DIR)\$(CPP_SRCDIR)\*.o
+	del build\$(BUILD_DIR)\$(CPP_SRCDIR)\*.res
+	del $(OUTPUT_DIR)\$(BASE_EXEC_NAME).exe
+
+pdfclean :
+	del build\$(BUILD_DIR)\$(PDF_SRCDIR)\*.o
+	del build\$(BUILD_DIR)\lib$(PDF_LIB_FILE1).a
+
+prebuild :
+	@if not exist "build" mkdir build
+	@if not exist "build\$(BUILD_DIR)" mkdir build\$(BUILD_DIR)
+	@if not exist "build\$(BUILD_DIR)\$(CPP_SRCDIR)" mkdir build\$(BUILD_DIR)\$(CPP_SRCDIR)
+	@if not exist "build\$(BUILD_DIR)\$(PDF_SRCDIR)" mkdir build\$(BUILD_DIR)\$(PDF_SRCDIR)
+
+infos :
+	@echo LIBS = $(LIBS)
+	@echo CFLAGS = $(CFLAGS)
+	@echo RCFLAGS = $(RCFLAGS)
+
+libwxpdf : $(PDF_LIB_FILE)
+
+$(EXEC_NAME) : prebuild libwxpdf $(OBJ_SRC_FILES) $(OBJ_WINRES_FILES)
+	@echo Linking file $(EXEC_NAME)
+	@x86_64-w64-mingw32-g++ -s -o $(EXEC_NAME) $(OBJ_SRC_FILES) $(OBJ_WINRES_FILES) $(LIBS) -mwindows
+
+$(PDF_LIB_FILE) : prebuild $(OBJ_PDF_FILES)
+	@echo Linking file $(PDF_LIB_FILE)
+	@ar.exe -r -s $(PDF_LIB_FILE) $(OBJ_PDF_FILES)
+
+$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.o: $(BASE_SRCDIR)/$(CPP_SRCDIR)/%.cpp $(BASE_SRCDIR)/$(CPP_SRCDIR)/%.h
+	@echo Compiling $<
+	@x86_64-w64-mingw32-g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.res: $(BASE_SRCDIR)/$(CPP_SRCDIR)/%.rc
+	@echo Compiling $<
+	@windres.exe $(RCFLAGS) -J rc -O coff -i $< -o $@
+
+$(BASE_OBJDIR)/$(PDF_SRCDIR)/%.o: $(BASE_SRCDIR)/$(PDF_SRCDIR)/%.cpp
+	@echo Compiling $<
+	@x86_64-w64-mingw32-g++ $(CFLAGS) -DWXMAKINGLIB_PDFDOC $(INCLUDES) -c $< -o $@
+
+.PHONY: clean appclean pdfclean infos
