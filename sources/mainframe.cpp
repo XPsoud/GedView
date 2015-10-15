@@ -663,6 +663,10 @@ void MainFrame::OnColumnHeaderClicked(wxListEvent& event)
             return;
     }
     m_lstItems->SortItems(MainFrame::SortCompFunction, m_iSortCol);
+    // If an item is selected, be sure it is visible
+    long lItem=m_lstItems->GetFirstSelected();
+    if (lItem!=wxNOT_FOUND)
+        m_lstItems->EnsureVisible(lItem);
 }
 
 void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)
