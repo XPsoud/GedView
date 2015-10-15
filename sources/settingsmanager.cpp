@@ -53,6 +53,7 @@ void SettingsManager::Initialize()
     m_iStartPos=wxCENTER_ON_SCREEN;
     m_ptStartPos=wxDefaultPosition;
     m_szStartSize=wxDefaultSize;
+    m_iShashPos=MINIMUM_PANE_WIDTH;
     // Other default settings
     m_bShowSplashScreen=true;
     m_bSingleInstance=true;
@@ -117,6 +118,8 @@ bool SettingsManager::ReadSettings()
                 m_szStartSize.SetWidth(lVal);
                 node->GetAttribute(_T("H"), _T("-1")).ToLong(&lVal);
                 m_szStartSize.SetHeight(lVal);
+                node->GetAttribute(_T("Split"), _T("-1")).ToLong(&lVal);
+                m_iShashPos=(lVal==-1?MINIMUM_PANE_WIDTH:lVal);
             }
         }
         if (nodName==_T("SplashScreen"))
@@ -184,6 +187,7 @@ bool SettingsManager::SaveSettings()
         node->AddAttribute(_T("Y"), wxString::Format(_T("%d"), m_ptStartPos.y));
         node->AddAttribute(_T("W"), wxString::Format(_T("%d"), m_szStartSize.GetWidth()));
         node->AddAttribute(_T("H"), wxString::Format(_T("%d"), m_szStartSize.GetHeight()));
+        node->AddAttribute(_T("Split"), wxString::Format(_T("%d"), m_iShashPos));
     }
     // General password
     if (!m_sPassword.IsEmpty())
@@ -295,6 +299,15 @@ void SettingsManager::SetLastWindowRect(const wxPoint& pos, const wxSize& size)
         m_bModified=true;
         m_ptStartPos=pos;
         m_szStartSize=size;
+    }
+}
+
+void SettingsManager::SetLastSashPos(int pos)
+{
+    if (pos!=m_iShashPos)
+    {
+        m_bModified=true;
+        m_iShashPos=pos;
     }
 }
 

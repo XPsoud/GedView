@@ -92,6 +92,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
         pt.y=(((iStartPos&wxTOP)==wxTOP)?0:((iStartPos&wxBOTTOM)==wxBOTTOM)?iHScr-sz.GetHeight():(iHScr-sz.GetHeight())/2);
         Move(pt);
     }
+    m_spwSplitter->SetSashPosition(m_settings.GetLastSashPos());
 
     ConnectControls();
 }
@@ -153,19 +154,20 @@ void MainFrame::CreateControls()
 
     szrMain->Add(stbszr, 0, wxALL|wxEXPAND, 5);
 
-    wxBoxSizer *lnszr=new wxBoxSizer(wxHORIZONTAL);
+    m_spwSplitter=new wxSplitterWindow(pnl, -1);
 
-        m_lstItems=new wxListView(pnl, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
+        m_lstItems=new wxListView(m_spwSplitter, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
             m_lstItems->AppendColumn(_("Sex"), wxLIST_FORMAT_LEFT, 30);
             m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT, 60);
             m_lstItems->AppendColumn(_("Last Name"));
             m_lstItems->AppendColumn(_("First Name"));
-        lnszr->Add(m_lstItems, 0, wxALL|wxEXPAND, 0);
 
-        m_htwDetails=new wxHtmlWindow(pnl, -1);
-        lnszr->Add(m_htwDetails, 1, wxLEFT|wxEXPAND, 5);
+        m_htwDetails=new wxHtmlWindow(m_spwSplitter, -1);
 
-    szrMain->Add(lnszr, 1, wxALL|wxEXPAND, 5);
+    szrMain->Add(m_spwSplitter, 1, wxALL|wxEXPAND, 5);
+
+    m_spwSplitter->SplitVertically(m_lstItems, m_htwDetails);
+    m_spwSplitter->SetMinimumPaneSize(MINIMUM_PANE_WIDTH);
 
     pnl->SetSizer(szrMain);
 
@@ -193,6 +195,7 @@ void MainFrame::ConnectControls()
     m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
     m_lstItems->Connect(wxEVT_LIST_COL_CLICK, wxListEventHandler(MainFrame::OnColumnHeaderClicked), NULL, this);
     m_htwDetails->Connect(wxEVT_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(MainFrame::OnHtmlLinkClicked), NULL, this);
+    m_spwSplitter->Connect(wxEVT_SPLITTER_SASH_POS_CHANGED, wxSplitterEventHandler(MainFrame::OnShashPosChanged), NULL, this);
     // Custom events handlers
     Connect(wxEVT_FILEOPEN, wxCommandEventHandler(MainFrame::OnAutoOpenGedFile));
     // UpdateUI events handlers
@@ -746,6 +749,11 @@ void MainFrame::OnCompareClicked(wxCommandEvent& event)
     }
 
     wxMessageBox(m_datas.GetCompResultsSummary(), _("Results"), wxICON_INFORMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnShashPosChanged(wxSplitterEvent& event)
+{
+    m_settings.SetLastSashPos(m_spwSplitter->GetSashPosition());
 }
 
 int MainFrame::SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)

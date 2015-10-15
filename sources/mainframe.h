@@ -3,6 +3,7 @@
 
 #include <wx/wx.h>
 #include <wx/listctrl.h>
+#include <wx/splitter.h>
 #include <wx/html/htmlwin.h>
 
 class SettingsManager;
@@ -41,6 +42,7 @@ class MainFrame: public wxFrame
         void OnHistoryBackClicked(wxCommandEvent &event);
         void OnHistoryNextClicked(wxCommandEvent &event);
         void OnCompareClicked(wxCommandEvent &event);
+        void OnShashPosChanged(wxSplitterEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         void OnUpdateUI_Backward(wxUpdateUIEvent& event);
         void OnUpdateUI_Forward(wxUpdateUIEvent& event);
@@ -48,6 +50,7 @@ class MainFrame: public wxFrame
         static int wxCALLBACK SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
         // Controls vars
         wxStaticText *m_lblSummary;
+        wxSplitterWindow *m_spwSplitter;
         wxListView *m_lstItems;
         wxHtmlWindow *m_htwDetails;
         wxTimer m_tmrLstSel;

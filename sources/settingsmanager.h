@@ -6,6 +6,8 @@
 extern const wxChar* szStdXmlFileHeader;
 extern const int iStdXmlHeaderSize;
 
+#define MINIMUM_PANE_WIDTH 250
+
 class SettingsManager
 {
     public:
@@ -30,6 +32,8 @@ class SettingsManager
 		void GetMainWndStartupPos(wxPoint& pos) { pos=m_ptStartPos; }
 		const wxSize& GetMainWndStartupSize() { return m_szStartSize; }
         void SetLastWindowRect(const wxPoint& pos, const wxSize& size);
+        int GetLastSashPos() { return m_iShashPos; }
+        void SetLastSashPos(int pos);
         // Multiple instances
         bool GetMultipleInstancesAllowed() { return (m_bSingleInstance==false); }
         void SetMultipleInstancesAllowed(bool value);
@@ -51,7 +55,7 @@ class SettingsManager
         // Settings vars
         wxString m_sPassword;
         bool m_bCompSettings, m_bCompDatas;
-        int m_iStartPos;
+        int m_iStartPos, m_iShashPos;
         wxPoint m_ptStartPos;
         wxSize m_szStartSize;
         bool m_bSingleInstance, m_bShowSplashScreen;
