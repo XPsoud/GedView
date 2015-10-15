@@ -29,6 +29,15 @@ enum
     LST_COL_COUNT
 };
 
+enum SortColumn
+{
+    SORT_COL_UNKNOWN =0,
+    SORTCOL_SEX,
+    SORTCOL_ID,
+    SORTCOL_LNAME,
+    SORTCOL_FNAME
+};
+
 const int wxID_PDF = wxNewId();
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
@@ -42,6 +51,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
 
     m_arsHistory.Clear();
     m_iHistPos=-1;
+    m_iSortCol=SORTCOL_ID;
     m_bHistClicked=false;
 
     CreateControls();
@@ -181,7 +191,7 @@ void MainFrame::ConnectControls()
     // Other controls events handlers
     m_lstItems->Connect(wxEVT_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListItemSelected), NULL, this);
     m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
-    Connect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnTimerSelectionCheck));
+    m_lstItems->Connect(wxEVT_LIST_COL_CLICK, wxListEventHandler(MainFrame::OnColumnHeaderClicked), NULL, this);
     m_htwDetails->Connect(wxEVT_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(MainFrame::OnHtmlLinkClicked), NULL, this);
     // Custom events handlers
     Connect(wxEVT_FILEOPEN, wxCommandEventHandler(MainFrame::OnAutoOpenGedFile));
@@ -617,6 +627,41 @@ void MainFrame::OnListItemDeselected(wxListEvent& event)
     m_tmrLstSel.Start(250, true);
 }
 
+void MainFrame::OnColumnHeaderClicked(wxListEvent& event)
+{
+    int iColClicked=event.GetColumn();
+    switch(iColClicked)
+    {
+        case LST_COL_SEX:
+            if ((m_iSortCol==SORTCOL_SEX) ||(m_iSortCol==-SORTCOL_SEX))
+                m_iSortCol*=-1;
+            else
+                m_iSortCol=SORTCOL_SEX;
+            break;
+        case LST_COL_ID:
+            if ((m_iSortCol==SORTCOL_ID) ||(m_iSortCol==-SORTCOL_ID))
+                m_iSortCol*=-1;
+            else
+                m_iSortCol=SORTCOL_ID;
+            break;
+        case LST_COL_LASTNAME:
+            if ((m_iSortCol==SORTCOL_LNAME) ||(m_iSortCol==-SORTCOL_LNAME))
+                m_iSortCol*=-1;
+            else
+                m_iSortCol=SORTCOL_LNAME;
+            break;
+        case LST_COL_FIRSTNAME:
+            if ((m_iSortCol==SORTCOL_FNAME) ||(m_iSortCol==-SORTCOL_FNAME))
+                m_iSortCol*=-1;
+            else
+                m_iSortCol=SORTCOL_FNAME;
+            break;
+        default:
+            return;
+    }
+    m_lstItems->SortItems(MainFrame::SortCompFunction, m_iSortCol);
+}
+
 void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)
 {
     if (m_lstItems->GetFirstSelected()==wxNOT_FOUND)
@@ -701,4 +746,75 @@ void MainFrame::OnCompareClicked(wxCommandEvent& event)
     }
 
     wxMessageBox(m_datas.GetCompResultsSummary(), _("Results"), wxICON_INFORMATION|wxCENTER|wxOK);
+}
+
+int MainFrame::SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
+{
+    wxXmlNode *node1=(wxXmlNode*)item1, *node2=(wxXmlNode*)item2;
+    if ((node1==NULL)||(node2==NULL)) return 0;
+    int iData=sortData;
+    long v1, v2;
+    wxString s1, s2;
+    if (iData<0)
+    {
+        iData*=-1;
+        node1=node2;
+        node2=(wxXmlNode*)item1;
+    }
+    switch(iData)
+    {
+        case SORTCOL_SEX:
+            v1=DatasManager::Get().GetItemSex(node1);
+            v2=DatasManager::Get().GetItemSex(node2);
+            if (v1!=v2)
+            {
+                if (v1<v2)
+                    return -1;
+                else
+                    return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        case SORTCOL_ID:
+            s1=node1->GetAttribute(_T("GedId"));
+            v1=0;
+            if (!s1.IsEmpty())
+            {
+                s1.Replace(_T('@'), _T(' '));
+                s1.Replace(_T('I'), _T(' '));
+                s1.ToLong(&v1);
+            }
+            s2=node2->GetAttribute(_T("GedId"));
+            v2=0;
+            if (!s2.IsEmpty())
+            {
+                s2.Replace(_T('@'), _T(' '));
+                s2.Replace(_T('I'), _T(' '));
+                s2.ToLong(&v2);
+            }
+            if (v1!=v2)
+            {
+                if (v1<v2)
+                    return -1;
+                else
+                    return 1;
+            }
+            else
+            {
+                return 0;
+            }
+            break;
+        case SORTCOL_LNAME:
+            return DatasManager::Get().GetItemLastName(node1).CompareTo(DatasManager::Get().GetItemLastName(node2));
+            break;
+        case SORTCOL_FNAME:
+            return DatasManager::Get().GetItemFirstName(node1).CompareTo(DatasManager::Get().GetItemFirstName(node2));
+            break;
+        default:
+            return 0;
+    }
+    return 0;
 }

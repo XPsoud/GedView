@@ -35,6 +35,7 @@ class MainFrame: public wxFrame
         void OnAboutClicked(wxCommandEvent &event);
         void OnListItemSelected(wxListEvent &event);
         void OnListItemDeselected(wxListEvent &event);
+        void OnColumnHeaderClicked(wxListEvent &event);
         void OnTimerSelectionCheck(wxTimerEvent &event);
         void OnHtmlLinkClicked(wxHtmlLinkEvent& event);
         void OnHistoryBackClicked(wxCommandEvent &event);
@@ -44,6 +45,7 @@ class MainFrame: public wxFrame
         void OnUpdateUI_Backward(wxUpdateUIEvent& event);
         void OnUpdateUI_Forward(wxUpdateUIEvent& event);
         void OnUpdateUI_Compare(wxUpdateUIEvent& event);
+        static int wxCALLBACK SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
         // Controls vars
         wxStaticText *m_lblSummary;
         wxListView *m_lstItems;
@@ -51,7 +53,7 @@ class MainFrame: public wxFrame
         wxTimer m_tmrLstSel;
         // Misc vars
         wxArrayString m_arsHistory;
-        int m_iHistPos;
+        int m_iHistPos, m_iSortCol;
         bool m_bHistClicked;
         SettingsManager& m_settings;
         DatasManager& m_datas;
