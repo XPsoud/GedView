@@ -3,6 +3,7 @@
 #include "main.h"
 #include "dlgabout.h"
 #include "appversion.h"
+#include "dlgtreepdf.h"
 #include "dlgexportpdf.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
@@ -718,7 +719,16 @@ void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
 
 void MainFrame::OnSavePdfTreeClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Create pdf tree"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    DlgTreePdf dlg(this);
+
+    long lItem=m_lstItems->GetFirstSelected();
+    if (lItem!=wxNOT_FOUND)
+    {
+        wxXmlNode *node=(wxXmlNode*)m_lstItems->GetItemData(lItem);
+        dlg.SetSelectedItem(node);
+    }
+
+    dlg.ShowModal();
 }
 
 void MainFrame::OnHistoryBackClicked(wxCommandEvent& event)
