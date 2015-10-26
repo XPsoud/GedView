@@ -11,6 +11,7 @@
 #include <wx/display.h>
 #include <wx/filedlg.h>
 #include <wx/artprov.h>
+#include <wx/xml/xml.h>
 #include <wx/wfstream.h>
 
 #ifndef __WXMSW__

@@ -568,12 +568,6 @@
 		<Unit filename="emptyclass.h">
 			<Option virtualFolder="Misc/" />
 		</Unit>
-		<Unit filename="gedtreeitem.cpp">
-			<Option virtualFolder="Datas/" />
-		</Unit>
-		<Unit filename="gedtreeitem.h">
-			<Option virtualFolder="Datas/" />
-		</Unit>
 		<Unit filename="main.cpp">
 			<Option virtualFolder="Misc/" />
 		</Unit>
@@ -585,12 +579,6 @@
 		</Unit>
 		<Unit filename="mainframe.h">
 			<Option virtualFolder="Interface/" />
-		</Unit>
-		<Unit filename="mypdfdoc.cpp">
-			<Option virtualFolder="Datas/" />
-		</Unit>
-		<Unit filename="mypdfdoc.h">
-			<Option virtualFolder="Datas/" />
 		</Unit>
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
