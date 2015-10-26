@@ -580,6 +580,12 @@
 		<Unit filename="mainframe.h">
 			<Option virtualFolder="Interface/" />
 		</Unit>
+		<Unit filename="mytreeitem.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="mytreeitem.h">
+			<Option virtualFolder="Datas/" />
+		</Unit>
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 			<Option virtualFolder="Misc/" />
@@ -595,6 +601,12 @@
 		</Unit>
 		<Unit filename="toolbaricons.h">
 			<Option virtualFolder="Graphx/" />
+		</Unit>
+		<Unit filename="treepdfdoc.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="treepdfdoc.h">
+			<Option virtualFolder="Datas/" />
 		</Unit>
 		<Unit filename="xpsi.png.cpp">
 			<Option virtualFolder="Graphx/" />
