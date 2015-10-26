@@ -12,9 +12,10 @@ class TreePdfDoc : public wxPdfDocument
     public:
         TreePdfDoc(MyTreeItem* root, double pageWidth=297, double pageHeight=210);
         virtual ~TreePdfDoc();
-        bool CreateTree();
+        bool CreateTree(int MaxLevels=-1);
         bool Generate(double pageWidth=-1, double pageHeight=-1);
         void GetTreeSize(double *width, double *height);
+        int GetLevelMax();
     protected:
     private:
         void DrawItem(MyTreeItem* item);

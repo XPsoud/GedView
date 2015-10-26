@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-26 15:50+0100\n"
-"PO-Revision-Date: 2015-10-26 15:50+0100\n"
+"POT-Creation-Date: 2015-10-26 19:06+0100\n"
+"PO-Revision-Date: 2015-10-26 19:06+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -176,11 +176,11 @@ msgstr "Exporter"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: sources/dlgexportpdf.cpp:135
+#: sources/dlgexportpdf.cpp:135 sources/dlgtreepdf.cpp:221
 msgid "Select the \"PDF\" file to create"
 msgstr "Sélectionnez le fichier \"PDF\" à créer"
 
-#: sources/dlgexportpdf.cpp:136
+#: sources/dlgexportpdf.cpp:136 sources/dlgtreepdf.cpp:222
 msgid "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*"
 msgstr "Fichiers pdf (*.pdf)|*.pdf|Tous les fichiers (*.*)|*.*"
 
@@ -200,17 +200,55 @@ msgstr "Id"
 msgid "Full name"
 msgstr "Nom complet"
 
-#: sources/dlgtreepdf.cpp:9 sources/mainframe.cpp:125
+#: sources/dlgtreepdf.cpp:11 sources/mainframe.cpp:125
 msgid "Create pdf tree"
 msgstr "Créer un arbre pdf"
 
-#: sources/dlgtreepdf.cpp:38
+#: sources/dlgtreepdf.cpp:48
 msgid "Tree options:"
 msgstr "Options de l'arbre"
 
-#: sources/dlgtreepdf.cpp:44
+#: sources/dlgtreepdf.cpp:54
 msgid "Maximum levels of the tree:"
 msgstr "Nombre maxi de niveaux de l'arbre :"
+
+#: sources/dlgtreepdf.cpp:61
+msgid "Pdf file format:"
+msgstr "Format du fichier pdf"
+
+#: sources/dlgtreepdf.cpp:67
+msgid "Predefined size:"
+msgstr "Taille prédéfinie :"
+
+#: sources/dlgtreepdf.cpp:72
+#, c-format
+msgid "A%d Landscape (%d mm x %d mm)"
+msgstr "A%d Paysage (%d mm x %d mm)"
+
+#: sources/dlgtreepdf.cpp:78
+msgid "Variable width and fixed height of"
+msgstr "Largeur variable et hauteur prédéfinie de"
+
+#: sources/dlgtreepdf.cpp:82 sources/dlgtreepdf.cpp:93
+#, c-format
+msgid "%d mm"
+msgstr "%d mm"
+
+#: sources/dlgtreepdf.cpp:84 sources/dlgtreepdf.cpp:95
+msgid "mm"
+msgstr "mm"
+
+#: sources/dlgtreepdf.cpp:89
+msgid "Variable height and fixed width of"
+msgstr "Hauteur variable et largeur prédéfinie de"
+
+#: sources/dlgtreepdf.cpp:228
+msgid "Pdf file successfully created!"
+msgstr "Fichier pdf créé avec succès !"
+
+#: sources/dlgtreepdf.cpp:228 sources/mainframe.cpp:717
+msgid "Success"
+msgstr "Succès"
 
 #: sources/main.cpp:42
 msgid "Invalid file given to command line!"
@@ -341,10 +379,6 @@ msgstr "Préférences"
 #: sources/mainframe.cpp:717
 msgid "The pdf file creation terminated !"
 msgstr "Création du fichier pdf terminée !"
-
-#: sources/mainframe.cpp:717
-msgid "Success"
-msgstr "Succès"
 
 #: sources/mainframe.cpp:781
 msgid "Results"

@@ -286,3 +286,16 @@ const wxString MyTreeItem::GetItemText()
 {
     return m_sItemLName + _T("\n") + m_sItemFName + _T("\n") + m_sItemId;
 }
+
+int MyTreeItem::GetMaxLevel()
+{
+    int iRes=m_iLevel, iFLvl=0, iMLvl=0;
+    if (m_Father!=NULL)
+        iFLvl=m_Father->GetMaxLevel();
+    if (m_Mother!=NULL)
+        iMLvl=m_Mother->GetMaxLevel();
+    if (iFLvl>iRes) iRes=iFLvl;
+    if (iMLvl>iRes) iRes=iMLvl;
+
+    return iRes;
+}

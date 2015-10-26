@@ -19,11 +19,13 @@ TreePdfDoc::~TreePdfDoc()
 #endif // __WXDEBUG__
 }
 
-bool TreePdfDoc::CreateTree()
+bool TreePdfDoc::CreateTree(int MaxLevels)
 {
     if (m_rootItem==NULL) return false;
 
     m_rootItem->UpdateParents();
+
+    int iMaxLvls=(MaxLevels==-1?MAX_ITER:MaxLevels);
 
     ListOfTreeItems items[MAX_ITER];
 
@@ -42,7 +44,7 @@ bool TreePdfDoc::CreateTree()
     if (m_rootItem->GetFather()==NULL) return false;
     if (m_rootItem->GetMother()==NULL) return false;
 
-    for (int i=0; i<=(MAX_ITER-1); ++i)
+    for (int i=0; i<=(iMaxLvls-1); ++i)
     {
         int iFound=0;
         ListOfTreeItems::iterator iter;
@@ -84,6 +86,12 @@ bool TreePdfDoc::CreateTree()
     return true;
 }
 
+int TreePdfDoc::GetLevelMax()
+{
+    if (m_rootItem==NULL) return 0;
+    return m_rootItem->GetMaxLevel();
+}
+
 bool TreePdfDoc::Generate(double pageWidth, double pageHeight)
 {
     if (m_rootItem==NULL) return false;
@@ -98,8 +106,33 @@ bool TreePdfDoc::Generate(double pageWidth, double pageHeight)
     UpdateItemXPos(m_rootItem, -1.*dXMin);
     dXMax-=dXMin; dXMin=0;
 
-    double dPageWidth=(pageWidth==-1?m_pgWidth:pageWidth);
-    double dPageHeight=(pageHeight==-1?m_pgHeight:pageHeight);
+    double dRTree=(dXMax-dXMin)/(dYMax-dYMin);
+    double dPageWidth, dPageHeight;
+
+    if ((pageWidth==-1) && (pageHeight==-1))
+    {
+        dPageWidth=m_pgWidth;
+        dPageHeight=m_pgHeight;
+    }
+    else
+    {
+        if (pageWidth==-1)
+        {
+            dPageWidth=20+(pageHeight-20)*dRTree;
+        }
+        else
+        {
+            dPageWidth=pageWidth;
+        }
+        if (pageHeight==-1)
+        {
+            dPageHeight=20+(pageWidth-20)/dRTree;
+        }
+        else
+        {
+            dPageHeight=pageHeight;
+        }
+    }
 
     double dScaleX=(dPageWidth-GetLeftMargin()-GetRightMargin())/(dXMax-dXMin);
     double dScaleY=(dPageHeight-GetTopMargin()-GetBreakMargin())/(dYMax-dYMin);

@@ -51,6 +51,7 @@ class MyTreeItem
 		const wxString& GetItemFirstName();
 		const wxString& GetItemLastName();
 		const wxString GetItemText();
+		int GetMaxLevel();
 	protected:
 	private:
 	    MyTreeItem *m_Father, *m_Mother, *m_Child, *m_LeftItem;
