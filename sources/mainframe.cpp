@@ -39,7 +39,8 @@ enum SortColumn
     SORTCOL_FNAME
 };
 
-const int wxID_PDF = wxNewId();
+const int wxID_PDFLIST = wxNewId();
+const int wxID_PDFTREE = wxNewId();
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
@@ -118,7 +119,9 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_SAVE, wxGetStockLabel(wxID_SAVE), wxGet_save_png_Bitmap(), _("Save datas to xml file"));
 
-        tb->AddTool(wxID_PDF, _("Export as pdf file"), wxGet_pdf_png_Bitmap(), _("Export the datas to a pdf file"));
+        tb->AddTool(wxID_PDFLIST, _("Export as pdf file"), wxGet_pdf_png_Bitmap(), _("Export the datas list to a pdf file"));
+
+        tb->AddTool(wxID_PDFTREE, _("Create pdf tree"), wxGet_pdftree_png_Bitmap(), _("Export selected item's tree to a pdf file"));
 
         tb->AddSeparator();
 
@@ -185,7 +188,8 @@ void MainFrame::ConnectControls()
     // Menus/Toolbar items
     Connect(wxID_OPEN, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnOpenGedFileClicked));
     Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
-    Connect(wxID_PDF, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
+    Connect(wxID_PDFLIST, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
+    Connect(wxID_PDFTREE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfTreeClicked));
     Connect(wxID_BACKWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryBackClicked));
     Connect(wxID_FORWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryNextClicked));
     Connect(wxID_SPELL_CHECK, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnCompareClicked));
@@ -201,7 +205,8 @@ void MainFrame::ConnectControls()
     Connect(wxEVT_FILEOPEN, wxCommandEventHandler(MainFrame::OnAutoOpenGedFile));
     // UpdateUI events handlers
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
-    Connect(wxID_PDF, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
+    Connect(wxID_PDFLIST, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
+    Connect(wxID_PDFTREE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_PdfTree));
     Connect(wxID_BACKWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Backward));
     Connect(wxID_FORWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Forward));
     Connect(wxID_SPELL_CHECK, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Compare));
@@ -575,6 +580,11 @@ void MainFrame::OnUpdateUI_Save(wxUpdateUIEvent& event)
     event.Enable(m_datas.HasDatas());
 }
 
+void MainFrame::OnUpdateUI_PdfTree(wxUpdateUIEvent& event)
+{
+    event.Enable(m_lstItems->GetSelectedItemCount()!=0);
+}
+
 void MainFrame::OnUpdateUI_Backward(wxUpdateUIEvent& event)
 {
     int iCount=m_arsHistory.GetCount();
@@ -704,6 +714,11 @@ void MainFrame::OnSavePdfFileClicked(wxCommandEvent& event)
 
     if (dlg.ShowModal()==wxID_OK)
         wxMessageBox(_("The pdf file creation terminated !"), _("Success"), wxICON_INFORMATION|wxOK|wxCENTER);
+}
+
+void MainFrame::OnSavePdfTreeClicked(wxCommandEvent& event)
+{
+    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Create pdf tree"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
 
 void MainFrame::OnHistoryBackClicked(wxCommandEvent& event)

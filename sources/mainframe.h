@@ -32,6 +32,7 @@ class MainFrame: public wxFrame
         void OnAutoOpenGedFile(wxCommandEvent &event);
         void OnSaveXmlFileClicked(wxCommandEvent &event);
         void OnSavePdfFileClicked(wxCommandEvent &event);
+        void OnSavePdfTreeClicked(wxCommandEvent &event);
         void OnPreferencesClicked(wxCommandEvent &event);
         void OnAboutClicked(wxCommandEvent &event);
         void OnListItemSelected(wxListEvent &event);
@@ -44,6 +45,7 @@ class MainFrame: public wxFrame
         void OnCompareClicked(wxCommandEvent &event);
         void OnShashPosChanged(wxSplitterEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
+        void OnUpdateUI_PdfTree(wxUpdateUIEvent &event);
         void OnUpdateUI_Backward(wxUpdateUIEvent& event);
         void OnUpdateUI_Forward(wxUpdateUIEvent& event);
         void OnUpdateUI_Compare(wxUpdateUIEvent& event);

@@ -24,6 +24,11 @@ extern unsigned char pdf_png[];
 
 wxBitmap wxGet_pdf_png_Bitmap();
 
+#define pdftree_png_Length 1794
+extern unsigned char pdftree_png[];
+
+wxBitmap wxGet_pdftree_png_Bitmap();
+
 #define preferences_png_Length 1964
 extern unsigned char preferences_png[];
 
