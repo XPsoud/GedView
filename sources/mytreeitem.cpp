@@ -6,6 +6,8 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(ListOfTreeItems);
 
+const wxString& g_sUnknownYear=_T("----");
+
 MyTreeItem::MyTreeItem(int level, wxXmlNode* item)
 {
 #ifdef __WXDEBUG__
@@ -27,6 +29,8 @@ MyTreeItem::MyTreeItem(int level, wxXmlNode* item)
     m_sItemId.Clear();
     m_sItemFName.Clear();
     m_sItemLName.Clear();
+    m_sItemDates.Clear();
+    m_sItemMarr.Clear();
 }
 
 MyTreeItem::~MyTreeItem()
@@ -262,11 +266,13 @@ void MyTreeItem::UpdateItemText()
     {
         m_sItemFName=_T("Unknown");
         m_sItemLName.Clear();
+        m_sItemDates=_T("---- => ----");
     }
     else
     {
         m_sItemLName=DatasManager::Get().GetItemLastName(m_NodeItem);
         m_sItemFName=DatasManager::Get().GetItemFirstName(m_NodeItem);
+        m_sItemDates=DatasManager::Get().GetItemBirth(m_NodeItem, true) + _T(" => ") + DatasManager::Get().GetItemDeath(m_NodeItem, true);
     }
 }
 
@@ -284,7 +290,69 @@ const wxString& MyTreeItem::GetItemLastName()
 
 const wxString MyTreeItem::GetItemText()
 {
+    if (m_sItemLName.IsEmpty() && m_sItemFName.IsEmpty()) UpdateItemText();
     return m_sItemLName + _T("\n") + m_sItemFName + _T("\n") + m_sItemId;
+}
+
+const wxString& MyTreeItem::GetItemDates()
+{
+    if (m_sItemDates.IsEmpty()) UpdateItemText();
+    return m_sItemDates;
+}
+
+const wxString& MyTreeItem::GetItemMarriage()
+{
+    if (!m_sItemMarr.IsEmpty())
+    {
+        return m_sItemMarr;
+    }
+    if (m_NodeItem==NULL) return g_sUnknownYear;
+    wxXmlNode *node=m_NodeItem->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("Type"))==_T("FAMS"))
+        {
+            wxXmlNode *famNode=DatasManager::Get().FindItemByGedId(node->GetAttribute(_T("Value")));
+            if (famNode==NULL) return g_sUnknownYear;
+            wxXmlNode *subNode=famNode->GetChildren();
+            while(subNode!=NULL)
+            {
+                if (subNode->GetAttribute(_T("Type"))==_T("MARR"))
+                {
+                    wxXmlNode *subsubNode=subNode->GetChildren();
+                    while(subsubNode!=NULL)
+                    {
+                        if (subsubNode->GetAttribute(_T("Type"))==_T("DATE"))
+                        {
+                            wxString sValue=subsubNode->GetAttribute(_T("Value"));
+                            if (sValue.Length()>3)
+                            {
+                                m_sItemMarr=sValue.Right(4);
+                                if (sValue.StartsWith(_T("ABT")))
+                                {
+                                    m_sItemMarr.Prepend(_T("~"));
+                                }
+                                if (sValue.StartsWith(_T("AFT")))
+                                {
+                                    m_sItemMarr.Append(_T("+"));
+                                }
+                                return m_sItemMarr;
+                            }
+                            else
+                            {
+                                return g_sUnknownYear;
+                            }
+                        }
+                        subsubNode=subsubNode->GetNext();
+                    }
+                }
+                subNode=subNode->GetChildren();
+            }
+        }
+        node=node->GetNext();
+    }
+
+    return m_sItemMarr;
 }
 
 int MyTreeItem::GetMaxLevel()

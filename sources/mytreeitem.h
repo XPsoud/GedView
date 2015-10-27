@@ -51,13 +51,15 @@ class MyTreeItem
 		const wxString& GetItemFirstName();
 		const wxString& GetItemLastName();
 		const wxString GetItemText();
+		const wxString& GetItemDates();
+		const wxString& GetItemMarriage();
 		int GetMaxLevel();
 	protected:
 	private:
 	    MyTreeItem *m_Father, *m_Mother, *m_Child, *m_LeftItem;
 	    wxXmlNode *m_NodeItem, *m_NodeFather, *m_NodeMother;
 	    int m_iLevel;
-	    wxString m_sItemId, m_sItemFName, m_sItemLName;
+	    wxString m_sItemId, m_sItemFName, m_sItemLName, m_sItemDates, m_sItemMarr;
 	    double m_dXPos, m_dYPos, m_dDec;
 	    double m_dWidth, m_dHeight;
 };

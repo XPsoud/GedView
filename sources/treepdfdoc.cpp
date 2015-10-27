@@ -192,8 +192,7 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     Cell(dw, delta, item->GetItemId(), 0, 0, wxPDF_ALIGN_CENTER);
     SetXY(dX0, dY0+3*delta);
     SetFont(_T("Courier"), _T(""), 4*m_dScale);
-    Cell(dw, delta, _T("---- => ----"), 0, 0, wxPDF_ALIGN_CENTER);
-    //Cell(dw, delta, wxString::Format(_T("%0.2f x %0.2f"), item->GetXPos(), item->GetItemWidth()), 0, 0, wxPDF_ALIGN_CENTER);
+    Cell(dw, delta, item->GetItemDates(), 0, 0, wxPDF_ALIGN_CENTER);
     RoundedRect(dX0, dY0, dw, dh, dR);
 
     if (item->GetChild()==NULL) return;
@@ -205,10 +204,10 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     Line(dX0, dY0, dX0, dY2);
     Line(dX0, dY2, dX1, dY2);
     Line(dX1, dY2, dX1, dY1);
+    if (item!=item->GetChild()->GetFather()) return;
     dw=GetStringWidth(_T(" ---- "));
     SetXY(dX1-0.5*dw, dY2-2*m_dScale);
-    Cell(dw, 2*m_dScale, _T("----"), 0, 0, wxPDF_ALIGN_CENTER);
-
+    Cell(dw, 2*m_dScale, item->GetItemMarriage(), 0, 0, wxPDF_ALIGN_CENTER);
 }
 
 void TreePdfDoc::UpdateItemDatas(MyTreeItem* item)

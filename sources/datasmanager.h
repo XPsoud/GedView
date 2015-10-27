@@ -45,10 +45,10 @@ class DatasManager
         wxString GetItemFullName(wxXmlNode* itmNode, bool lastFirst=true);
         GEDITEMSEX GetItemSex(const wxString& itmId);
         GEDITEMSEX GetItemSex(const wxXmlNode *itmNode);
-        wxString GetItemBirth(const wxString& itmId);
-        wxString GetItemBirth(const wxXmlNode *itmNode);
-        wxString GetItemDeath(const wxString& itmId);
-        wxString GetItemDeath(const wxXmlNode *itmNode);
+        wxString GetItemBirth(const wxString& itmId, bool yearOnly=false);
+        wxString GetItemBirth(const wxXmlNode *itmNode, bool yearOnly=false);
+        wxString GetItemDeath(const wxString& itmId, bool yearOnly=false);
+        wxString GetItemDeath(const wxXmlNode *itmNode, bool yearOnly=false);
         wxString GetItemInfos(wxXmlNode *itmNode);
         // Reading and saving datas
         bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
