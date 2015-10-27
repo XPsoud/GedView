@@ -83,6 +83,8 @@ bool TreePdfDoc::CreateTree(int MaxLevels)
     m_rootItem->SetRelativePos(0);
     m_rootItem->SetFinalPos(0);
 
+    m_rootItem->SetSosa(1);
+
     return true;
 }
 
@@ -204,7 +206,24 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     Line(dX0, dY0, dX0, dY2);
     Line(dX0, dY2, dX1, dY2);
     Line(dX1, dY2, dX1, dY1);
+    if (item->GetSosa()>1)
+    {
+        SetFont(_T("Courier"), _T("B"), 3*m_dScale);
+        if (dX0<dX1)
+        {
+            // Father's sosa on the left
+            SetXY(dX0-dw/2, dY0);
+            Cell(dw/2, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_LEFT);
+        }
+        else
+        {
+            // Mother's sosa on the right
+            SetXY(dX0, dY0);
+            Cell(dw/2, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_RIGHT);
+        }
+    }
     if (item!=item->GetChild()->GetFather()) return;
+    SetFont(_T("Courier"), _T(""), 4*m_dScale);
     dw=GetStringWidth(_T(" ---- "));
     SetXY(dX1-0.5*dw, dY2-2*m_dScale);
     Cell(dw, 2*m_dScale, item->GetItemMarriage(), 0, 0, wxPDF_ALIGN_CENTER);
