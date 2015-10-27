@@ -203,9 +203,21 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     double dX1=m_dDecX+(item->GetChild()->GetXPos()*m_dScale);
     double dY1=m_dDecY-(item->GetChild()->GetYPos()*m_dScale)+(item->GetChild()->GetItemHeight()*m_dScale/2);
     double dY2=(dY0+dY1)/2.;
-    Line(dX0, dY0, dX0, dY2);
-    Line(dX0, dY2, dX1, dY2);
-    Line(dX1, dY2, dX1, dY1);
+    dR=1.5*m_dScale;
+    Line(dX0, dY0, dX0, dY2-dR);
+    if (dX0<dX1)
+    {
+        Circle(dX0+dR, dY2-dR, dR, 180, 270);
+        Line(dX0+dR, dY2, dX1-dR, dY2);
+        Circle(dX1-dR, dY2+dR, dR, 0, 90);
+    }
+    else
+    {
+        Circle(dX0-dR, dY2-dR, dR, 270, 360);
+        Line(dX0-dR, dY2, dX1+dR, dY2);
+        Circle(dX1+dR, dY2+dR, dR, 90, 180);
+    }
+    Line(dX1, dY2+dR, dX1, dY1);
     if (item->GetSosa()>1)
     {
         SetFont(_T("Courier"), _T("B"), 3*m_dScale);
