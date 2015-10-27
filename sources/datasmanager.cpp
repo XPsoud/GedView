@@ -11,6 +11,8 @@
 const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS")};
 const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR")};
 const wxChar* szKnownFamItems[] = { _T("HUSB"), _T("WIFE"), _T("CHIL")};
+const wxChar* g_sUnknownYear=_T("----");
+
 DatasManager DatasManager::m_instance;
 
 DatasManager::DatasManager()
@@ -399,11 +401,27 @@ wxString DatasManager::ParseEvent(wxXmlNode* event)
     return sRes;
 }
 
-wxString DatasManager::ParseDate(const wxString& value)
+wxString DatasManager::ParseDate(const wxString& value, bool yearOnly)
 {
-    static const wxChar* szSpec[]={_T("AFT"), _T("BEF"), _T("ABT"), _T("CAL"), _T("EST")};
-
+    // static const wxChar* szSpec[]={_T("AFT"), _T("BEF"), _T("ABT"), _T("EST")};
     wxString sRes=wxEmptyString;
+
+    if (yearOnly)
+    {
+        if (value.Length()>3)
+        {
+            sRes=value.Right(4);
+            if (value.StartsWith(_T("AFT"))) sRes.Append(_T("+"));
+            if (value.StartsWith(_T("BEF"))) sRes.Append(_T("-"));
+            if (value.StartsWith(_T("ABT"))) sRes.Prepend(_T("~"));
+            if (value.StartsWith(_T("EST"))) sRes.Append(_T("?"));
+            return sRes;
+        }
+        else
+        {
+            return g_sUnknownYear;
+        }
+    }
 
     return value;
 }
@@ -588,7 +606,7 @@ wxString DatasManager::GetItemBirth(const wxString& itmId, bool yearOnly)
     {
         if (node->GetAttribute(_T("GedId"))==itmId)
         {
-            return GetItemBirth(node);
+            return GetItemBirth(node, yearOnly);
         }
         node=node->GetNext();
     }
@@ -611,39 +629,21 @@ wxString DatasManager::GetItemBirth(const wxXmlNode* itmNode, bool yearOnly)
             else
             {
                 wxXmlNode *subsubNode=subNode->GetChildren();
-                wxString sBirth=_T("----"), sValue, sTmp=wxEmptyString;
                 while(subsubNode!=NULL)
                 {
                     if (subsubNode->GetAttribute(_T("Type"))==_T("DATE"))
                     {
-                        sValue=subsubNode->GetAttribute(_T("Value"));
-                        if (sValue.Length()>3)
-                        {
-                            sTmp=sValue.Right(4);
-                            if (sValue.StartsWith(_T("ABT")))
-                            {
-                                sTmp.Prepend(_T("~"));
-                            }
-                            if (sValue.StartsWith(_T("AFT")))
-                            {
-                                sTmp.Append(_T("+"));
-                            }
-                            return sTmp;
-                        }
-                        else
-                        {
-                            return sBirth;
-                        }
+                        return ParseDate(subsubNode->GetAttribute(_T("Value")), true);
                     }
                     subsubNode=subsubNode->GetNext();
                 }
-                return sBirth;
+                return g_sUnknownYear;
             }
         }
         subNode=subNode->GetNext();
     }
 
-    return (yearOnly?_T("----"):wxEmptyString);
+    return (yearOnly?g_sUnknownYear:wxEmptyString);
 }
 
 wxString DatasManager::GetItemDeath(const wxString& itmId, bool yearOnly)
@@ -653,7 +653,7 @@ wxString DatasManager::GetItemDeath(const wxString& itmId, bool yearOnly)
     {
         if (node->GetAttribute(_T("GedId"))==itmId)
         {
-            return GetItemDeath(node);
+            return GetItemDeath(node, yearOnly);
         }
         node=node->GetNext();
     }
@@ -676,39 +676,21 @@ wxString DatasManager::GetItemDeath(const wxXmlNode* itmNode, bool yearOnly)
             else
             {
                 wxXmlNode *subsubNode=subNode->GetChildren();
-                wxString sDeath=_T("----"), sValue, sTmp=wxEmptyString;
                 while(subsubNode!=NULL)
                 {
                     if (subsubNode->GetAttribute(_T("Type"))==_T("DATE"))
                     {
-                        sValue=subsubNode->GetAttribute(_T("Value"));
-                        if (sValue.Length()>3)
-                        {
-                            sTmp=sValue.Right(4);
-                            if (sValue.StartsWith(_T("ABT")))
-                            {
-                                sTmp.Prepend(_T("~"));
-                            }
-                            if (sValue.StartsWith(_T("AFT")))
-                            {
-                                sTmp.Append(_T("+"));
-                            }
-                            return sTmp;
-                        }
-                        else
-                        {
-                            return sDeath;
-                        }
+                        return ParseDate(subsubNode->GetAttribute(_T("Value")), true);
                     }
                     subsubNode=subsubNode->GetNext();
                 }
-                return sDeath;
+                return g_sUnknownYear;
             }
         }
         subNode=subNode->GetNext();
     }
 
-    return (yearOnly?_T("----"):wxEmptyString);
+    return (yearOnly?g_sUnknownYear:wxEmptyString);
 }
 
 wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)

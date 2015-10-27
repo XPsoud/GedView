@@ -3,6 +3,8 @@
 
 #include <wx/wx.h>
 
+extern const wxChar* g_sUnknownYear;
+
 class wxXmlNode;
 
 enum GEDITEMTYPE
@@ -35,7 +37,7 @@ class DatasManager
         const wxString& GetLastError() { return m_sLastError; }
         // Parsing items datas
         wxString ParseEvent(wxXmlNode* event);
-        wxString ParseDate(const wxString& value);
+        wxString ParseDate(const wxString& value, bool yearOnly=false);
         // Accessing items entries
         wxString GetItemFirstName(const wxString& itmId);
         wxString GetItemFirstName(wxXmlNode* itmNode);
