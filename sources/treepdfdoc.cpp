@@ -55,7 +55,7 @@ bool TreePdfDoc::CreateTree(int MaxLevels)
             // Update Left item
             item->SetLeftItem(PrevItem);
             PrevItem=item;
-            if (i>=(MAX_ITER-1)) continue;
+            if (i>=(iMaxLvls-1)) continue;
             item->UpdateParents();
             if (item->GetFatherNode()!=NULL)
             {
