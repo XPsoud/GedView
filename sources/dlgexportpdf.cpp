@@ -231,6 +231,8 @@ void DlgExportPdf::AddHrTitle(double Y, const wxString& title, wxPdfDocument *do
 void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc)
 {
     doc->AddPage();
+    doc->SetMargins(10, 10, 10);
+    doc->SetAutoPageBreak(true, 10);
     doc->SetFont(_T("Helvetica"), _T(""), 20);
     wxString sHtml=_T("<table border=\"0\" width=\"100%\"><tbody><tr><td align=\"center\">");
     sHtml << _("Alphabetical Index") << _T("</td></tr></tbody></table><br />");
@@ -270,6 +272,8 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
     wxString sItmID=itmNode->GetAttribute(_T("GedId"));
 
     doc->AddPage();
+    doc->SetMargins(10, 10, 10);
+    doc->SetAutoPageBreak(true, 10);
     wxPdfArrayDouble dash;
     wxPdfLineStyle lstyle(0.5, wxPDF_LINECAP_BUTT, wxPDF_LINEJOIN_MITER, dash, 0., wxColour(0, 0, 0));
     doc->SetLineStyle(lstyle);
@@ -299,7 +303,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
             {
                 sEvt=_("Dead_F");
             }
-            doc->Cell(190, 10, sEvt, wxPDF_BORDER_NONE, 1);
+            doc->Cell(190, 8, sEvt, wxPDF_BORDER_NONE, 1);
         }
         if (sType==_T("SEX"))
         {
