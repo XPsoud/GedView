@@ -12,6 +12,7 @@ MyTreeItem::MyTreeItem(int level, wxXmlNode* item)
     //wxPrintf(_T("Creating a \"MyTreeItem\" object\n"));
 #endif // DEBUG
     m_iLevel=level;
+    m_iSosa=0;
     m_NodeItem=item;
     m_Father=NULL;
     m_NodeFather=NULL;
@@ -43,6 +44,25 @@ MyTreeItem::~MyTreeItem()
 void MyTreeItem::SetLevel(int level)
 {
     m_iLevel=level;
+}
+
+void MyTreeItem::SetSosa(int value)
+{
+    m_iSosa=value;
+    if (value==0)
+    {
+        if (m_Father!=NULL)
+            m_Father->SetSosa(0);
+        if (m_Mother!=NULL)
+            m_Mother->SetSosa(0);
+    }
+    else
+    {
+        if (m_Father!=NULL)
+            m_Father->SetSosa(value*2);
+        if (m_Mother!=NULL)
+            m_Mother->SetSosa(1+value*2);
+    }
 }
 
 void MyTreeItem::SetNodeItem(wxXmlNode* item)

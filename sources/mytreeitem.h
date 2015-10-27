@@ -17,6 +17,8 @@ class MyTreeItem
 		virtual ~MyTreeItem();
 		void SetLevel(int level);
 		int GetLevel() { return m_iLevel; }
+		void SetSosa(int value);
+		int GetSosa() { return m_iSosa; }
 		void SetNodeItem(wxXmlNode *item);
 		wxXmlNode* GetNodeItem() { return m_NodeItem; }
 		wxString GetItemId();
@@ -58,7 +60,7 @@ class MyTreeItem
 	private:
 	    MyTreeItem *m_Father, *m_Mother, *m_Child, *m_LeftItem;
 	    wxXmlNode *m_NodeItem, *m_NodeFather, *m_NodeMother;
-	    int m_iLevel;
+	    int m_iLevel, m_iSosa;
 	    wxString m_sItemId, m_sItemFName, m_sItemLName, m_sItemDates, m_sItemMarr;
 	    double m_dXPos, m_dYPos, m_dDec;
 	    double m_dWidth, m_dHeight;
