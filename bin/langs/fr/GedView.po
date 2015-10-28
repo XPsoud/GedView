@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 11:28+0100\n"
-"PO-Revision-Date: 2015-10-28 11:31+0100\n"
+"POT-Creation-Date: 2015-10-28 11:48+0100\n"
+"PO-Revision-Date: 2015-10-28 11:49+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -254,11 +254,11 @@ msgstr "mm"
 msgid "Variable height and fixed width of"
 msgstr "Hauteur variable et largeur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:245
+#: sources/dlgtreepdf.cpp:255
 msgid "Pdf file successfully created!"
 msgstr "Fichier pdf créé avec succès !"
 
-#: sources/dlgtreepdf.cpp:245 sources/mainframe.cpp:717
+#: sources/dlgtreepdf.cpp:255 sources/mainframe.cpp:717
 msgid "Success"
 msgstr "Succès"
 
@@ -396,12 +396,17 @@ msgstr "Création du fichier pdf terminée !"
 msgid "Results"
 msgstr "Résultats"
 
-#: sources/treepdfdoc.cpp:186
+#: sources/treepdfdoc.cpp:182
 #, c-format
-msgid "Tree generated on %s with"
-msgstr "Arbre généré le %s avec"
+msgid "Ascending tree of %s %s (%d levels)"
+msgstr "Arbre d'ascendence de %s %s (%d niveaux)"
 
-#: sources/treepdfdoc.cpp:203
+#: sources/treepdfdoc.cpp:187
+#, c-format
+msgid "Generated on %s with"
+msgstr "Généré le %s avec"
+
+#: sources/treepdfdoc.cpp:204
 #, c-format
 msgid "Number of elements of the tree: %d"
 msgstr "Nombre d'éléments de l'arbre : %d"

@@ -178,7 +178,13 @@ void TreePdfDoc::WriteSummary()
     wxString sLine=wxEmptyString;
     wxDateTime dtNow=wxDateTime::Now();
     wxString sNow=dtNow.FormatDate();
-    sLine.Printf(_("Tree generated on %s with"), sNow);
+
+    sLine.Printf(_("Ascending tree of %s %s (%d levels)"), m_rootItem->GetItemFirstName(), m_rootItem->GetItemLastName(), m_rootItem->GetMaxLevel()+1);
+    SetFont(_T("Helvetica"), _T(""), 12);
+    SetXY(m_dDecX, m_dDecY-2*GetLineHeight());
+    Cell(1, GetLineHeight(), sLine, 0, 1);
+
+    sLine.Printf(_("Generated on %s with"), sNow);
 
     SetFont(_T("Helvetica"), _T(""), 12);
     double dx=GetStringWidth(sLine + _T(" "));
