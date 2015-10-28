@@ -222,12 +222,6 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     m_cmbLevels->GetStringSelection().ToLong(&lMaxLvl);
     if (lMaxLvl==0) return;
 
-    m_TreePdf=new TreePdfDoc(m_RootItem);
-    int iWdth, iHght;
-    GetPaperSize(&iWdth, &iHght);
-    m_TreePdf->CreateTree(lMaxLvl);
-    m_TreePdf->Generate(iWdth, iHght, m_chkMarrDate->IsChecked(), m_chkSosaNmbr->IsChecked());
-
     wxFileName fname=m_datas.GetCurrentFileName();
     fname.SetExt(_T("pdf"));
 
@@ -236,6 +230,12 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     wxString sFName=wxFileSelector(sMsg, fname.GetPath(), fname.GetFullName(), _T("pdf"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (sFName.IsEmpty()) return;
     fname.Assign(sFName);
+
+    m_TreePdf=new TreePdfDoc(m_RootItem);
+    int iWdth, iHght;
+    GetPaperSize(&iWdth, &iHght);
+    m_TreePdf->CreateTree(lMaxLvl);
+    m_TreePdf->Generate(iWdth, iHght, m_chkMarrDate->IsChecked(), m_chkSosaNmbr->IsChecked());
 
     m_TreePdf->SaveAsFile(sFName);
     wxMessageBox(_("Pdf file successfully created!"), _("Success"), wxICON_INFORMATION|wxCENTER|wxOK);
