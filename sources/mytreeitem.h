@@ -56,6 +56,7 @@ class MyTreeItem
 		const wxString& GetItemDates();
 		const wxString& GetItemMarriage();
 		int GetMaxLevel();
+		int GetSubItemsCount();
 	protected:
 	private:
 	    MyTreeItem *m_Father, *m_Mother, *m_Child, *m_LeftItem;

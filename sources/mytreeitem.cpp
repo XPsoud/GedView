@@ -382,3 +382,14 @@ int MyTreeItem::GetMaxLevel()
 
     return iRes;
 }
+
+int MyTreeItem::GetSubItemsCount()
+{
+    int iRes=0;
+    if (m_Father!=NULL)
+        iRes+=m_Father->GetSubItemsCount()+1;
+    if (m_Mother!=NULL)
+        iRes+=m_Mother->GetSubItemsCount()+1;
+
+    return iRes;
+}
