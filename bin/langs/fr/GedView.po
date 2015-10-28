@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 10:19+0100\n"
-"PO-Revision-Date: 2015-10-28 10:19+0100\n"
+"POT-Creation-Date: 2015-10-28 11:28+0100\n"
+"PO-Revision-Date: 2015-10-28 11:31+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -216,45 +216,49 @@ msgstr "Nombre maxi de niveaux de l'arbre :"
 msgid "Add marriage year at each junction point"
 msgstr "Ajouter l'année de mariage à chaque point de jonction"
 
-#: sources/dlgtreepdf.cpp:63
+#: sources/dlgtreepdf.cpp:64
 msgid "Add sosa number under each item"
 msgstr "Ajouter le numéro sosa sous chaque élément"
 
-#: sources/dlgtreepdf.cpp:67
+#: sources/dlgtreepdf.cpp:68
+msgid "Add a small summary in the bottom-left corner"
+msgstr "Ajouter un petit sommaire dans le coin bas-gauche"
+
+#: sources/dlgtreepdf.cpp:73
 msgid "Pdf file format:"
 msgstr "Format du fichier pdf"
 
-#: sources/dlgtreepdf.cpp:73
+#: sources/dlgtreepdf.cpp:79
 msgid "Predefined size:"
 msgstr "Taille prédéfinie :"
 
-#: sources/dlgtreepdf.cpp:78
+#: sources/dlgtreepdf.cpp:84
 #, c-format
 msgid "A%d Landscape (%d mm x %d mm)"
 msgstr "A%d Paysage (%d mm x %d mm)"
 
-#: sources/dlgtreepdf.cpp:85
+#: sources/dlgtreepdf.cpp:91
 msgid "Variable width and fixed height of"
 msgstr "Largeur variable et hauteur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:90 sources/dlgtreepdf.cpp:102
+#: sources/dlgtreepdf.cpp:96 sources/dlgtreepdf.cpp:108
 #, c-format
 msgid "%d mm"
 msgstr "%d mm"
 
-#: sources/dlgtreepdf.cpp:93 sources/dlgtreepdf.cpp:105
+#: sources/dlgtreepdf.cpp:99 sources/dlgtreepdf.cpp:111
 msgid "mm"
 msgstr "mm"
 
-#: sources/dlgtreepdf.cpp:98
+#: sources/dlgtreepdf.cpp:104
 msgid "Variable height and fixed width of"
 msgstr "Hauteur variable et largeur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:239
+#: sources/dlgtreepdf.cpp:245
 msgid "Pdf file successfully created!"
 msgstr "Fichier pdf créé avec succès !"
 
-#: sources/dlgtreepdf.cpp:239 sources/mainframe.cpp:717
+#: sources/dlgtreepdf.cpp:245 sources/mainframe.cpp:717
 msgid "Success"
 msgstr "Succès"
 
@@ -391,6 +395,16 @@ msgstr "Création du fichier pdf terminée !"
 #: sources/mainframe.cpp:781
 msgid "Results"
 msgstr "Résultats"
+
+#: sources/treepdfdoc.cpp:186
+#, c-format
+msgid "Tree generated on %s with"
+msgstr "Arbre généré le %s avec"
+
+#: sources/treepdfdoc.cpp:203
+#, c-format
+msgid "Number of elements of the tree: %d"
+msgstr "Nombre d'éléments de l'arbre : %d"
 
 #: sources/appversion.h:13
 msgid "GedView Application"

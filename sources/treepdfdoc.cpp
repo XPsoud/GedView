@@ -1,5 +1,7 @@
 #include "treepdfdoc.h"
 
+#include "appversion.h"
+
 TreePdfDoc::TreePdfDoc(MyTreeItem* root, double pageWidth, double pageHeight) : wxPdfDocument(wxPORTRAIT, pageWidth, pageHeight, _T("mm"))
 {
 #ifdef __WXDEBUG__
@@ -94,7 +96,7 @@ int TreePdfDoc::GetLevelMax()
     return m_rootItem->GetMaxLevel();
 }
 
-bool TreePdfDoc::Generate(double pageWidth, double pageHeight, bool marrDate, bool sosaNmbr)
+bool TreePdfDoc::Generate(double pageWidth, double pageHeight)
 {
     if (m_rootItem==NULL) return false;
     if (m_rootItem->GetFather()==NULL) return false;
@@ -160,18 +162,41 @@ bool TreePdfDoc::Generate(double pageWidth, double pageHeight, bool marrDate, bo
 */
 /*
     SetFont(_T("Helvetica"), _T(""), 10);
-    wxString sBB=wxString::Format(_T("XMin=%0.2f XMax=%0.2f YMin=%0.2f YMax=%0.2f DecX=%0.2f DecY=%0.2f"), dXMin, dXMax, dYMin, dYMax, m_dDecX, m_dDecY);
-    sBB << _T(" Scale=") << m_dScale << _T(" ScaleX=") << dScaleX << _T(" ScaleY=") << dScaleY << _T(")");
-    Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sBB, wxPDF_BORDER_NONE, 1);
-    wxString sRoot=wxString::Format(_T("RootItem : X=%0.2f, Y=%0.2f W=%0.2f H=%0.2f"), m_rootItem->GetXPos(), m_rootItem->GetYPos(), m_rootItem->GetItemWidth(), m_rootItem->GetItemHeight());
-    Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sRoot, wxPDF_BORDER_NONE, 1);
+    wxString sTxt=wxString::Format(_T("XMin=%0.2f XMax=%0.2f YMin=%0.2f YMax=%0.2f DecX=%0.2f DecY=%0.2f"), dXMin, dXMax, dYMin, dYMax, m_dDecX, m_dDecY);
+    sTxt << _T(" Scale=") << m_dScale << _T(" ScaleX=") << dScaleX << _T(" ScaleY=") << dScaleY << _T(")");
+    Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sTxt, wxPDF_BORDER_NONE, 1);
+    sTxt.Printf(_T("RootItem : X=%0.2f, Y=%0.2f W=%0.2f H=%0.2f %d sub-items"), m_rootItem->GetXPos(), m_rootItem->GetYPos(), m_rootItem->GetItemWidth(), m_rootItem->GetItemHeight(), m_rootItem->GetSubItemsCount());
+    Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sTxt, wxPDF_BORDER_NONE, 1);
 */
     DrawItem(m_rootItem);
-    DrawConnexions(m_rootItem, marrDate);
-    if (sosaNmbr)
-        DrawSosaNumber(m_rootItem);
-
     return true;
+}
+
+void TreePdfDoc::WriteSummary()
+{
+    SetLineHeight(6);
+    wxString sLine=wxEmptyString;
+    wxDateTime dtNow=wxDateTime::Now();
+    wxString sNow=dtNow.FormatDate();
+    sLine.Printf(_("Tree generated on %s with"), sNow);
+
+    SetFont(_T("Helvetica"), _T(""), 12);
+    double dx=GetStringWidth(sLine + _T(" "));
+    SetXY(m_dDecX, m_dDecY-GetLineHeight());
+    Cell(dx, GetLineHeight(), sLine, 0, 0);
+    SetFont(_T("Helvetica"), _T("B"), 12);
+    sLine=wxTheApp->GetAppName();
+    sLine << _T("-v") << VERSION_MAJOR << _T(".") << VERSION_MINOR << _T(".") << VERSION_REV;
+    dx=GetStringWidth(sLine + _T(" "));
+    Cell(dx, GetLineHeight(), sLine, 0, 0);
+    SetFont(_T("Helvetica"), _T("I"), 12);
+    Cell(dx, GetLineHeight(), _T(SMALLCOPYRIGHT), 0, 1);
+
+    if (m_rootItem==NULL) return;
+
+    SetFont(_T("Helvetica"), _T(""), 12);
+    sLine.Printf(_("Number of elements of the tree: %d"), int(m_rootItem->GetSubItemsCount()+1));
+    Cell(1, GetLineHeight(), sLine, 0, 1);
 }
 
 void TreePdfDoc::DrawItem(MyTreeItem* item)

@@ -65,6 +65,10 @@ void DlgTreePdf::CreateControls()
             m_chkSosaNmbr->SetValue(true);
         szrMain->Add(m_chkSosaNmbr, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
+        m_chkSummary=new wxCheckBox(this, -1, _("Add a small summary in the bottom-left corner"));
+            m_chkSummary->SetValue(true);
+        szrMain->Add(m_chkSummary, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
+
         lnszr=new wxBoxSizer(wxHORIZONTAL);
             label=new wxStaticText(this, -1, _("Pdf file format:"));
             lnszr->Add(label, 0, wxALL|wxALIGN_CENTER_VERTICAL, 0);
@@ -234,8 +238,18 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     m_TreePdf=new TreePdfDoc(m_RootItem);
     int iWdth, iHght;
     GetPaperSize(&iWdth, &iHght);
+
     m_TreePdf->CreateTree(lMaxLvl);
-    m_TreePdf->Generate(iWdth, iHght, m_chkMarrDate->IsChecked(), m_chkSosaNmbr->IsChecked());
+    m_TreePdf->Generate(iWdth, iHght);
+    m_TreePdf->DrawConnexions(m_chkMarrDate->IsChecked());
+
+    if (m_chkSosaNmbr->IsChecked())
+        m_TreePdf->DrawSosaNumbers();
+
+    if (m_chkSummary->IsChecked())
+    {
+        m_TreePdf->WriteSummary();
+    }
 
     m_TreePdf->SaveAsFile(sFName);
     wxMessageBox(_("Pdf file successfully created!"), _("Success"), wxICON_INFORMATION|wxCENTER|wxOK);
