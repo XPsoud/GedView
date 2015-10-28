@@ -94,7 +94,7 @@ int TreePdfDoc::GetLevelMax()
     return m_rootItem->GetMaxLevel();
 }
 
-bool TreePdfDoc::Generate(double pageWidth, double pageHeight)
+bool TreePdfDoc::Generate(double pageWidth, double pageHeight, bool marrDate, bool sosaNmbr)
 {
     if (m_rootItem==NULL) return false;
     if (m_rootItem->GetFather()==NULL) return false;
@@ -145,19 +145,31 @@ bool TreePdfDoc::Generate(double pageWidth, double pageHeight)
         m_dScale=dScaleY;
 
     m_dDecX=GetLeftMargin();
-    m_dDecY=dPageHeight-GetBreakMargin()+dYMin-m_dScale*m_rootItem->GetItemHeight();
+    m_dDecY=dPageHeight-GetBreakMargin()+m_dScale*dYMin;
+    //m_dDecY=dPageHeight-GetBreakMargin()-GetTopMargin()+dYMin-m_dScale*(m_rootItem->GetItemHeight()-2);
 
     // Creating the Pdf document
     AliasNbPages();
     AddPage(wxPORTRAIT, dPageWidth, dPageHeight);
 /*
+    SetDrawColour(*wxBLUE);
     Rect(GetLeftMargin(), GetBreakMargin(), GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetPageHeight()-GetTopMargin()-GetBreakMargin());
+    SetDrawColour(*wxRED);
+    Rect(m_dDecX+m_dScale*dXMin, m_dDecY-m_dScale*dYMin, m_dScale*(dXMax-dXMin), -m_dScale*(dYMax-dYMin));
+    SetDrawColour(*wxBLACK);
+*/
+/*
     SetFont(_T("Helvetica"), _T(""), 10);
     wxString sBB=wxString::Format(_T("XMin=%0.2f XMax=%0.2f YMin=%0.2f YMax=%0.2f DecX=%0.2f DecY=%0.2f"), dXMin, dXMax, dYMin, dYMax, m_dDecX, m_dDecY);
     sBB << _T(" Scale=") << m_dScale << _T(" ScaleX=") << dScaleX << _T(" ScaleY=") << dScaleY << _T(")");
     Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sBB, wxPDF_BORDER_NONE, 1);
+    wxString sRoot=wxString::Format(_T("RootItem : X=%0.2f, Y=%0.2f W=%0.2f H=%0.2f"), m_rootItem->GetXPos(), m_rootItem->GetYPos(), m_rootItem->GetItemWidth(), m_rootItem->GetItemHeight());
+    Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sRoot, wxPDF_BORDER_NONE, 1);
 */
     DrawItem(m_rootItem);
+    DrawConnexions(m_rootItem, marrDate);
+    if (sosaNmbr)
+        DrawSosaNumber(m_rootItem);
 
     return true;
 }
@@ -178,7 +190,7 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     double dw=m_dScale*item->GetItemWidth();
     double dh=m_dScale*item->GetItemHeight();
     double dX0=m_dDecX+(item->GetXPos()*m_dScale)-(dw/2.);
-    double dY0=m_dDecY-(item->GetYPos()*m_dScale)+(dh/2.);
+    double dY0=m_dDecY-(item->GetYPos()*m_dScale)-(dh/2.);
     double dR=(dw<dh?dw/6:dh/6);
     double delta=dh/4;
 
@@ -196,49 +208,105 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     SetFont(_T("Courier"), _T(""), 4*m_dScale);
     Cell(dw, delta, item->GetItemDates(), 0, 0, wxPDF_ALIGN_CENTER);
     RoundedRect(dX0, dY0, dw, dh, dR);
+}
 
+void TreePdfDoc::DrawConnexions(MyTreeItem* item, bool withMarrDate)
+{
+    if (item==NULL) return;
+
+    if (item->GetFather()!=NULL)
+    {
+        DrawConnexions(item->GetFather(), withMarrDate);
+    }
+    if (item->GetMother()!=NULL)
+    {
+        DrawConnexions(item->GetMother(), withMarrDate);
+    }
     if (item->GetChild()==NULL) return;
-    dX0+=(dw/2.);
-    dY0+=dh;
+
+    double dh=m_dScale*item->GetItemHeight();
+    double dX0=m_dDecX+(item->GetXPos()*m_dScale);
+    double dY0=m_dDecY-(item->GetYPos()*m_dScale)+(dh/2.);
     double dX1=m_dDecX+(item->GetChild()->GetXPos()*m_dScale);
-    double dY1=m_dDecY-(item->GetChild()->GetYPos()*m_dScale)+(item->GetChild()->GetItemHeight()*m_dScale/2);
+    double dY1=dY0+(V_GAP*m_dScale);
     double dY2=(dY0+dY1)/2.;
-    dR=1.5*m_dScale;
+    double dR=1.5*m_dScale;
+
     Line(dX0, dY0, dX0, dY2-dR);
     if (dX0<dX1)
     {
+        // Father connexion ligne
         Circle(dX0+dR, dY2-dR, dR, 180, 270);
         Line(dX0+dR, dY2, dX1-dR, dY2);
         Circle(dX1-dR, dY2+dR, dR, 0, 90);
+        Line(dX1, dY2+dR, dX1, dY1);
+        if (withMarrDate)
+        {
+            SetFont(_T("Courier"), _T(""), 4*m_dScale);
+            double dw=GetStringWidth(_T(" ---- "));
+            SetXY(dX1-0.5*dw, dY2-2*m_dScale);
+            Cell(dw, 2*m_dScale, item->GetItemMarriage(), 0, 0, wxPDF_ALIGN_CENTER);
+        }
     }
     else
     {
+        // Mother connexion line
         Circle(dX0-dR, dY2-dR, dR, 270, 360);
         Line(dX0-dR, dY2, dX1+dR, dY2);
         Circle(dX1+dR, dY2+dR, dR, 90, 180);
+        // If there were no father, draw the final line and the marriage date if wanted
+        if (item->GetChild()->GetFather()==NULL)
+        {
+            Line(dX1, dY2+dR, dX1, dY1);
+            if (withMarrDate)
+            {
+                SetFont(_T("Courier"), _T("B"), 4*m_dScale);
+                double dw=GetStringWidth(_T(" ---- "));
+                SetXY(dX1-0.5*dw, dY2-2*m_dScale);
+                Cell(dw, 2*m_dScale, item->GetItemMarriage(), 0, 0, wxPDF_ALIGN_CENTER);
+            }
+        }
     }
-    Line(dX1, dY2+dR, dX1, dY1);
-    if (item->GetSosa()>1)
+}
+
+void TreePdfDoc::DrawSosaNumber(MyTreeItem* item)
+{
+    if (item==NULL) return;
+
+    if (item->GetFather()!=NULL)
     {
-        SetFont(_T("Courier"), _T("B"), 3*m_dScale);
-        if (dX0<dX1)
-        {
-            // Father's sosa on the left
-            SetXY(dX0-dw/2, dY0);
-            Cell(dw/2, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_LEFT);
-        }
-        else
-        {
-            // Mother's sosa on the right
-            SetXY(dX0, dY0);
-            Cell(dw/2, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_RIGHT);
-        }
+        DrawSosaNumber(item->GetFather());
     }
-    if (item!=item->GetChild()->GetFather()) return;
-    SetFont(_T("Courier"), _T(""), 4*m_dScale);
-    dw=GetStringWidth(_T(" ---- "));
-    SetXY(dX1-0.5*dw, dY2-2*m_dScale);
-    Cell(dw, 2*m_dScale, item->GetItemMarriage(), 0, 0, wxPDF_ALIGN_CENTER);
+    if (item->GetMother()!=NULL)
+    {
+        DrawSosaNumber(item->GetMother());
+    }
+    if (item->GetSosa()<1) return;
+
+    double dw=m_dScale*item->GetItemWidth();
+    double dh=m_dScale*item->GetItemHeight();
+    double dX0=m_dDecX+(item->GetXPos()*m_dScale);
+    double dY0=m_dDecY-(item->GetYPos()*m_dScale)+(dh/2.);
+
+    SetFont(_T("Courier"), _T("B"), 3*m_dScale);
+    if (item->GetChild()==NULL)
+    {
+        SetXY(dX0-dw/2, dY0);
+        Cell(dw, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_CENTER);
+        return;
+    }
+    if (item==item->GetChild()->GetFather())
+    {
+        // Father's sosa on the left
+        SetXY(dX0-dw/2, dY0);
+        Cell(dw/2, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_LEFT);
+    }
+    else
+    {
+        // Mother's sosa on the right
+        SetXY(dX0, dY0);
+        Cell(dw/2, 2*m_dScale, wxString::Format(_T("(%d)"), item->GetSosa()), wxPDF_BORDER_NONE, 0, wxPDF_ALIGN_RIGHT);
+    }
 }
 
 void TreePdfDoc::UpdateItemDatas(MyTreeItem* item)
