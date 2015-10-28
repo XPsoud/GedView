@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-26 19:06+0100\n"
-"PO-Revision-Date: 2015-10-26 19:06+0100\n"
+"POT-Creation-Date: 2015-10-28 10:19+0100\n"
+"PO-Revision-Date: 2015-10-28 10:19+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -18,124 +18,124 @@ msgstr ""
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: sources\n"
 
-#: sources/datasmanager.cpp:370
+#: sources/datasmanager.cpp:372
 msgid "Birth:"
 msgstr "Naissance :"
 
-#: sources/datasmanager.cpp:375 sources/datasmanager.cpp:666
-#: sources/datasmanager.cpp:695 sources/datasmanager.cpp:720
-#: sources/datasmanager.cpp:761 sources/datasmanager.cpp:777
-#: sources/dlgexportpdf.cpp:298 sources/dlgexportpdf.cpp:334
-#: sources/dlgexportpdf.cpp:363 sources/dlgexportpdf.cpp:410
-#: sources/dlgexportpdf.cpp:427 sources/mainframe.cpp:332
+#: sources/datasmanager.cpp:377 sources/datasmanager.cpp:716
+#: sources/datasmanager.cpp:745 sources/datasmanager.cpp:770
+#: sources/datasmanager.cpp:811 sources/datasmanager.cpp:827
+#: sources/dlgexportpdf.cpp:302 sources/dlgexportpdf.cpp:338
+#: sources/dlgexportpdf.cpp:367 sources/dlgexportpdf.cpp:414
+#: sources/dlgexportpdf.cpp:431 sources/mainframe.cpp:332
 #: sources/mainframe.cpp:368 sources/mainframe.cpp:393
 #: sources/mainframe.cpp:435 sources/mainframe.cpp:456
 msgid "Dead"
 msgstr "Décédé"
 
-#: sources/datasmanager.cpp:377
+#: sources/datasmanager.cpp:379
 msgid "Death:"
 msgstr "Décès :"
 
-#: sources/datasmanager.cpp:382
+#: sources/datasmanager.cpp:384
 msgid "Marriage:"
 msgstr "Mariage :"
 
-#: sources/datasmanager.cpp:385
+#: sources/datasmanager.cpp:387
 msgid "Unknown event:"
 msgstr "Événement inconnu :"
 
-#: sources/datasmanager.cpp:394
+#: sources/datasmanager.cpp:396
 msgid "in"
 msgstr "à"
 
-#: sources/datasmanager.cpp:668 sources/datasmanager.cpp:696
-#: sources/datasmanager.cpp:721 sources/datasmanager.cpp:763
-#: sources/datasmanager.cpp:778 sources/dlgexportpdf.cpp:300
-#: sources/dlgexportpdf.cpp:335 sources/dlgexportpdf.cpp:364
-#: sources/dlgexportpdf.cpp:411 sources/dlgexportpdf.cpp:428
+#: sources/datasmanager.cpp:718 sources/datasmanager.cpp:746
+#: sources/datasmanager.cpp:771 sources/datasmanager.cpp:813
+#: sources/datasmanager.cpp:828 sources/dlgexportpdf.cpp:304
+#: sources/dlgexportpdf.cpp:339 sources/dlgexportpdf.cpp:368
+#: sources/dlgexportpdf.cpp:415 sources/dlgexportpdf.cpp:432
 #: sources/mainframe.cpp:334 sources/mainframe.cpp:369
 #: sources/mainframe.cpp:394 sources/mainframe.cpp:437
 #: sources/mainframe.cpp:457
 msgid "Dead_F"
 msgstr "Décédée"
 
-#: sources/datasmanager.cpp:674 sources/dlgexportpdf.cpp:311
+#: sources/datasmanager.cpp:724 sources/dlgexportpdf.cpp:315
 #: sources/mainframe.cpp:347
 msgid "Parents"
 msgstr "Parents"
 
-#: sources/datasmanager.cpp:688 sources/dlgexportpdf.cpp:325
+#: sources/datasmanager.cpp:738 sources/dlgexportpdf.cpp:329
 #: sources/mainframe.cpp:361
 msgid "Father:"
 msgstr "Père :"
 
-#: sources/datasmanager.cpp:688 sources/dlgexportpdf.cpp:325
+#: sources/datasmanager.cpp:738 sources/dlgexportpdf.cpp:329
 #: sources/mainframe.cpp:361
 msgid "Mother:"
 msgstr "Mère :"
 
-#: sources/datasmanager.cpp:708 sources/dlgexportpdf.cpp:349
+#: sources/datasmanager.cpp:758 sources/dlgexportpdf.cpp:353
 #: sources/mainframe.cpp:381
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
-#: sources/datasmanager.cpp:733 sources/dlgexportpdf.cpp:377
+#: sources/datasmanager.cpp:783 sources/dlgexportpdf.cpp:381
 #: sources/mainframe.cpp:406
 msgid "Union(s)"
 msgstr "Union(s)"
 
-#: sources/datasmanager.cpp:796
+#: sources/datasmanager.cpp:846
 msgid "No datas in memory can be compared"
 msgstr "Aucunes données en mémoire ne peuvents être comparées"
 
-#: sources/datasmanager.cpp:801
+#: sources/datasmanager.cpp:851
 msgid "The selected file is already loaded in memory"
 msgstr "Le fichier sélectionné est déjà chargé en mémoire"
 
-#: sources/datasmanager.cpp:808
+#: sources/datasmanager.cpp:858
 msgid "Unable to open the selected file"
 msgstr "Impossible d'ouvrir le fichier sélectionné"
 
-#: sources/datasmanager.cpp:815
+#: sources/datasmanager.cpp:865
 msgid "Unable to parse the selected file"
 msgstr "Impossible d'analyser le fichier sélectionné"
 
-#: sources/datasmanager.cpp:825
+#: sources/datasmanager.cpp:875
 msgid "Comparing datas"
 msgstr "Comparaison des données"
 
-#: sources/datasmanager.cpp:826
+#: sources/datasmanager.cpp:876
 msgid "Please wait..."
 msgstr "Patientez, svp..."
 
-#: sources/datasmanager.cpp:971
+#: sources/datasmanager.cpp:1021
 msgid "Changes from file:"
 msgstr "Modifications depuis le fichier :"
 
-#: sources/datasmanager.cpp:978
+#: sources/datasmanager.cpp:1028
 msgid "1 item added:"
 msgstr "1 élément ajouté :"
 
-#: sources/datasmanager.cpp:980
+#: sources/datasmanager.cpp:1030
 #, c-format
 msgid "%d items added:"
 msgstr "%d éléments ajoutés :"
 
-#: sources/datasmanager.cpp:990
+#: sources/datasmanager.cpp:1040
 msgid "1 item removed:"
 msgstr "1 élément supprimé :"
 
-#: sources/datasmanager.cpp:992
+#: sources/datasmanager.cpp:1042
 #, c-format
 msgid "%d items removed:"
 msgstr "%d éléments supprimés :"
 
-#: sources/datasmanager.cpp:1002
+#: sources/datasmanager.cpp:1052
 msgid "1 item modified:"
 msgstr "1 élément modifié :"
 
-#: sources/datasmanager.cpp:1004
+#: sources/datasmanager.cpp:1054
 #, c-format
 msgid "%d items modified:"
 msgstr "%d éléments modifiés :"
@@ -176,11 +176,11 @@ msgstr "Exporter"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: sources/dlgexportpdf.cpp:135 sources/dlgtreepdf.cpp:221
+#: sources/dlgexportpdf.cpp:135 sources/dlgtreepdf.cpp:232
 msgid "Select the \"PDF\" file to create"
 msgstr "Sélectionnez le fichier \"PDF\" à créer"
 
-#: sources/dlgexportpdf.cpp:136 sources/dlgtreepdf.cpp:222
+#: sources/dlgexportpdf.cpp:136 sources/dlgtreepdf.cpp:233
 msgid "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*"
 msgstr "Fichiers pdf (*.pdf)|*.pdf|Tous les fichiers (*.*)|*.*"
 
@@ -188,15 +188,15 @@ msgstr "Fichiers pdf (*.pdf)|*.pdf|Tous les fichiers (*.*)|*.*"
 msgid "Summary"
 msgstr "Index"
 
-#: sources/dlgexportpdf.cpp:236
+#: sources/dlgexportpdf.cpp:238
 msgid "Alphabetical Index"
 msgstr "Index Alphabétique"
 
-#: sources/dlgexportpdf.cpp:241
+#: sources/dlgexportpdf.cpp:243
 msgid "Id"
 msgstr "Id"
 
-#: sources/dlgexportpdf.cpp:241
+#: sources/dlgexportpdf.cpp:243
 msgid "Full name"
 msgstr "Nom complet"
 
@@ -212,41 +212,49 @@ msgstr "Options de l'arbre"
 msgid "Maximum levels of the tree:"
 msgstr "Nombre maxi de niveaux de l'arbre :"
 
-#: sources/dlgtreepdf.cpp:61
+#: sources/dlgtreepdf.cpp:60
+msgid "Add marriage year at each junction point"
+msgstr "Ajouter l'année de mariage à chaque point de jonction"
+
+#: sources/dlgtreepdf.cpp:63
+msgid "Add sosa number under each item"
+msgstr "Ajouter le numéro sosa sous chaque élément"
+
+#: sources/dlgtreepdf.cpp:67
 msgid "Pdf file format:"
 msgstr "Format du fichier pdf"
 
-#: sources/dlgtreepdf.cpp:67
+#: sources/dlgtreepdf.cpp:73
 msgid "Predefined size:"
 msgstr "Taille prédéfinie :"
 
-#: sources/dlgtreepdf.cpp:72
+#: sources/dlgtreepdf.cpp:78
 #, c-format
 msgid "A%d Landscape (%d mm x %d mm)"
 msgstr "A%d Paysage (%d mm x %d mm)"
 
-#: sources/dlgtreepdf.cpp:78
+#: sources/dlgtreepdf.cpp:85
 msgid "Variable width and fixed height of"
 msgstr "Largeur variable et hauteur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:82 sources/dlgtreepdf.cpp:93
+#: sources/dlgtreepdf.cpp:90 sources/dlgtreepdf.cpp:102
 #, c-format
 msgid "%d mm"
 msgstr "%d mm"
 
-#: sources/dlgtreepdf.cpp:84 sources/dlgtreepdf.cpp:95
+#: sources/dlgtreepdf.cpp:93 sources/dlgtreepdf.cpp:105
 msgid "mm"
 msgstr "mm"
 
-#: sources/dlgtreepdf.cpp:89
+#: sources/dlgtreepdf.cpp:98
 msgid "Variable height and fixed width of"
 msgstr "Hauteur variable et largeur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:228
+#: sources/dlgtreepdf.cpp:239
 msgid "Pdf file successfully created!"
 msgstr "Fichier pdf créé avec succès !"
 
-#: sources/dlgtreepdf.cpp:228 sources/mainframe.cpp:717
+#: sources/dlgtreepdf.cpp:239 sources/mainframe.cpp:717
 msgid "Success"
 msgstr "Succès"
 

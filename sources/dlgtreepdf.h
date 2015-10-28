@@ -28,6 +28,7 @@ class DlgTreePdf : public wxDialog
         void OnUpdateUI_BtnSaveAs(wxUpdateUIEvent &event);
         // Controls vars
         wxChoice *m_cmbLevels, *m_cmbFormat, *m_cmbHeight, *m_cmbWidth;
+        wxCheckBox *m_chkMarrDate, *m_chkSosaNmbr;
         wxRadioButton *m_optSize[3];
         wxButton *m_btnSave, *m_btnClose;
         // Misc vars

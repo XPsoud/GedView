@@ -57,6 +57,14 @@ void DlgTreePdf::CreateControls()
             lnszr->Add(m_cmbLevels, 1, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
         szrMain->Add(lnszr, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
 
+        m_chkMarrDate=new wxCheckBox(this, -1, _("Add marriage year at each junction point"));
+            m_chkMarrDate->SetValue(true);
+        szrMain->Add(m_chkMarrDate, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
+
+        m_chkSosaNmbr=new wxCheckBox(this, -1, _("Add sosa number under each item"));
+            m_chkSosaNmbr->SetValue(true);
+        szrMain->Add(m_chkSosaNmbr, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
+
         lnszr=new wxBoxSizer(wxHORIZONTAL);
             label=new wxStaticText(this, -1, _("Pdf file format:"));
             lnszr->Add(label, 0, wxALL|wxALIGN_CENTER_VERTICAL, 0);
@@ -218,7 +226,7 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     int iWdth, iHght;
     GetPaperSize(&iWdth, &iHght);
     m_TreePdf->CreateTree(lMaxLvl);
-    m_TreePdf->Generate(iWdth, iHght);
+    m_TreePdf->Generate(iWdth, iHght, m_chkMarrDate->IsChecked(), m_chkSosaNmbr->IsChecked());
 
     wxFileName fname=m_datas.GetCurrentFileName();
     fname.SetExt(_T("pdf"));
