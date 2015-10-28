@@ -197,6 +197,11 @@ double MyTreeItem::GetXMax()
 double MyTreeItem::GetYMin()
 {
     double y=m_dYPos-m_dHeight/2.;
+    if (m_Child==NULL)
+        y-=2.; // If we are on the root item, add 2 units for the sosa number
+    else
+        y-=V_GAP; // else add the place for the connexion lines
+
     if (m_Father!=NULL)
     {
         double yy=m_Father->GetYMin();
@@ -207,6 +212,7 @@ double MyTreeItem::GetYMin()
         double yy=m_Mother->GetYMin();
         if (yy<y) y=yy;
     }
+
     return y;
 }
 
