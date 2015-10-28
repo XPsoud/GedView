@@ -71,15 +71,18 @@ void DlgTreePdf::CreateControls()
                 {
                     m_cmbFormat->Append(wxString::Format(_("A%d Landscape (%d mm x %d mm)"), int(4-i), g_iPaperDim[i+1], g_iPaperDim[i]));
                 }
+                m_cmbFormat->SetSelection(1); // A3
             lnszr->Add(m_cmbFormat, 1, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
         szrMain->Add(lnszr, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
 
         lnszr=new wxBoxSizer(wxHORIZONTAL);
             m_optSize[1]=new wxRadioButton(this, -1, _("Variable width and fixed height of"));
+                m_optSize[1]->SetValue(true);
             lnszr->Add(m_optSize[1], 0, wxALL|wxALIGN_CENTER_VERTICAL, 0);
             m_cmbHeight=new wxChoice(this, -1);
                 for (int i=0; i<6; ++i)
                     m_cmbHeight->Append(wxString::Format(_("%d mm"), g_iPaperDim[i]));
+                m_cmbHeight->SetSelection(2); // 420mm
             lnszr->Add(m_cmbHeight, 1, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
             label=new wxStaticText(this, -1, _("mm"));
             lnszr->Add(label, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
@@ -91,6 +94,7 @@ void DlgTreePdf::CreateControls()
             m_cmbWidth=new wxChoice(this, -1);
                 for (int i=0; i<6; ++i)
                     m_cmbWidth->Append(wxString::Format(_("%d mm"), g_iPaperDim[i]));
+                m_cmbWidth->SetSelection(2); // 420mm
             lnszr->Add(m_cmbWidth, 1, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
             label=new wxStaticText(this, -1, _("mm"));
             lnszr->Add(label, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
@@ -131,8 +135,9 @@ void DlgTreePdf::UpdateCmbLevels(int maxLvl)
 {
     int iMax=(maxLvl==-1?MAX_ITER:maxLvl);
     m_cmbLevels->Clear();
-    for (int i=2; i<iMax; ++i)
+    for (int i=1; i<iMax; ++i)
         m_cmbLevels->Append(wxString::Format(_T("%d"), i));
+    m_cmbLevels->SetSelection(m_cmbLevels->GetCount()-1);
 }
 
 void DlgTreePdf::UpdateControlsStates()
