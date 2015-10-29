@@ -880,6 +880,9 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
                     );
 
     wxArrayString arsSrc, arsCmp;
+    m_arsCompAdded.Clear();
+    m_arsCompModified.Clear();
+    m_arsCompRemoved.Clear();
     m_sCmpFile=filename;
 
     // Get the lists of the items
