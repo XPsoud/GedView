@@ -846,10 +846,10 @@ int MainFrame::SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortDat
             }
             break;
         case SORTCOL_LNAME:
-            return DatasManager::Get().GetItemLastName(node1).CompareTo(DatasManager::Get().GetItemLastName(node2));
+            return DatasManager::Get().GetItemFullName(node1, true).CompareTo(DatasManager::Get().GetItemFullName(node2, true));
             break;
         case SORTCOL_FNAME:
-            return DatasManager::Get().GetItemFirstName(node1).CompareTo(DatasManager::Get().GetItemFirstName(node2));
+            return DatasManager::Get().GetItemFullName(node1, false).CompareTo(DatasManager::Get().GetItemFullName(node2, false));
             break;
         default:
             return 0;
