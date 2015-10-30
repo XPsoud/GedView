@@ -4,6 +4,8 @@
 #include "appversion.h"
 #include "settingsmanager.h"
 
+#include <wx/stdpaths.h>
+
 IMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
@@ -18,7 +20,11 @@ bool MyApp::OnInit()
     // Init the SettingManager instance
     SettingsManager& settings=SettingsManager::Get();
     // Initialize the local if possible
+#ifdef __WXMAC__
+    wxString sDir=wxStandardPaths::Get().GetResourcesDir();
+#else
     wxString sDir=settings.GetAppPath();
+#endif // __WXMAC__
     if (!sDir.EndsWith(wxFileName::GetPathSeparator()))
         sDir.Append(wxFileName::GetPathSeparator());
     sDir.Append(_T("langs"));
