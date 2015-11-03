@@ -4,6 +4,7 @@
 #include "dlgabout.h"
 #include "appversion.h"
 #include "dlgtreepdf.h"
+#include "dlgoptions.h"
 #include "dlgexportpdf.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
@@ -567,7 +568,8 @@ void MainFrame::OnSaveXmlFileClicked(wxCommandEvent& event)
 
 void MainFrame::OnPreferencesClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Preferences"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    DlgOptions dlg(this);
+    dlg.ShowModal();
 }
 
 void MainFrame::OnAboutClicked(wxCommandEvent& event)

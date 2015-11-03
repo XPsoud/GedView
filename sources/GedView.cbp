@@ -562,6 +562,12 @@
 		<Unit filename="dlgexportpdf.h">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>
+		<Unit filename="dlgoptions.cpp">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
+		<Unit filename="dlgoptions.h">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
 		<Unit filename="dlgtreepdf.cpp">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>
