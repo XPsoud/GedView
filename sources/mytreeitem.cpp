@@ -296,7 +296,22 @@ void MyTreeItem::UpdateItemText()
     {
         m_sItemLName=DatasManager::Get().GetItemLastName(m_NodeItem);
         m_sItemFName=DatasManager::Get().GetItemFirstName(m_NodeItem);
-        m_sItemDates=DatasManager::Get().GetItemBirth(m_NodeItem, true) + _T(" => ") + DatasManager::Get().GetItemDeath(m_NodeItem, true);
+        wxString s1=DatasManager::Get().GetItemBirth(m_NodeItem, true);
+        if (s1==g_sUnknownYear)
+        {
+            s1=DatasManager::Get().GetItemBaptism(m_NodeItem, true);
+            if (s1!=g_sUnknownYear)
+                s1=_T("[")+s1+_T("]");
+        }
+
+        wxString s2=DatasManager::Get().GetItemDeath(m_NodeItem, true);
+        if (s2==g_sUnknownYear)
+        {
+            s2=DatasManager::Get().GetItemBurial(m_NodeItem, true);
+            if (s2!=g_sUnknownYear)
+                s2=_T("[")+s2+_T("]");
+        }
+        m_sItemDates=s1 + _T(" => ") + s2;
     }
 }
 

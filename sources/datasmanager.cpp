@@ -750,6 +750,53 @@ wxString DatasManager::GetItemDeath(const wxXmlNode* itmNode, bool yearOnly)
     return (yearOnly?g_sUnknownYear:wxEmptyString);
 }
 
+wxString DatasManager::GetItemBurial(const wxString& itmId, bool yearOnly)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemBurial(node, yearOnly);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemBurial(const wxXmlNode* itmNode, bool yearOnly)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BURI")))
+        {
+            if (!yearOnly)
+            {
+                return ParseEvent(subNode);
+            }
+            else
+            {
+                wxXmlNode *subsubNode=subNode->GetChildren();
+                while(subsubNode!=NULL)
+                {
+                    if (subsubNode->GetAttribute(_T("Type"))==_T("DATE"))
+                    {
+                        return ParseDate(subsubNode->GetAttribute(_T("Value")), true);
+                    }
+                    subsubNode=subsubNode->GetNext();
+                }
+                return g_sUnknownYear;
+            }
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return (yearOnly?g_sUnknownYear:wxEmptyString);
+}
+
 wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
 {
     if (itmNode==NULL) return wxEmptyString;
