@@ -65,6 +65,7 @@ class DatasManager
         const wxArrayString& GetModifiedCompResults() { return m_arsCompModified; }
         const wxArrayString& GetAddedCompResults() { return m_arsCompAdded; }
         const wxArrayString& GetRemovedCompResults() { return m_arsCompRemoved; }
+        const wxString& GetLastComparedFile() { return m_sCmpFile; }
     protected:
     private:
         DatasManager();

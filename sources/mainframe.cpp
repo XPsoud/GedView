@@ -769,15 +769,28 @@ void MainFrame::OnHistoryNextClicked(wxCommandEvent& event)
 
 void MainFrame::OnCompareClicked(wxCommandEvent& event)
 {
-    wxString sMsg=_("Select the \"GED\" file to open");
-    wxString sWlcrd=_("Gedcom files (*.ged)|*.ged|All files (*.*)|*.*");
-    wxString sFName=wxFileSelector(sMsg, wxGetCwd(), wxEmptyString, _T("ged"), sWlcrd, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
-    if (sFName.IsEmpty()) return;
-
-    if (!m_datas.CompareWithGedFile(sFName))
+    int iRes=wxNO;
+    if (m_datas.HasCompResults(true))
     {
-        wxMessageBox(m_datas.GetLastError(), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
-        return;
+        wxString sMsg=_("Datas has already been compared with the following file:");
+        sMsg << _T("\n") << m_datas.GetLastComparedFile() << _T("\n");
+        sMsg << _("- Click \"Yes\" to see the results of this comparison") << _T("\n");
+        sMsg << _("- Click \"No\" to make a new comparison");
+        iRes=wxMessageBox(sMsg, _("Already done"), wxICON_QUESTION|wxYES_NO|wxCANCEL|wxCENTER);
+        if (iRes==wxCANCEL) return;
+    }
+    if (iRes==wxNO)
+    {
+        wxString sMsg=_("Select the \"GED\" file to open");
+        wxString sWlcrd=_("Gedcom files (*.ged)|*.ged|All files (*.*)|*.*");
+        wxString sFName=wxFileSelector(sMsg, wxGetCwd(), wxEmptyString, _T("ged"), sWlcrd, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+        if (sFName.IsEmpty()) return;
+
+        if (!m_datas.CompareWithGedFile(sFName))
+        {
+            wxMessageBox(m_datas.GetLastError(), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+            return;
+        }
     }
 
     wxMessageBox(m_datas.GetCompResultsSummary(), _("Results"), wxICON_INFORMATION|wxCENTER|wxOK);

@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-03 09:04+0100\n"
-"PO-Revision-Date: 2015-11-03 09:07+0100\n"
+"POT-Creation-Date: 2015-11-09 07:43+0100\n"
+"PO-Revision-Date: 2015-11-09 07:43+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -343,7 +343,7 @@ msgid "Invalid file given to command line!"
 msgstr "Fichier passé à la ligne de commande invalide !"
 
 #: sources/main.cpp:50 sources/mainframe.cpp:516 sources/mainframe.cpp:536
-#: sources/mainframe.cpp:563 sources/mainframe.cpp:779
+#: sources/mainframe.cpp:563 sources/mainframe.cpp:791
 msgid "Error"
 msgstr "Erreur"
 
@@ -420,11 +420,11 @@ msgstr "Pas de fichier chargé"
 msgid "No datas present in memory"
 msgstr "Pas de données présentes en mémoire"
 
-#: sources/mainframe.cpp:510 sources/mainframe.cpp:772
+#: sources/mainframe.cpp:510 sources/mainframe.cpp:784
 msgid "Select the \"GED\" file to open"
 msgstr "Sélectionnez le fichier \"GED\" à ouvrir"
 
-#: sources/mainframe.cpp:511 sources/mainframe.cpp:773
+#: sources/mainframe.cpp:511 sources/mainframe.cpp:785
 msgid "Gedcom files (*.ged)|*.ged|All files (*.*)|*.*"
 msgstr "Fichiers Gedcom (*.ged)|*.ged|Tous les fichiers (*.*)|*.*"
 
@@ -460,7 +460,23 @@ msgstr "Données sauvées avec succès vers"
 msgid "The pdf file creation terminated !"
 msgstr "Création du fichier pdf terminée !"
 
-#: sources/mainframe.cpp:783
+#: sources/mainframe.cpp:775
+msgid "Datas has already been compared with the following file:"
+msgstr "Les données ont déjà été comparées avec le fichier suivant :"
+
+#: sources/mainframe.cpp:777
+msgid "- Click \"Yes\" to see the results of this comparison"
+msgstr "- Cliquez sur \"Oui\" pour voir les résultats de cette comparaison"
+
+#: sources/mainframe.cpp:778
+msgid "- Click \"No\" to make a new comparison"
+msgstr "- Cliquez sur \"Non\" pour faire une nouvelle comparaison"
+
+#: sources/mainframe.cpp:779
+msgid "Already done"
+msgstr "Déjà effectué"
+
+#: sources/mainframe.cpp:796
 msgid "Results"
 msgstr "Résultats"
 
