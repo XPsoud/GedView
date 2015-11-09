@@ -48,6 +48,8 @@ void DlgExportPdf::CreateControls()
             vszr->Add(m_optExportType[0], 0, wxALL, 5);
             m_optExportType[1]=new wxRadioButton(this, -1, _("All the items in memory"));
             vszr->Add(m_optExportType[1], 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
+            m_optExportType[2]=new wxRadioButton(this, -1, _("Items affected by the last comparison"));
+            vszr->Add(m_optExportType[2], 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
         szrMain->Add(vszr, 0, wxLEFT, 5);
 
@@ -82,8 +84,8 @@ void DlgExportPdf::CreateControls()
 
 void DlgExportPdf::ConnectControls()
 {
-    m_optExportType[0]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgExportPdf::OnOptExportTypeClicked), NULL, this);
-    m_optExportType[1]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgExportPdf::OnOptExportTypeClicked), NULL, this);
+    for (int i=0; i<3; ++i)
+        m_optExportType[i]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgExportPdf::OnOptExportTypeClicked), NULL, this);
     m_btnExport->Connect(wxEVT_BUTTON, wxCommandEventHandler(DlgExportPdf::OnBtnExportClicked), NULL, this);
 }
 
@@ -91,19 +93,44 @@ void DlgExportPdf::UpdateControlsStates()
 {
     if (m_SelectedItem==NULL)
     {
-        m_optExportType[0]->Disable();
-        m_optExportType[1]->SetValue(true);
-        m_chkSummary->SetValue(true);
-        m_chkSummary->Enable();
-        m_chkSplitPdf->Enable();
+        if (!m_datas.HasCompResults())
+        {
+            m_optExportType[0]->Disable();
+            m_optExportType[1]->SetValue(true);
+            m_optExportType[2]->Disable();
+            m_chkSummary->SetValue(true);
+            m_chkSummary->Enable();
+            m_chkSplitPdf->Enable();
+        }
+        else
+        {
+            m_optExportType[0]->Disable();
+            m_optExportType[1]->SetValue(false);
+            m_optExportType[2]->SetValue(true);
+            m_chkSummary->SetValue(true);
+            m_chkSummary->Enable();
+            m_chkSplitPdf->Enable();
+        }
     }
     else
     {
-        m_optExportType[0]->Enable();
-        m_optExportType[0]->SetValue(true);
-        m_chkSummary->SetValue(false);
-        m_chkSummary->Disable();
-        m_chkSplitPdf->Disable();
+        if (!m_datas.HasCompResults())
+        {
+            m_optExportType[0]->Enable();
+            m_optExportType[0]->SetValue(true);
+            m_optExportType[2]->Disable();
+            m_chkSummary->SetValue(false);
+            m_chkSummary->Disable();
+            m_chkSplitPdf->Disable();
+        }
+        else
+        {
+            m_optExportType[0]->Enable();
+            m_optExportType[0]->SetValue(true);
+            m_chkSummary->SetValue(false);
+            m_chkSummary->Disable();
+            m_chkSplitPdf->Disable();
+        }
     }
 }
 
@@ -129,85 +156,33 @@ void DlgExportPdf::OnOptExportTypeClicked(wxCommandEvent& event)
 
 void DlgExportPdf::OnBtnExportClicked(wxCommandEvent& event)
 {
-    wxFileName fname=m_datas.GetCurrentFileName();
-    fname.SetExt(_T("pdf"));
+    m_FName=m_datas.GetCurrentFileName();
+    m_FName.SetExt(_T("pdf"));
 
     wxString sMsg=_("Select the \"PDF\" file to create");
     wxString sWlcrd=_("Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*");
-    wxString sFName=wxFileSelector(sMsg, fname.GetPath(), fname.GetFullName(), _T("pdf"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+    wxString sFName=wxFileSelector(sMsg, m_FName.GetPath(), m_FName.GetFullName(), _T("pdf"), sWlcrd, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
     if (sFName.IsEmpty()) return;
-    fname.Assign(sFName);
+    m_FName.Assign(sFName);
 
-    double dTotal=m_datas.GetItemsCount(GIT_INDI), dDone=0., dPrct;
-
-    wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
-    doc->SetFont(_T("Helvetica"), _T(""), 14);
-    doc->AliasNbPages();
-
-    if ((m_optExportType[1]->GetValue() && (m_chkSummary->IsChecked())))
+    int iExpType=-1;
+    for (int i=0; i<3; ++i)
     {
-        Summary2Pdf(doc);
-        if (m_chkSplitPdf->IsChecked())
-        {
-            dTotal++;
-            dDone=1;
-            wxString sName=fname.GetName() + _T("-") + _("Summary");
-            fname.SetName(sName);
-            doc->SaveAsFile(fname.GetFullPath());
-            delete doc;
-            doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
-            doc->SetFont(_T("Helvetica"), _T(""), 14);
-            doc->AliasNbPages();
-            dPrct=100./dTotal;
-            m_pgbProgress->SetValue(dPrct);
-            m_pgbProgress->Refresh();
-            wxTheApp->Yield();
-        }
+        if (m_optExportType[i]->GetValue())
+            iExpType=i;
     }
-    if ((m_optExportType[0]->GetValue()) && (m_SelectedItem!=NULL))
+    switch(iExpType)
     {
-        GedItem2Pdf(m_SelectedItem, doc);
-        doc->SaveAsFile(sFName);
-        m_pgbProgress->SetValue(100);
-        m_pgbProgress->Refresh();
+        case 0:
+            DoExportSelectedItem();
+            break;
+        case 1:
+            DoExportAllItems();
+            break;
+        case 2:
+            DoExportCompResults();
+            break;
     }
-    else
-    {
-        // Create a page for each individual item
-        wxXmlNode *root=m_datas.GetDatas();
-        wxXmlNode *item=root->GetChildren();
-        while(item!=NULL)
-        {
-            if (item->GetAttribute(_T("Type"))==_T("INDI"))
-            {
-                dDone++;
-                dPrct=dDone*100./dTotal;
-                m_pgbProgress->SetValue(dPrct);
-                m_pgbProgress->Refresh();
-                wxTheApp->Yield();
-                GedItem2Pdf(item, doc);
-                if (m_chkSplitPdf->IsChecked())
-                {
-                    fname.Assign(sFName);
-                    wxString sName=fname.GetName() + _T("-") + item->GetAttribute(_T("GedId"));
-                    fname.SetName(sName);
-                    doc->SaveAsFile(fname.GetFullPath());
-                    delete doc;
-                    doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
-                    doc->SetFont(_T("Helvetica"), _T(""), 14);
-                    doc->AliasNbPages();
-                }
-            }
-
-            item=item->GetNext();
-        }
-    }
-
-    m_pgbProgress->SetValue(100);
-    m_pgbProgress->Refresh();
-    if (m_optExportType[1]->GetValue() && !m_chkSplitPdf->IsChecked())
-        doc->SaveAsFile(fname.GetFullPath());
-    delete doc;
 
     EndModal(wxID_OK);
 }
@@ -228,7 +203,7 @@ void DlgExportPdf::AddHrTitle(double Y, const wxString& title, wxPdfDocument *do
     doc->SetFont(sName, sStyle, dSize);
 }
 
-void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc)
+void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems)
 {
     doc->AddPage();
     doc->SetMargins(10, 10, 10);
@@ -242,17 +217,36 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc)
     sHtml=_T("<table border=\"1\" cellpadding=\"2\"><colgroup><col width=\"30\" span=\"1\" /><col width=\"160\" span=\"1\" /></colgroup><thead><tr><td align=\"center\"><b>");
     sHtml << _("Id") << _T("</b></td><td align=\"center\"><b>") << _("Full name") << _T("</b></td></tr></thead>");
     sHtml << _T("<tbody>");
-    wxXmlNode *root=m_datas.GetDatas();
-    wxXmlNode *node=root->GetChildren();
+
     wxArrayString arsItems;
     arsItems.Clear();
-    while(node!=NULL)
+    if (pArsItems==NULL)
     {
-        if (node->GetAttribute(_T("Type"))==_T("INDI"))
+        wxXmlNode *root=m_datas.GetDatas();
+        wxXmlNode *node=root->GetChildren();
+        while(node!=NULL)
         {
-            arsItems.Add(m_datas.GetItemFullName(node) + wxString(_T("          ") + node->GetAttribute(_T("GedId"))).Right(10));
+            if (node->GetAttribute(_T("Type"))==_T("INDI"))
+            {
+                arsItems.Add(m_datas.GetItemFullName(node) + wxString(_T("          ") + node->GetAttribute(_T("GedId"))).Right(10));
+            }
+            node=node->GetNext();
         }
-        node=node->GetNext();
+    }
+    else
+    {
+        wxArrayString& items=*pArsItems;
+        for (size_t i=0; i<items.GetCount(); ++i)
+        {
+            int iPos=items[i].Find(_T(' '));
+            wxString sItem=items[i].Right(items[i].Length()-iPos);
+            sItem.Trim(false);
+            sItem.Trim(true);
+            wxString sId=_T("          ") + items[i].Left(iPos);
+            sId.Trim();
+            sItem << sId.Right(10);
+            arsItems.Add(sItem);
+        }
     }
     arsItems.Sort();
     for (size_t i=0; i<arsItems.GetCount(); ++i)
@@ -441,4 +435,160 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
 
         subNode=subNode->GetNext();
     }
+}
+
+void DlgExportPdf::DoExportSelectedItem()
+{
+    wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+    doc->SetFont(_T("Helvetica"), _T(""), 14);
+    doc->AliasNbPages();
+
+    GedItem2Pdf(m_SelectedItem, doc);
+    doc->SaveAsFile(m_FName.GetFullPath());
+    m_pgbProgress->SetValue(100);
+    m_pgbProgress->Refresh();
+
+}
+
+void DlgExportPdf::DoExportAllItems()
+{
+    double dTotal=m_datas.GetItemsCount(GIT_INDI), dDone=0., dPrct;
+
+    wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+    doc->SetFont(_T("Helvetica"), _T(""), 14);
+    doc->AliasNbPages();
+
+    wxString sBaseFName=m_FName.GetName();
+
+    if (m_chkSummary->IsChecked())
+    {
+        Summary2Pdf(doc);
+        if (m_chkSplitPdf->IsChecked())
+        {
+            dTotal++;
+            dDone=1;
+            wxString sName=sBaseFName + _T("-") + _("Summary");
+            m_FName.SetName(sName);
+            doc->SaveAsFile(m_FName.GetFullPath());
+            delete doc;
+            doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+            doc->SetFont(_T("Helvetica"), _T(""), 14);
+            doc->AliasNbPages();
+            dPrct=100./dTotal;
+            m_pgbProgress->SetValue(dPrct);
+            m_pgbProgress->Refresh();
+            wxTheApp->Yield();
+        }
+    }
+    // Create a page for each individual item
+    wxXmlNode *root=m_datas.GetDatas();
+    wxXmlNode *item=root->GetChildren();
+    while(item!=NULL)
+    {
+        if (item->GetAttribute(_T("Type"))==_T("INDI"))
+        {
+            dDone++;
+            dPrct=dDone*100./dTotal;
+            m_pgbProgress->SetValue(dPrct);
+            m_pgbProgress->Refresh();
+            wxTheApp->Yield();
+            GedItem2Pdf(item, doc);
+            if (m_chkSplitPdf->IsChecked())
+            {
+                wxString sName=sBaseFName + _T("-") + item->GetAttribute(_T("GedId"));
+                m_FName.SetName(sName);
+                doc->SaveAsFile(m_FName.GetFullPath());
+                delete doc;
+                doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+                doc->SetFont(_T("Helvetica"), _T(""), 14);
+                doc->AliasNbPages();
+            }
+        }
+
+        item=item->GetNext();
+    }
+    m_pgbProgress->SetValue(100);
+    m_pgbProgress->Refresh();
+    if (!m_chkSplitPdf->IsChecked())
+        doc->SaveAsFile(m_FName.GetFullPath());
+    delete doc;
+}
+
+void DlgExportPdf::DoExportCompResults()
+{
+    if (!m_datas.HasCompResults())
+    {
+        wxMessageBox(_("No exportable comparison results!"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        return;
+    }
+
+    wxArrayString arsItems;
+    arsItems.Clear();
+    const wxArrayString& mitems=m_datas.GetModifiedCompResults();
+    for (size_t i=0; i<mitems.GetCount(); ++i)
+        arsItems.Add(mitems[i]);
+    const wxArrayString& aitems=m_datas.GetAddedCompResults();
+    for (size_t i=0; i<aitems.GetCount(); ++i)
+        arsItems.Add(aitems[i]);
+
+    double dTotal=arsItems.GetCount(), dDone=0., dPrct;
+
+    wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+    doc->SetFont(_T("Helvetica"), _T(""), 14);
+    doc->AliasNbPages();
+
+    wxString sBaseFName=m_FName.GetName();
+
+    if (m_chkSummary->IsChecked())
+    {
+        Summary2Pdf(doc, &arsItems);
+        if (m_chkSplitPdf->IsChecked())
+        {
+            dTotal++;
+            dDone=1;
+            wxString sName=sBaseFName + _T("-") + _("Summary");
+            m_FName.SetName(sName);
+            doc->SaveAsFile(m_FName.GetFullPath());
+            delete doc;
+            doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+            doc->SetFont(_T("Helvetica"), _T(""), 14);
+            doc->AliasNbPages();
+            dPrct=100./dTotal;
+            m_pgbProgress->SetValue(dPrct);
+            m_pgbProgress->Refresh();
+            wxTheApp->Yield();
+        }
+    }
+    // Create a page for each individual item
+    wxXmlNode *item;
+    for (size_t i=0; i<arsItems.GetCount(); ++i)
+    {
+        int iPos=arsItems[i].Find(_T(' '));
+        wxString sId=arsItems[i].Left(iPos);
+        item=m_datas.FindItemByGedId(sId);
+        if (item!=NULL)
+        {
+            dDone++;
+            dPrct=dDone*100./dTotal;
+            m_pgbProgress->SetValue(dPrct);
+            m_pgbProgress->Refresh();
+            wxTheApp->Yield();
+            GedItem2Pdf(item, doc);
+            if (m_chkSplitPdf->IsChecked())
+            {
+                wxString sName=sBaseFName + _T("-") + item->GetAttribute(_T("GedId"));
+                m_FName.SetName(sName);
+                doc->SaveAsFile(m_FName.GetFullPath());
+                delete doc;
+                doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
+                doc->SetFont(_T("Helvetica"), _T(""), 14);
+                doc->AliasNbPages();
+            }
+        }
+    }
+    m_pgbProgress->SetValue(100);
+    m_pgbProgress->Refresh();
+    if (!m_chkSplitPdf->IsChecked())
+        doc->SaveAsFile(m_FName.GetFullPath());
+    delete doc;
 }

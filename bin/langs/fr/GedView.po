@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-09 07:43+0100\n"
-"PO-Revision-Date: 2015-11-09 07:43+0100\n"
+"POT-Creation-Date: 2015-11-09 09:36+0100\n"
+"PO-Revision-Date: 2015-11-09 09:36+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -25,9 +25,9 @@ msgstr "Naissance :"
 #: sources/datasmanager.cpp:377 sources/datasmanager.cpp:716
 #: sources/datasmanager.cpp:745 sources/datasmanager.cpp:770
 #: sources/datasmanager.cpp:811 sources/datasmanager.cpp:827
-#: sources/dlgexportpdf.cpp:302 sources/dlgexportpdf.cpp:338
-#: sources/dlgexportpdf.cpp:367 sources/dlgexportpdf.cpp:414
-#: sources/dlgexportpdf.cpp:431 sources/mainframe.cpp:333
+#: sources/dlgexportpdf.cpp:296 sources/dlgexportpdf.cpp:332
+#: sources/dlgexportpdf.cpp:361 sources/dlgexportpdf.cpp:408
+#: sources/dlgexportpdf.cpp:425 sources/mainframe.cpp:333
 #: sources/mainframe.cpp:369 sources/mainframe.cpp:394
 #: sources/mainframe.cpp:436 sources/mainframe.cpp:457
 msgid "Dead"
@@ -51,36 +51,36 @@ msgstr "à"
 
 #: sources/datasmanager.cpp:718 sources/datasmanager.cpp:746
 #: sources/datasmanager.cpp:771 sources/datasmanager.cpp:813
-#: sources/datasmanager.cpp:828 sources/dlgexportpdf.cpp:304
-#: sources/dlgexportpdf.cpp:339 sources/dlgexportpdf.cpp:368
-#: sources/dlgexportpdf.cpp:415 sources/dlgexportpdf.cpp:432
+#: sources/datasmanager.cpp:828 sources/dlgexportpdf.cpp:298
+#: sources/dlgexportpdf.cpp:333 sources/dlgexportpdf.cpp:362
+#: sources/dlgexportpdf.cpp:409 sources/dlgexportpdf.cpp:426
 #: sources/mainframe.cpp:335 sources/mainframe.cpp:370
 #: sources/mainframe.cpp:395 sources/mainframe.cpp:438
 #: sources/mainframe.cpp:458
 msgid "Dead_F"
 msgstr "Décédée"
 
-#: sources/datasmanager.cpp:724 sources/dlgexportpdf.cpp:315
+#: sources/datasmanager.cpp:724 sources/dlgexportpdf.cpp:309
 #: sources/mainframe.cpp:348
 msgid "Parents"
 msgstr "Parents"
 
-#: sources/datasmanager.cpp:738 sources/dlgexportpdf.cpp:329
+#: sources/datasmanager.cpp:738 sources/dlgexportpdf.cpp:323
 #: sources/mainframe.cpp:362
 msgid "Father:"
 msgstr "Père :"
 
-#: sources/datasmanager.cpp:738 sources/dlgexportpdf.cpp:329
+#: sources/datasmanager.cpp:738 sources/dlgexportpdf.cpp:323
 #: sources/mainframe.cpp:362
 msgid "Mother:"
 msgstr "Mère :"
 
-#: sources/datasmanager.cpp:758 sources/dlgexportpdf.cpp:353
+#: sources/datasmanager.cpp:758 sources/dlgexportpdf.cpp:347
 #: sources/mainframe.cpp:382
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
-#: sources/datasmanager.cpp:783 sources/dlgexportpdf.cpp:381
+#: sources/datasmanager.cpp:783 sources/dlgexportpdf.cpp:375
 #: sources/mainframe.cpp:407
 msgid "Union(s)"
 msgstr "Union(s)"
@@ -160,45 +160,59 @@ msgstr "Seulement l'élément sélectionné"
 msgid "All the items in memory"
 msgstr "Tous les éléments en mémoire"
 
-#: sources/dlgexportpdf.cpp:54
+#: sources/dlgexportpdf.cpp:51
+msgid "Items affected by the last comparison"
+msgstr "Éléments concernés par la dernière comparaison"
+
+#: sources/dlgexportpdf.cpp:56
 msgid "Add a summary of the exported items"
 msgstr "Ajouter un sommaire aux éléments exportés"
 
-#: sources/dlgexportpdf.cpp:57
+#: sources/dlgexportpdf.cpp:59
 msgid "Create one pdf file per item"
 msgstr "Créer un fichier pdf par élément"
 
-#: sources/dlgexportpdf.cpp:67
+#: sources/dlgexportpdf.cpp:69
 msgid "Export"
 msgstr "Exporter"
 
-#: sources/dlgexportpdf.cpp:72
+#: sources/dlgexportpdf.cpp:74
 msgid "Cancel"
 msgstr "Annuler"
 
-#: sources/dlgexportpdf.cpp:135 sources/dlgtreepdf.cpp:232
+#: sources/dlgexportpdf.cpp:162 sources/dlgtreepdf.cpp:232
 msgid "Select the \"PDF\" file to create"
 msgstr "Sélectionnez le fichier \"PDF\" à créer"
 
-#: sources/dlgexportpdf.cpp:136 sources/dlgtreepdf.cpp:233
+#: sources/dlgexportpdf.cpp:163 sources/dlgtreepdf.cpp:233
 msgid "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*"
 msgstr "Fichiers pdf (*.pdf)|*.pdf|Tous les fichiers (*.*)|*.*"
 
-#: sources/dlgexportpdf.cpp:154
-msgid "Summary"
-msgstr "Index"
-
-#: sources/dlgexportpdf.cpp:238
+#: sources/dlgexportpdf.cpp:213
 msgid "Alphabetical Index"
 msgstr "Index Alphabétique"
 
-#: sources/dlgexportpdf.cpp:243
+#: sources/dlgexportpdf.cpp:218
 msgid "Id"
 msgstr "Id"
 
-#: sources/dlgexportpdf.cpp:243
+#: sources/dlgexportpdf.cpp:218
 msgid "Full name"
 msgstr "Nom complet"
+
+#: sources/dlgexportpdf.cpp:470 sources/dlgexportpdf.cpp:549
+msgid "Summary"
+msgstr "Index"
+
+#: sources/dlgexportpdf.cpp:521
+msgid "No exportable comparison results!"
+msgstr "Aucun résultat de comparaison exportable !"
+
+#: sources/dlgexportpdf.cpp:521 sources/main.cpp:50 sources/mainframe.cpp:516
+#: sources/mainframe.cpp:536 sources/mainframe.cpp:563
+#: sources/mainframe.cpp:791
+msgid "Error"
+msgstr "Erreur"
 
 #: sources/dlgoptions.cpp:11
 msgid "Preferences"
@@ -341,11 +355,6 @@ msgstr "Succès"
 #: sources/main.cpp:48
 msgid "Invalid file given to command line!"
 msgstr "Fichier passé à la ligne de commande invalide !"
-
-#: sources/main.cpp:50 sources/mainframe.cpp:516 sources/mainframe.cpp:536
-#: sources/mainframe.cpp:563 sources/mainframe.cpp:791
-msgid "Error"
-msgstr "Erreur"
 
 #: sources/mainframe.cpp:120
 msgid "Open a ged file"
