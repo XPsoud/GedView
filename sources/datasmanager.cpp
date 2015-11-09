@@ -9,7 +9,7 @@
 #include <wx/busyinfo.h>
 
 const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS")};
-const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR")};
+const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR"), _T("BAPM"), _T("BURI")};
 const wxChar* szKnownFamItems[] = { _T("HUSB"), _T("WIFE"), _T("CHIL")};
 const wxChar* g_sUnknownYear=_T("----");
 
@@ -383,6 +383,16 @@ wxString DatasManager::ParseEvent(wxXmlNode* event)
         if (!event->HasAttribute(_T("Value")))
             sRes << _("Marriage:");
     }
+    else if (sType==_T("BAPM"))
+    {
+        if (!event->HasAttribute(_T("Value")))
+            sRes << _("Baptism:");
+    }
+    else if (sType==_T("BURI"))
+    {
+        if (!event->HasAttribute(_T("Value")))
+            sRes << _("Inhumation:");
+    }
     else
         sRes << _("Unknown event:");
 
@@ -621,6 +631,53 @@ wxString DatasManager::GetItemBirth(const wxXmlNode* itmNode, bool yearOnly)
     while(subNode!=NULL)
     {
         if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BIRT")))
+        {
+            if (!yearOnly)
+            {
+                return ParseEvent(subNode);
+            }
+            else
+            {
+                wxXmlNode *subsubNode=subNode->GetChildren();
+                while(subsubNode!=NULL)
+                {
+                    if (subsubNode->GetAttribute(_T("Type"))==_T("DATE"))
+                    {
+                        return ParseDate(subsubNode->GetAttribute(_T("Value")), true);
+                    }
+                    subsubNode=subsubNode->GetNext();
+                }
+                return g_sUnknownYear;
+            }
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return (yearOnly?g_sUnknownYear:wxEmptyString);
+}
+
+wxString DatasManager::GetItemBaptism(const wxString& itmId, bool yearOnly)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemBaptism(node, yearOnly);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemBaptism(const wxXmlNode* itmNode, bool yearOnly)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BAPM")))
         {
             if (!yearOnly)
             {

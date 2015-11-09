@@ -49,6 +49,8 @@ class DatasManager
         GEDITEMSEX GetItemSex(const wxXmlNode *itmNode);
         wxString GetItemBirth(const wxString& itmId, bool yearOnly=false);
         wxString GetItemBirth(const wxXmlNode *itmNode, bool yearOnly=false);
+        wxString GetItemBaptism(const wxString& itmId, bool yearOnly=false);
+        wxString GetItemBaptism(const wxXmlNode *itmNode, bool yearOnly=false);
         wxString GetItemDeath(const wxString& itmId, bool yearOnly=false);
         wxString GetItemDeath(const wxXmlNode *itmNode, bool yearOnly=false);
         wxString GetItemInfos(wxXmlNode *itmNode);
@@ -56,8 +58,6 @@ class DatasManager
         bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
         bool ReadGedFile(const wxString& filename);
         bool SaveXmlFile(const wxString& filename, int compLevel=0);
-        // Creating a tree form the datas
-        bool CreateTree();
         // Comparison with another gedcom file
         bool CompareWithGedFile(const wxString& filename);
         bool HasCompResults(bool deleted=false);
