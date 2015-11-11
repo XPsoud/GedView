@@ -1,0 +1,53 @@
+CFLAGS = `wx-config --cppflags` -DwxDEBUG_LEVEL=0
+BASE_SRCDIR = .
+CPP_SRCDIR = sources
+RES_SRCDIR = resources
+PDF_SRCDIR = wxpdfdoc
+OUTPUT_DIR = bin
+
+EXEC_NAME = $(BASE_SRCDIR)/$(OUTPUT_DIR)/GedView
+INCLUDES = -I$(BASE_SRCDIR)/$(PDF_SRCDIR)
+
+BASE_OBJDIR = build/Release-lx
+SRC_OBJDIR = $(BASE_OBJDIR)/$(CPP_SRCDIR)
+RES_OBJDIR = $(BASE_OBJDIR)/$(RES_SRCDIR)
+PDF_OBJDIR = $(BASE_OBJDIR)/$(PDF_SRCDIR)
+
+CPP_SRC_FILES = $(wildcard $(BASE_SRCDIR)/$(CPP_SRCDIR)/*.cpp)
+OBJ_SRC_FILES = $(CPP_SRC_FILES:$(BASE_SRCDIR)/$(CPP_SRCDIR)/%.cpp=$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.o)
+
+CPP_RES_FILES = $(wildcard $(BASE_SRCDIR)/$(RES_SRCDIR)/*.cpp)
+OBJ_RES_FILES = $(CPP_RES_FILES:$(BASE_SRCDIR)/$(RES_SRCDIR)/%.cpp=$(BASE_OBJDIR)/$(RES_SRCDIR)/%.o)
+
+CPP_PDF_FILES = $(wildcard $(BASE_SRCDIR)/$(PDF_SRCDIR)/*.cpp)
+OBJ_PDF_FILES = $(CPP_PDF_FILES:$(BASE_SRCDIR)/$(PDF_SRCDIR)/%.cpp=$(BASE_OBJDIR)/$(PDF_SRCDIR)/%.o)
+
+LIBS = `wx-config --libs` -lfontconfig -lcurl
+
+all : $(EXEC_NAME)
+
+clean :
+	rm $(OBJ_SRC_FILES) $(OBJ_RES_FILES) $(OBJ_PDF_FILES) $(EXEC_NAME)
+
+minclean :
+	rm $(OBJ_SRC_FILES) $(OBJ_RES_FILES)
+
+prebuild :
+	mkdir -p $(SRC_OBJDIR) $(RES_OBJDIR) $(PDF_OBJDIR) $(OUTPUT_DIR)
+
+$(EXEC_NAME) : prebuild $(OBJ_SRC_FILES) $(OBJ_RES_FILES) $(OBJ_PDF_FILES)
+	g++ -o $(EXEC_NAME) $(OBJ_SRC_FILES) $(OBJ_RES_FILES) $(OBJ_PDF_FILES) $(LIBS)
+
+$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.o: $(BASE_SRCDIR)/$(CPP_SRCDIR)/%.cpp $(BASE_SRCDIR)/$(CPP_SRCDIR)/%.h
+	@echo Compiling $<
+	g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(BASE_OBJDIR)/$(RES_SRCDIR)/%.o: $(BASE_SRCDIR)/$(RES_SRCDIR)/%.cpp $(BASE_SRCDIR)/$(RES_SRCDIR)/%.h
+	@echo Compiling $<
+	g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(BASE_OBJDIR)/$(PDF_SRCDIR)/%.o: $(BASE_SRCDIR)/$(PDF_SRCDIR)/%.cpp
+	@echo Compiling $<
+	g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+.PHONY: clean minclean
