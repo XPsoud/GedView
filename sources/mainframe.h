@@ -33,6 +33,7 @@ class MainFrame: public wxFrame
         void OnSaveXmlFileClicked(wxCommandEvent &event);
         void OnSavePdfFileClicked(wxCommandEvent &event);
         void OnSavePdfTreeClicked(wxCommandEvent &event);
+        void OnSaveCsvFileClicked(wxCommandEvent &event);
         void OnPreferencesClicked(wxCommandEvent &event);
         void OnAboutClicked(wxCommandEvent &event);
         void OnListItemSelected(wxListEvent &event);

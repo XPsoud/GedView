@@ -6,6 +6,7 @@
 #include "dlgtreepdf.h"
 #include "dlgoptions.h"
 #include "dlgexportpdf.h"
+#include "dlgexportcsv.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
 #include "settingsmanager.h"
@@ -33,6 +34,7 @@ enum SortColumn
 
 const int wxID_PDFLIST = wxNewId();
 const int wxID_PDFTREE = wxNewId();
+const int wxID_CSVFILE = wxNewId();
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
@@ -115,6 +117,8 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_PDFTREE, _("Create pdf tree"), wxGet_pdftree_png_Bitmap(), _("Export selected item's tree to a pdf file"));
 
+        tb->AddTool(wxID_CSVFILE, _("Export to csv"), wxGet_csv_png_Bitmap(), _("Export datas to a csv file"));
+
         tb->AddSeparator();
 
         tb->AddTool(wxID_BACKWARD, wxGetStockLabel(wxID_BACKWARD), wxArtProvider::GetBitmap(wxART_GO_BACK, wxART_TOOLBAR), _("Go backward in shown items history"));
@@ -158,7 +162,7 @@ void MainFrame::CreateControls()
             m_lstItems->AppendColumn(_("Sex"), wxLIST_FORMAT_LEFT, iWdth);
             iWdth=m_settings.GetColumnWidth(LST_COL_ID);
             if (iWdth<60) iWdth=60;
-            m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT, 60);
+            m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT, iWdth);
             iWdth=m_settings.GetColumnWidth(LST_COL_LASTNAME);
             m_lstItems->AppendColumn(_("Last Name"), wxLIST_FORMAT_LEFT, iWdth);
             iWdth=m_settings.GetColumnWidth(LST_COL_FIRSTNAME);
@@ -188,6 +192,7 @@ void MainFrame::ConnectControls()
     Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
     Connect(wxID_PDFLIST, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
     Connect(wxID_PDFTREE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfTreeClicked));
+    Connect(wxID_CSVFILE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveCsvFileClicked));
     Connect(wxID_BACKWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryBackClicked));
     Connect(wxID_FORWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryNextClicked));
     Connect(wxID_SPELL_CHECK, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnCompareClicked));
@@ -206,6 +211,7 @@ void MainFrame::ConnectControls()
     Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_PDFLIST, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_PDFTREE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_PdfTree));
+    Connect(wxID_CSVFILE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
     Connect(wxID_BACKWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Backward));
     Connect(wxID_FORWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Forward));
     Connect(wxID_SPELL_CHECK, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Compare));
@@ -737,6 +743,12 @@ void MainFrame::OnSavePdfTreeClicked(wxCommandEvent& event)
         dlg.SetSelectedItem(node);
     }
 
+    dlg.ShowModal();
+}
+
+void MainFrame::OnSaveCsvFileClicked(wxCommandEvent& event)
+{
+    DlgExportCsv dlg(this);
     dlg.ShowModal();
 }
 
