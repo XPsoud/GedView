@@ -34,6 +34,21 @@ bool MyApp::OnInit()
     // Read the settings file
     settings.ReadSettings();
 
+    // Check for single instance
+    m_pSnglInstChkr=NULL;
+    if (!settings.GetMultipleInstancesAllowed())
+    {
+        m_pSnglInstChkr=new wxSingleInstanceChecker;
+
+        m_pSnglInstChkr->Create(_T(PRODUCTNAME));
+        if (m_pSnglInstChkr->IsAnotherRunning())
+        {
+            wxMessageBox(_("An other instance of this application is already running !"), _("Multiple instances forbidden"), wxICON_EXCLAMATION|wxOK|wxCENTER);
+            delete m_pSnglInstChkr;
+            return false;
+        }
+    }
+
     MainFrame* frame = new MainFrame(GetVersionString(true));
     SetTopWindow(frame);
     frame->Show();
@@ -70,6 +85,9 @@ int MyApp::OnExit()
     SettingsManager& settings=SettingsManager::Get();
     if (settings.IsModified())
         settings.SaveSettings();
+
+    if (m_pSnglInstChkr!=NULL)
+        delete m_pSnglInstChkr;
 
     return wxApp::OnExit();
 }

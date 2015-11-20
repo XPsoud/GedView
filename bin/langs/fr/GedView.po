@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-20 07:46+0100\n"
-"PO-Revision-Date: 2015-11-20 07:46+0100\n"
+"POT-Creation-Date: 2015-11-20 07:54+0100\n"
+"PO-Revision-Date: 2015-11-20 07:54+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -216,7 +216,7 @@ msgstr "Index"
 msgid "No exportable comparison results!"
 msgstr "Aucun résultat de comparaison exportable !"
 
-#: sources/dlgexportpdf.cpp:521 sources/main.cpp:50 sources/mainframe.cpp:516
+#: sources/dlgexportpdf.cpp:521 sources/main.cpp:65 sources/mainframe.cpp:516
 #: sources/mainframe.cpp:536 sources/mainframe.cpp:563
 #: sources/mainframe.cpp:791
 msgid "Error"
@@ -288,7 +288,7 @@ msgstr "Divers :"
 
 #: sources/dlgoptions.cpp:76
 msgid "Allow only one instance of the application"
-msgstr "N'autoriser qu'une instance de l'application"
+msgstr "N'autoriser qu'une seule instance de l'application"
 
 #: sources/dlgoptions.cpp:81
 msgid "General"
@@ -356,7 +356,15 @@ msgstr "Fichier pdf créé avec succès !"
 msgid "Success"
 msgstr "Succès"
 
-#: sources/main.cpp:48
+#: sources/main.cpp:46
+msgid "An other instance of this application is already running !"
+msgstr "Une autre instance de cette application est déjà en train de tourner !"
+
+#: sources/main.cpp:46
+msgid "Multiple instances forbidden"
+msgstr "Instances multiples interdites"
+
+#: sources/main.cpp:63
 msgid "Invalid file given to command line!"
 msgstr "Fichier passé à la ligne de commande invalide !"
 
