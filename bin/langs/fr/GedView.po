@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-09 10:01+0100\n"
-"PO-Revision-Date: 2015-11-09 10:01+0100\n"
+"POT-Creation-Date: 2015-11-20 07:46+0100\n"
+"PO-Revision-Date: 2015-11-20 07:46+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -22,9 +22,9 @@ msgstr ""
 msgid "Birth:"
 msgstr "Naissance :"
 
-#: sources/datasmanager.cpp:377 sources/datasmanager.cpp:773
-#: sources/datasmanager.cpp:802 sources/datasmanager.cpp:827
-#: sources/datasmanager.cpp:868 sources/datasmanager.cpp:884
+#: sources/datasmanager.cpp:377 sources/datasmanager.cpp:820
+#: sources/datasmanager.cpp:849 sources/datasmanager.cpp:874
+#: sources/datasmanager.cpp:915 sources/datasmanager.cpp:931
 #: sources/dlgexportpdf.cpp:296 sources/dlgexportpdf.cpp:332
 #: sources/dlgexportpdf.cpp:361 sources/dlgexportpdf.cpp:408
 #: sources/dlgexportpdf.cpp:425 sources/mainframe.cpp:333
@@ -57,9 +57,9 @@ msgstr "Événement inconnu :"
 msgid "in"
 msgstr "à"
 
-#: sources/datasmanager.cpp:775 sources/datasmanager.cpp:803
-#: sources/datasmanager.cpp:828 sources/datasmanager.cpp:870
-#: sources/datasmanager.cpp:885 sources/dlgexportpdf.cpp:298
+#: sources/datasmanager.cpp:822 sources/datasmanager.cpp:850
+#: sources/datasmanager.cpp:875 sources/datasmanager.cpp:917
+#: sources/datasmanager.cpp:932 sources/dlgexportpdf.cpp:298
 #: sources/dlgexportpdf.cpp:333 sources/dlgexportpdf.cpp:362
 #: sources/dlgexportpdf.cpp:409 sources/dlgexportpdf.cpp:426
 #: sources/mainframe.cpp:335 sources/mainframe.cpp:370
@@ -68,82 +68,82 @@ msgstr "à"
 msgid "Dead_F"
 msgstr "Décédée"
 
-#: sources/datasmanager.cpp:781 sources/dlgexportpdf.cpp:309
+#: sources/datasmanager.cpp:828 sources/dlgexportpdf.cpp:309
 #: sources/mainframe.cpp:348
 msgid "Parents"
 msgstr "Parents"
 
-#: sources/datasmanager.cpp:795 sources/dlgexportpdf.cpp:323
+#: sources/datasmanager.cpp:842 sources/dlgexportpdf.cpp:323
 #: sources/mainframe.cpp:362
 msgid "Father:"
 msgstr "Père :"
 
-#: sources/datasmanager.cpp:795 sources/dlgexportpdf.cpp:323
+#: sources/datasmanager.cpp:842 sources/dlgexportpdf.cpp:323
 #: sources/mainframe.cpp:362
 msgid "Mother:"
 msgstr "Mère :"
 
-#: sources/datasmanager.cpp:815 sources/dlgexportpdf.cpp:347
+#: sources/datasmanager.cpp:862 sources/dlgexportpdf.cpp:347
 #: sources/mainframe.cpp:382
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
-#: sources/datasmanager.cpp:840 sources/dlgexportpdf.cpp:375
+#: sources/datasmanager.cpp:887 sources/dlgexportpdf.cpp:375
 #: sources/mainframe.cpp:407
 msgid "Union(s)"
 msgstr "Union(s)"
 
-#: sources/datasmanager.cpp:903
+#: sources/datasmanager.cpp:950
 msgid "No datas in memory can be compared"
 msgstr "Aucunes données en mémoire ne peuvents être comparées"
 
-#: sources/datasmanager.cpp:908
+#: sources/datasmanager.cpp:955
 msgid "The selected file is already loaded in memory"
 msgstr "Le fichier sélectionné est déjà chargé en mémoire"
 
-#: sources/datasmanager.cpp:915
+#: sources/datasmanager.cpp:962
 msgid "Unable to open the selected file"
 msgstr "Impossible d'ouvrir le fichier sélectionné"
 
-#: sources/datasmanager.cpp:922
+#: sources/datasmanager.cpp:969
 msgid "Unable to parse the selected file"
 msgstr "Impossible d'analyser le fichier sélectionné"
 
-#: sources/datasmanager.cpp:932
+#: sources/datasmanager.cpp:979
 msgid "Comparing datas"
 msgstr "Comparaison des données"
 
-#: sources/datasmanager.cpp:933
+#: sources/datasmanager.cpp:980
 msgid "Please wait..."
 msgstr "Patientez, svp..."
 
-#: sources/datasmanager.cpp:1081
+#: sources/datasmanager.cpp:1128
 msgid "Changes from file:"
 msgstr "Modifications depuis le fichier :"
 
-#: sources/datasmanager.cpp:1088
+#: sources/datasmanager.cpp:1135
 msgid "1 item added:"
 msgstr "1 élément ajouté :"
 
-#: sources/datasmanager.cpp:1090
+#: sources/datasmanager.cpp:1137
 #, c-format
 msgid "%d items added:"
 msgstr "%d éléments ajoutés :"
 
-#: sources/datasmanager.cpp:1100
+#: sources/datasmanager.cpp:1147
 msgid "1 item removed:"
 msgstr "1 élément supprimé :"
 
-#: sources/datasmanager.cpp:1102
+#: sources/datasmanager.cpp:1149
 #, c-format
 msgid "%d items removed:"
 msgstr "%d éléments supprimés :"
 
-#: sources/datasmanager.cpp:1112
+#: sources/datasmanager.cpp:1159
 msgid "1 item modified:"
 msgstr "1 élément modifié :"
 
-#: sources/datasmanager.cpp:1114
+#: sources/datasmanager.cpp:1161
 #, c-format
 msgid "%d items modified:"
 msgstr "%d éléments modifiés :"
@@ -290,11 +290,7 @@ msgstr "Divers :"
 msgid "Allow only one instance of the application"
 msgstr "N'autoriser qu'une instance de l'application"
 
-#: sources/dlgoptions.cpp:79
-msgid "Show the splash-screen at startup"
-msgstr "Afficher l'écran de démarrage"
-
-#: sources/dlgoptions.cpp:84
+#: sources/dlgoptions.cpp:81
 msgid "General"
 msgstr "Général"
 

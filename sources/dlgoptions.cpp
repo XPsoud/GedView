@@ -75,9 +75,6 @@ void DlgOptions::CreateControls()
                 box=new wxStaticBoxSizer(wxVERTICAL, page, _("Misc : "));
                     m_chkSingleInstance=new wxCheckBox(page, -1, _("Allow only one instance of the application"));
                     box->Add(m_chkSingleInstance, 0, wxALL, 5);
-
-                    m_chkSplashScreen=new wxCheckBox(page, -1, _("Show the splash-screen at startup"));
-                    box->Add(m_chkSplashScreen, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
                 pageszr->Add(box, 0, wxALL|wxEXPAND, 5);
 
             page->SetSizer(pageszr);
@@ -147,7 +144,6 @@ void DlgOptions::FillControls()
     }
     OnStartupPosTypeChanged(evt);
 
-    m_chkSplashScreen->SetValue(m_options.GetShowSplashScreen());
     m_chkSingleInstance->SetValue(m_options.GetMultipleInstancesAllowed()==false);
 
     m_btnApply->Disable();
@@ -183,7 +179,6 @@ bool DlgOptions::ApplySettings()
     }
     m_options.SetMainWndStartupPos(iStartPos);
 
-    m_options.SetShowSplashScreen(m_chkSplashScreen->IsChecked());
     m_options.SetMultipleInstancesAllowed(m_chkSingleInstance->IsChecked()==false);
 
     m_btnApply->Disable();

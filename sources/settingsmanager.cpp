@@ -55,7 +55,6 @@ void SettingsManager::Initialize()
     m_szStartSize=wxDefaultSize;
     m_iShashPos=MINIMUM_PANE_WIDTH;
     // Other default settings
-    m_bShowSplashScreen=true;
     m_bSingleInstance=true;
     m_bCompDatas=false;
     m_bCompSettings=false;
@@ -121,11 +120,6 @@ bool SettingsManager::ReadSettings()
                 node->GetAttribute(_T("Split"), _T("-1")).ToLong(&lVal);
                 m_iShashPos=(lVal==-1?MINIMUM_PANE_WIDTH:lVal);
             }
-        }
-        if (nodName==_T("SplashScreen"))
-        {
-            // Show the splash screen at startup
-            m_bShowSplashScreen=(node->GetAttribute(_T("Show"), _T("Yes"))==_T("Yes"));
         }
         if (nodName==_T("MultiInstances"))
         {
@@ -204,10 +198,6 @@ bool SettingsManager::SaveSettings()
         node->AddAttribute(_T("Datas"), (m_bCompDatas?_T("Yes"):_T("No")));
         node->AddAttribute(_T("Settings"), (m_bCompSettings?_T("Yes"):_T("No")));
     }
-    // Show (or not) the splash screen at startup
-    node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("SplashScreen")));
-    node = node->GetNext();
-    node->AddAttribute(_T("Show"), (m_bShowSplashScreen?_T("Yes"):_T("No")));
     // Allowing (or not) multiple instances of the application
     node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("MultiInstances")));
     node = node->GetNext();
@@ -308,15 +298,6 @@ void SettingsManager::SetLastSashPos(int pos)
     {
         m_bModified=true;
         m_iShashPos=pos;
-    }
-}
-
-void SettingsManager::SetShowSplashScreen(bool show)
-{
-    if (show!=m_bShowSplashScreen)
-    {
-        m_bShowSplashScreen=show;
-        m_bModified=true;
     }
 }
 

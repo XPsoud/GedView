@@ -37,9 +37,6 @@ class SettingsManager
         // Multiple instances
         bool GetMultipleInstancesAllowed() { return (m_bSingleInstance==false); }
         void SetMultipleInstancesAllowed(bool value);
-        // Show splash screen at startup
-        bool GetShowSplashScreen() { return m_bShowSplashScreen; }
-        void SetShowSplashScreen(bool show);
     protected:
     private:
         SettingsManager();
@@ -58,7 +55,7 @@ class SettingsManager
         int m_iStartPos, m_iShashPos;
         wxPoint m_ptStartPos;
         wxSize m_szStartSize;
-        bool m_bSingleInstance, m_bShowSplashScreen;
+        bool m_bSingleInstance;
 };
 
 #endif // __SETTINGSMANAGER_H_INCLUDED__

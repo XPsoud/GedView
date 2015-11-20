@@ -25,7 +25,7 @@ class DlgOptions : public wxDialog
         // "General" tab controls vars
         wxRadioButton *m_optStartType[2], *m_optDefPos[9];
         wxStaticBox *m_stbPos;
-        wxCheckBox *m_chkSingleInstance, *m_chkSplashScreen;
+        wxCheckBox *m_chkSingleInstance;
         // Main dialog box controls
         wxNotebook *m_nBook;
         wxButton *m_btnOk, *m_btnCancel, *m_btnApply;
