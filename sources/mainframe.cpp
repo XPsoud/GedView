@@ -22,16 +22,6 @@
 
 const wxEventType wxEVT_FILEOPEN = wxNewEventType();
 
-enum
-{
-    LST_COL_SEX,
-    LST_COL_ID,
-    LST_COL_LASTNAME,
-    LST_COL_FIRSTNAME,
-
-    LST_COL_COUNT
-};
-
 enum SortColumn
 {
     SORT_COL_UNKNOWN =0,
@@ -163,10 +153,16 @@ void MainFrame::CreateControls()
     m_spwSplitter=new wxSplitterWindow(pnl, -1);
 
         m_lstItems=new wxListView(m_spwSplitter, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
-            m_lstItems->AppendColumn(_("Sex"), wxLIST_FORMAT_LEFT, 30);
+            int iWdth=m_settings.GetColumnWidth(LST_COL_SEX);
+            if (iWdth<30) iWdth=30;
+            m_lstItems->AppendColumn(_("Sex"), wxLIST_FORMAT_LEFT, iWdth);
+            iWdth=m_settings.GetColumnWidth(LST_COL_ID);
+            if (iWdth<60) iWdth=60;
             m_lstItems->AppendColumn(_("ID"), wxLIST_FORMAT_RIGHT, 60);
-            m_lstItems->AppendColumn(_("Last Name"));
-            m_lstItems->AppendColumn(_("First Name"));
+            iWdth=m_settings.GetColumnWidth(LST_COL_LASTNAME);
+            m_lstItems->AppendColumn(_("Last Name"), wxLIST_FORMAT_LEFT, iWdth);
+            iWdth=m_settings.GetColumnWidth(LST_COL_FIRSTNAME);
+            m_lstItems->AppendColumn(_("First Name"), wxLIST_FORMAT_LEFT, iWdth);
 
         m_htwDetails=new wxHtmlWindow(m_spwSplitter, -1);
 
@@ -201,6 +197,7 @@ void MainFrame::ConnectControls()
     m_lstItems->Connect(wxEVT_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListItemSelected), NULL, this);
     m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
     m_lstItems->Connect(wxEVT_LIST_COL_CLICK, wxListEventHandler(MainFrame::OnColumnHeaderClicked), NULL, this);
+    m_lstItems->Connect(wxEVT_LIST_COL_END_DRAG, wxListEventHandler(MainFrame::OnColumnHeaderDragged), NULL, this);
     m_htwDetails->Connect(wxEVT_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(MainFrame::OnHtmlLinkClicked), NULL, this);
     m_spwSplitter->Connect(wxEVT_SPLITTER_SASH_POS_CHANGED, wxSplitterEventHandler(MainFrame::OnShashPosChanged), NULL, this);
     // Custom events handlers
@@ -681,6 +678,16 @@ void MainFrame::OnColumnHeaderClicked(wxListEvent& event)
     long lItem=m_lstItems->GetFirstSelected();
     if (lItem!=wxNOT_FOUND)
         m_lstItems->EnsureVisible(lItem);
+}
+
+void MainFrame::OnColumnHeaderDragged(wxListEvent& event)
+{
+    if (m_lstItems->GetItemCount()==0)
+        return;
+    int iCol=event.GetColumn();
+    if (iCol==wxNOT_FOUND) return;
+    int iWidth=m_lstItems->GetColumnWidth(iCol);
+    m_settings.SetColumnWidth(iCol, iWidth);
 }
 
 void MainFrame::OnTimerSelectionCheck(wxTimerEvent& event)

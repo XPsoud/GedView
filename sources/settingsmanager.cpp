@@ -54,6 +54,8 @@ void SettingsManager::Initialize()
     m_ptStartPos=wxDefaultPosition;
     m_szStartSize=wxDefaultSize;
     m_iShashPos=MINIMUM_PANE_WIDTH;
+    for (int i=0; i<LST_COL_COUNT; ++i)
+        m_iColWdth[i]=wxID_ANY;
     // Other default settings
     m_bSingleInstance=true;
     m_bCompDatas=false;
@@ -121,6 +123,16 @@ bool SettingsManager::ReadSettings()
                 m_iShashPos=(lVal==-1?MINIMUM_PANE_WIDTH:lVal);
             }
         }
+        if (nodName==_T("Columns"))
+        {
+            for (int i=0; i<LST_COL_COUNT; ++i)
+            {
+                sValue.Printf(_T("w%d"), i);
+                node->GetAttribute(sValue, _T("-1")).ToLong(&lVal);
+                if (lVal<0) lVal=-1;
+                m_iColWdth[i]=lVal;
+            }
+        }
         if (nodName==_T("MultiInstances"))
         {
             // Only one instance allowed ?
@@ -182,6 +194,13 @@ bool SettingsManager::SaveSettings()
         node->AddAttribute(_T("W"), wxString::Format(_T("%d"), m_szStartSize.GetWidth()));
         node->AddAttribute(_T("H"), wxString::Format(_T("%d"), m_szStartSize.GetHeight()));
         node->AddAttribute(_T("Split"), wxString::Format(_T("%d"), m_iShashPos));
+    }
+    // Columns width
+    node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("Columns")));
+    node = node->GetNext();
+    for(int i=0; i<LST_COL_COUNT; ++i)
+    {
+        node->AddAttribute(wxString::Format(_T("w%d"),i), wxString::Format(_T("%d"), m_iColWdth[i]));
     }
     // General password
     if (!m_sPassword.IsEmpty())
@@ -298,6 +317,24 @@ void SettingsManager::SetLastSashPos(int pos)
     {
         m_bModified=true;
         m_iShashPos=pos;
+    }
+}
+
+int SettingsManager::GetColumnWidth(int col)
+{
+    if ((col<0)||(col>=LST_COL_COUNT))
+        return wxID_ANY;
+    return m_iColWdth[col];
+}
+
+void SettingsManager::SetColumnWidth(int col, int width)
+{
+    if ((col<0)||(col>=LST_COL_COUNT))
+        return;
+    if (width!=m_iColWdth[col])
+    {
+        m_iColWdth[col]=width;
+        m_bModified=true;
     }
 }
 

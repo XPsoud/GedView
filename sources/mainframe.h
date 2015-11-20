@@ -38,6 +38,7 @@ class MainFrame: public wxFrame
         void OnListItemSelected(wxListEvent &event);
         void OnListItemDeselected(wxListEvent &event);
         void OnColumnHeaderClicked(wxListEvent &event);
+        void OnColumnHeaderDragged(wxListEvent &event);
         void OnTimerSelectionCheck(wxTimerEvent &event);
         void OnHtmlLinkClicked(wxHtmlLinkEvent& event);
         void OnHistoryBackClicked(wxCommandEvent &event);
