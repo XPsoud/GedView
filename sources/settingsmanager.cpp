@@ -74,7 +74,7 @@ bool SettingsManager::ReadSettings()
     if (!wxFileExists(sFName)) return false;
 
     wxXmlDocument doc;
-    wxXmlNode *root, *node;
+    wxXmlNode *root, *node, *subNode;
 
     wxFileInputStream f_in(sFName);
     if (!f_in.IsOk()) return false;
@@ -123,14 +123,33 @@ bool SettingsManager::ReadSettings()
                 m_iShashPos=(lVal==-1?MINIMUM_PANE_WIDTH:lVal);
             }
         }
-        if (nodName==_T("Columns"))
+        if (nodName==_T("ColumnsWidth"))
         {
-            for (int i=0; i<LST_COL_COUNT; ++i)
+            subNode=node->GetChildren();
+            while(subNode!=NULL)
             {
-                sValue.Printf(_T("w%d"), i);
-                node->GetAttribute(sValue, _T("-1")).ToLong(&lVal);
-                if (lVal<0) lVal=-1;
-                m_iColWdth[i]=lVal;
+                subName=subNode->GetName();
+                if (subName==_T("Sex"))
+                {
+                    subNode->GetNodeContent().ToLong(&lVal);
+                    m_iColWdth[LST_COL_SEX]=lVal;
+                }
+                if (subName==_T("ID"))
+                {
+                    subNode->GetNodeContent().ToLong(&lVal);
+                    m_iColWdth[LST_COL_ID]=lVal;
+                }
+                if (subName==_T("LastName"))
+                {
+                    subNode->GetNodeContent().ToLong(&lVal);
+                    m_iColWdth[LST_COL_LASTNAME]=lVal;
+                }
+                if (subName==_T("FirstName"))
+                {
+                    subNode->GetNodeContent().ToLong(&lVal);
+                    m_iColWdth[LST_COL_FIRSTNAME]=lVal;
+                }
+                subNode=subNode->GetNext();
             }
         }
         if (nodName==_T("MultiInstances"))
@@ -182,7 +201,7 @@ bool SettingsManager::SaveSettings()
     wxXmlNode *root = new wxXmlNode(NULL,wxXML_ELEMENT_NODE, _T("GedView_Settings-file"), wxEmptyString,
                             new wxXmlAttribute(_T("Version"), _T("1.0")));
 
-    wxXmlNode *node;
+    wxXmlNode *node, *subNode;
     // Last known position and size of the main window
     node=new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("StartupPos"));
     root->AddChild(node);
@@ -196,12 +215,23 @@ bool SettingsManager::SaveSettings()
         node->AddAttribute(_T("Split"), wxString::Format(_T("%d"), m_iShashPos));
     }
     // Columns width
-    node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("Columns")));
+    node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("ColumnsWidth")));
     node = node->GetNext();
-    for(int i=0; i<LST_COL_COUNT; ++i)
-    {
-        node->AddAttribute(wxString::Format(_T("w%d"),i), wxString::Format(_T("%d"), m_iColWdth[i]));
-    }
+        subNode=new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("Sex"));
+        node->AddChild(subNode);
+        subNode->AddChild(new wxXmlNode(wxXML_TEXT_NODE, _T(""), wxString::Format(_T("%d"), m_iColWdth[LST_COL_SEX])));
+
+        subNode->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("ID")));
+        subNode = subNode->GetNext();
+        subNode->AddChild(new wxXmlNode(wxXML_TEXT_NODE, _T(""), wxString::Format(_T("%d"), m_iColWdth[LST_COL_ID])));
+
+        subNode->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("LastName")));
+        subNode = subNode->GetNext();
+        subNode->AddChild(new wxXmlNode(wxXML_TEXT_NODE, _T(""), wxString::Format(_T("%d"), m_iColWdth[LST_COL_LASTNAME])));
+
+        subNode->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("FirstName")));
+        subNode = subNode->GetNext();
+        subNode->AddChild(new wxXmlNode(wxXML_TEXT_NODE, _T(""), wxString::Format(_T("%d"), m_iColWdth[LST_COL_FIRSTNAME])));
     // General password
     if (!m_sPassword.IsEmpty())
     {
