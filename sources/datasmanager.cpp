@@ -656,6 +656,46 @@ wxString DatasManager::GetItemBirth(const wxXmlNode* itmNode, bool yearOnly)
     return (yearOnly?g_sUnknownYear:wxEmptyString);
 }
 
+wxString DatasManager::GetItemBirthPlace(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemBirthPlace(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemBirthPlace(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BIRT")))
+        {
+            wxXmlNode *subsubNode=subNode->GetChildren();
+            while(subsubNode!=NULL)
+            {
+                if (subsubNode->GetAttribute(_T("Type"))==_T("PLAC"))
+                {
+                    return subsubNode->GetAttribute(_T("Value"));
+                }
+                subsubNode=subsubNode->GetNext();
+            }
+            return wxEmptyString;
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
+}
+
 wxString DatasManager::GetItemBaptism(const wxString& itmId, bool yearOnly)
 {
     wxXmlNode *node=m_datas->GetChildren();
@@ -701,6 +741,46 @@ wxString DatasManager::GetItemBaptism(const wxXmlNode* itmNode, bool yearOnly)
     }
 
     return (yearOnly?g_sUnknownYear:wxEmptyString);
+}
+
+wxString DatasManager::GetItemBaptismPlace(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemBaptismPlace(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemBaptismPlace(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BAPM")))
+        {
+            wxXmlNode *subsubNode=subNode->GetChildren();
+            while(subsubNode!=NULL)
+            {
+                if (subsubNode->GetAttribute(_T("Type"))==_T("PLAC"))
+                {
+                    return subsubNode->GetAttribute(_T("Value"));
+                }
+                subsubNode=subsubNode->GetNext();
+            }
+            return wxEmptyString;
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
 }
 
 wxString DatasManager::GetItemDeath(const wxString& itmId, bool yearOnly)
@@ -750,6 +830,46 @@ wxString DatasManager::GetItemDeath(const wxXmlNode* itmNode, bool yearOnly)
     return (yearOnly?g_sUnknownYear:wxEmptyString);
 }
 
+wxString DatasManager::GetItemDeathPlace(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemDeathPlace(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemDeathPlace(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("DEAT")))
+        {
+            wxXmlNode *subsubNode=subNode->GetChildren();
+            while(subsubNode!=NULL)
+            {
+                if (subsubNode->GetAttribute(_T("Type"))==_T("PLAC"))
+                {
+                    return subsubNode->GetAttribute(_T("Value"));
+                }
+                subsubNode=subsubNode->GetNext();
+            }
+            return wxEmptyString;
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
+}
+
 wxString DatasManager::GetItemBurial(const wxString& itmId, bool yearOnly)
 {
     wxXmlNode *node=m_datas->GetChildren();
@@ -795,6 +915,46 @@ wxString DatasManager::GetItemBurial(const wxXmlNode* itmNode, bool yearOnly)
     }
 
     return (yearOnly?g_sUnknownYear:wxEmptyString);
+}
+
+wxString DatasManager::GetItemBurialPlace(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemBurialPlace(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemBurialPlace(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BURI")))
+        {
+            wxXmlNode *subsubNode=subNode->GetChildren();
+            while(subsubNode!=NULL)
+            {
+                if (subsubNode->GetAttribute(_T("Type"))==_T("PLAC"))
+                {
+                    return subsubNode->GetAttribute(_T("Value"));
+                }
+                subsubNode=subsubNode->GetNext();
+            }
+            return wxEmptyString;
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
 }
 
 wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)

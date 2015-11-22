@@ -49,12 +49,20 @@ class DatasManager
         GEDITEMSEX GetItemSex(const wxXmlNode *itmNode);
         wxString GetItemBirth(const wxString& itmId, bool yearOnly=false);
         wxString GetItemBirth(const wxXmlNode *itmNode, bool yearOnly=false);
+        wxString GetItemBirthPlace(const wxString& itmId);
+        wxString GetItemBirthPlace(const wxXmlNode *itmNode);
         wxString GetItemBaptism(const wxString& itmId, bool yearOnly=false);
         wxString GetItemBaptism(const wxXmlNode *itmNode, bool yearOnly=false);
+        wxString GetItemBaptismPlace(const wxString& itmId);
+        wxString GetItemBaptismPlace(const wxXmlNode *itmNode);
         wxString GetItemDeath(const wxString& itmId, bool yearOnly=false);
         wxString GetItemDeath(const wxXmlNode *itmNode, bool yearOnly=false);
+        wxString GetItemDeathPlace(const wxString& itmId);
+        wxString GetItemDeathPlace(const wxXmlNode *itmNode);
         wxString GetItemBurial(const wxString& itmId, bool yearOnly=false);
         wxString GetItemBurial(const wxXmlNode *itmNode, bool yearOnly=false);
+        wxString GetItemBurialPlace(const wxString& itmId);
+        wxString GetItemBurialPlace(const wxXmlNode *itmNode);
         wxString GetItemInfos(wxXmlNode *itmNode);
         // Reading and saving datas
         bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
