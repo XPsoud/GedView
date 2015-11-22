@@ -21,10 +21,12 @@ class DlgExportCsv : public wxDialog
         // Events handlers
         void OnBtnExportClicked(wxCommandEvent &event);
         // Controls vars
-        wxRadioButton *m_optExportType[3];
+        wxChoice *m_cmbSeparator;
+        wxCheckBox *m_chkColHeaders;
         wxButton *m_btnExport, *m_btnCancel;
         // Misc vars
         wxFileName m_FName;
+        wxString m_sSeparator;
         DatasManager& m_datas;
 };
 

@@ -2,10 +2,15 @@
 
 #include "datasmanager.h"
 
+#include <wx/file.h>
 #include <wx/pdfdoc.h>
 #include <wx/pdffont.h>
 #include <wx/xml/xml.h>
 #include <wx/statline.h>
+
+const wxChar* szSepName[]={_("Tabulation"), _("Semicolon")};
+const wxChar* szSepVal[]={_T("\t"), _T(";")};
+const int iSepCount=2;
 
 DlgExportCsv::DlgExportCsv(wxWindow *parent) : wxDialog(parent, -1, _("Export as csv file"), wxDefaultPosition, wxDefaultSize),
     m_datas(DatasManager::Get())
@@ -13,6 +18,9 @@ DlgExportCsv::DlgExportCsv(wxWindow *parent) : wxDialog(parent, -1, _("Export as
 #ifdef __WXDEBUG__
     wxPrintf(_T("Creating a \"DlgExportCsv\" object\n"));
 #endif // __WXDEBUG__
+
+    // Default separator = tab
+    m_sSeparator=_T("\n");
 
 	CreateControls();
 
@@ -30,7 +38,29 @@ DlgExportCsv::~DlgExportCsv()
 
 void DlgExportCsv::CreateControls()
 {
+    wxStaticText *label;
     wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL), *hszr;
+
+        label=new wxStaticText(this, -1, _("CSV export options:"));
+        szrMain->Add(label, 0, wxALL, 5);
+
+        hszr=new wxBoxSizer(wxHORIZONTAL);
+            label=new wxStaticText(this, -1, _("Columns separator:"));
+            hszr->Add(label, 0, wxALL|wxALIGN_CENTER_VERTICAL, 0);
+            m_cmbSeparator=new wxChoice(this, -1);
+                for (int i=0; i<iSepCount; ++i)
+                {
+                    m_cmbSeparator->Append(wxGetTranslation(szSepName[i]));
+                }
+                m_cmbSeparator->SetSelection(0);
+                m_sSeparator=szSepVal[0];
+
+            hszr->Add(m_cmbSeparator, 0, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
+        szrMain->Add(hszr, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
+
+        m_chkColHeaders=new wxCheckBox(this, -1, _("Add columns names on the first line"));
+            m_chkColHeaders->SetValue(true);
+        szrMain->Add(m_chkColHeaders, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
         szrMain->Add(new wxStaticLine(this, -1), 0, wxALL|wxEXPAND, 5);
 
@@ -68,33 +98,81 @@ void DlgExportCsv::OnBtnExportClicked(wxCommandEvent& event)
     if (sFName.IsEmpty()) return;
     m_FName.Assign(sFName);
 
+    // Update separator from combobox
+    int iSel=m_cmbSeparator->GetSelection();
+    m_sSeparator=szSepVal[iSel];
+
+    wxFile f_out(m_FName.GetFullPath(), wxFile::write);
+    if (!f_out.IsOpened())
+    {
+        wxMessageBox(_("An error occurred while opening the output file"), _("Error"), wxICON_EXCLAMATION);
+        return;
+    }
+
+    wxString sLine=wxEmptyString;
+    // Write columns title if needed
+    if (m_chkColHeaders->IsChecked())
+    {
+        sLine << _("Id") << m_sSeparator << _("Sex") << m_sSeparator;
+        sLine << _("Last Name") << m_sSeparator << _("First Name") << m_sSeparator;
+        sLine << _("Birth") << m_sSeparator << _("Birth place") << m_sSeparator;
+        sLine << _("Death") << m_sSeparator << _("Death place");
+        sLine << _T("\n");
+    }
+    wxXmlNode *root=m_datas.GetDatas();
+    wxXmlNode *item=root->GetChildren();
+    while(item!=NULL)
+    {
+        if (item->GetAttribute(_T("Type"))==_T("INDI"))
+        {
+            sLine << GedItem2CsvLine(item);
+            f_out.Write(sLine, *wxConvCurrent);
+            sLine=_T("\n");
+        }
+        item=item->GetNext();
+    }
+    f_out.Close();
+
+    wxMessageBox(_("CSV file successfully created!"), _("Success"), wxICON_INFORMATION|wxCENTER|wxOK);
+
     EndModal(wxID_OK);
 }
 
 wxString DlgExportCsv::GedItem2CsvLine(wxXmlNode *itmNode)
 {
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxString sResult=itmNode->GetAttribute(_T("GedId"));
+    sResult << m_sSeparator;
+
+    int iSex=m_datas.GetItemSex(itmNode);
+    if (iSex==GIS_MALE)
+    {
+        sResult << _T("M");
+    }
+    else
+    {
+        if (iSex==GIS_FEMALE)
+        {
+            sResult << _T("F");
+        }
+        else
+        {
+            sResult << _T("?");
+        }
+    }
+    sResult << m_sSeparator;
+
+    sResult << m_datas.GetItemLastName(itmNode) << m_sSeparator;
+    sResult << m_datas.GetItemFirstName(itmNode) << m_sSeparator;
+    sResult << m_datas.GetItemBirth(itmNode, true) << m_sSeparator;
+    sResult << m_datas.GetItemBirthPlace(itmNode) << m_sSeparator;
+    sResult << m_datas.GetItemDeath(itmNode, true) << m_sSeparator;
+    sResult << m_datas.GetItemDeathPlace(itmNode);
+
+    return sResult;
+
     /*
-    if (itmNode==NULL) return;
-    wxString sItmID=itmNode->GetAttribute(_T("GedId"));
-
-    doc->AddPage();
-    doc->SetMargins(10, 10, 10);
-    doc->SetAutoPageBreak(true, 10);
-    wxPdfArrayDouble dash;
-    wxPdfLineStyle lstyle(0.5, wxPDF_LINECAP_BUTT, wxPDF_LINEJOIN_MITER, dash, 0., wxColour(0, 0, 0));
-    doc->SetLineStyle(lstyle);
-
-    doc->SetXY(10, 10);
-
-    doc->SetCellMargin(2);
-
-    doc->SetFont(_T("Arial"), _T(" "), 15);
-    doc->Cell(30, 10, sItmID, wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_RIGHT);
-    doc->SetFont(_T("Helvetica"), _T("B"), 18);
-    doc->Cell(160, 10, m_datas.GetItemFullName(itmNode), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT);
-
-    wxString sTxt;
-    doc->SetFont(_T("Arial"), _T(" "), 12);
 
     wxXmlNode *subNode=itmNode->GetChildren();
     bool bUnions=false;
