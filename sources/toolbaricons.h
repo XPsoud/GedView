@@ -14,7 +14,7 @@ extern unsigned char compare_png[];
 
 wxBitmap wxGet_compare_png_Bitmap();
 
-#define csv_png_Length 1200
+#define csv_png_Length 1403
 extern unsigned char csv_png[];
 
 wxBitmap wxGet_csv_png_Bitmap();
