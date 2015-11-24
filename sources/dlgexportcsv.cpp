@@ -142,7 +142,7 @@ wxString DlgExportCsv::GedItem2CsvLine(wxXmlNode *itmNode)
 {
     if (itmNode==NULL) return wxEmptyString;
 
-    wxString sResult=itmNode->GetAttribute(_T("GedId"));
+    wxString sResult=itmNode->GetAttribute(_T("GedId")), sDate, sPlace;
     sResult << m_sSeparator;
 
     int iSex=m_datas.GetItemSex(itmNode);
@@ -165,10 +165,64 @@ wxString DlgExportCsv::GedItem2CsvLine(wxXmlNode *itmNode)
 
     sResult << m_datas.GetItemLastName(itmNode) << m_sSeparator;
     sResult << m_datas.GetItemFirstName(itmNode) << m_sSeparator;
-    sResult << m_datas.GetItemBirth(itmNode, true) << m_sSeparator;
-    sResult << m_datas.GetItemBirthPlace(itmNode) << m_sSeparator;
-    sResult << m_datas.GetItemDeath(itmNode, true) << m_sSeparator;
-    sResult << m_datas.GetItemDeathPlace(itmNode);
+
+    sDate=m_datas.GetItemBirth(itmNode, true);
+    bool bBapm=false;
+    if (sDate==g_sUnknownYear)
+    {
+        sDate=m_datas.GetItemBaptism(itmNode, true);
+        bBapm=true;
+    }
+    if (sDate!=g_sUnknownYear)
+    {
+        wxChar c=sDate[0];
+        if ((c<_T('0'))||(c>_T('9')))
+        {
+            sDate.Remove(0, 1);
+            sDate.Append(c);
+        }
+        if (bBapm)
+        {
+            sDate << _T("*");
+        }
+    }
+    sResult << _T("\"") << sDate << _T("\"") << m_sSeparator;
+
+    sPlace=m_datas.GetItemBirthPlace(itmNode);
+    if (sPlace.IsEmpty())
+    {
+        sPlace=m_datas.GetItemBaptismPlace(itmNode);
+    }
+    sResult << sPlace << m_sSeparator;
+
+    sDate=m_datas.GetItemDeath(itmNode, true);
+    bool bBuri=false;
+    if (sDate==g_sUnknownYear)
+    {
+        sDate=m_datas.GetItemBurial(itmNode, true);
+        bBuri=true;
+    }
+    if (sDate!=g_sUnknownYear)
+    {
+        wxChar c=sDate[0];
+        if ((c<_T('0'))||(c>_T('9')))
+        {
+            sDate.Remove(0, 1);
+            sDate.Append(c);
+        }
+        if (bBuri)
+        {
+            sDate << _T("*");
+        }
+    }
+
+    sResult << _T("\"") << sDate << _T("\"") << m_sSeparator;
+    sPlace=m_datas.GetItemDeathPlace(itmNode);
+    if (sPlace.IsEmpty())
+    {
+        sPlace=m_datas.GetItemBurialPlace(itmNode);
+    }
+    sResult << sPlace;
 
     return sResult;
 
