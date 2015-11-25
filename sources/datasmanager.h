@@ -33,7 +33,7 @@ class DatasManager
         const wxString& GetCurrentFileName() { return m_sFileName; }
         int GetItemsCount(GEDITEMTYPE type=GIT_ALL);
         wxXmlNode *GetDatas() { return m_datas; }
-        wxXmlNode *FindItemByGedId(const wxString& gedId);
+        wxXmlNode *FindItemByGedId(const wxString& gedId, wxXmlNode *root=NULL);
         const wxString& GetLastError() { return m_sLastError; }
         // Parsing items datas
         wxString ParseEvent(wxXmlNode* event);
@@ -63,7 +63,7 @@ class DatasManager
         wxString GetItemBurial(const wxXmlNode *itmNode, bool yearOnly=false);
         wxString GetItemBurialPlace(const wxString& itmId);
         wxString GetItemBurialPlace(const wxXmlNode *itmNode);
-        wxString GetItemInfos(wxXmlNode *itmNode);
+        wxString GetItemInfos(wxXmlNode *itmNode, wxXmlNode *root=NULL);
         // Reading and saving datas
         bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
         bool ReadGedFile(const wxString& filename);

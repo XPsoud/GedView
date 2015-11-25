@@ -116,11 +116,16 @@ int DatasManager::GetItemsCount(GEDITEMTYPE type)
     return iRes;
 }
 
-wxXmlNode* DatasManager::FindItemByGedId(const wxString& gedId)
+wxXmlNode* DatasManager::FindItemByGedId(const wxString& gedId, wxXmlNode *root)
 {
     if (gedId.IsEmpty()) return NULL;
 
-    wxXmlNode *node=m_datas->GetChildren();
+    wxXmlNode *node;
+
+    if (root==NULL)
+        node=m_datas->GetChildren();
+    else
+        node=root->GetChildren();
 
     while(node)
     {
@@ -957,7 +962,7 @@ wxString DatasManager::GetItemBurialPlace(const wxXmlNode* itmNode)
     return wxEmptyString;
 }
 
-wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
+wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
 {
     if (itmNode==NULL) return wxEmptyString;
 
@@ -988,7 +993,7 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
             sResult << _("Parents") << _T("\n");
             wxArrayString arsSiblings;
             arsSiblings.Clear();
-            wxXmlNode* evtNode=FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            wxXmlNode* evtNode=FindItemByGedId(subNode->GetAttribute(_T("Value")), root);
             if (evtNode!=NULL)
             {
                 wxXmlNode *subEvt=evtNode->GetChildren();
@@ -1000,13 +1005,14 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
                     if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
                     {
                         sResult << (sSubTyp==_T("HUSB")?_("Father:"):_("Mother:")) << sSubId << _T(" - ") << GetItemFullName(sSubId) << _T("\n");
-                        sEvent=GetItemBirth(sSubId);
+                        wxXmlNode *nd=FindItemByGedId(sSubId, root);
+                        sEvent=GetItemBirth(nd);
                         if (!sEvent.IsEmpty())
                             sResult << _T(" ") << sEvent << _T("\n");
-                        sEvent=GetItemDeath(sSubId);
+                        sEvent=GetItemDeath(nd);
                         if (!sEvent.IsEmpty())
                         {
-                            if ((sEvent==_("Dead"))&&(GetItemSex(sSubId)==GIS_FEMALE))
+                            if ((sEvent==_("Dead"))&&(GetItemSex(nd)==GIS_FEMALE))
                                 sEvent=_("Dead_F");
                             sResult << _T(" ") << sEvent << _T("\n");
                         }
@@ -1024,14 +1030,15 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
                     {
                         if (arsSiblings[s]!=sItmID)
                         {
-                            sResult << arsSiblings[s] << _T(" - ")<< GetItemFirstName(arsSiblings[s]) << _T("\n");
-                            sEvent=GetItemBirth(arsSiblings[s]);
+                            wxXmlNode *nd=FindItemByGedId(arsSiblings[s], root);
+                            sResult << arsSiblings[s] << _T(" - ")<< GetItemFirstName(nd) << _T("\n");
+                            sEvent=GetItemBirth(nd);
                             if (!sEvent.IsEmpty())
                                 sResult << _T(" ") << sEvent << _T("\n");
-                            sEvent=GetItemDeath(arsSiblings[s]);
+                            sEvent=GetItemDeath(nd);
                             if (!sEvent.IsEmpty())
                             {
-                                if ((sEvent==_("Dead"))&&(GetItemSex(arsSiblings[s])==GIS_FEMALE))
+                                if ((sEvent==_("Dead"))&&(GetItemSex(nd)==GIS_FEMALE))
                                     sEvent=_("Dead_F");
                                 sResult << _T(" ") << sEvent << _T("\n");
                             }
@@ -1047,7 +1054,7 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
                 sResult << _("Union(s)") << _T("\n");
                 bUnions=true;
             }
-            wxXmlNode* evtNode=FindItemByGedId(subNode->GetAttribute(_T("Value")));
+            wxXmlNode* evtNode=FindItemByGedId(subNode->GetAttribute(_T("Value")), root);
             wxString sEvent;
             if (evtNode!=NULL)
             {
@@ -1065,11 +1072,12 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
                     }
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
-                        sResult << sEvtId << _T(" - ") << GetItemFullName(sEvtId) << _T("\n");
-                        sEvent=GetItemBirth(sEvtId);
+                        wxXmlNode *nd=FindItemByGedId(sEvtId, root);
+                        sResult << sEvtId << _T(" - ") << GetItemFullName(nd) << _T("\n");
+                        sEvent=GetItemBirth(nd);
                         if (!sEvent.IsEmpty())
                             sResult << _T(" ") << sEvent << _T("\n");
-                        sEvent=GetItemDeath(sEvtId);
+                        sEvent=GetItemDeath(nd);
                         if (!sEvent.IsEmpty())
                         {
                             if (sEvent==_("Dead") && (sSubTyp==_T("WIFE")))
@@ -1081,14 +1089,15 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode)
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
-                        sResult << _T(" -> ") << sEvtId << _T(" - ") << GetItemFirstName(sEvtId) << _T("\n");
-                        sEvent=GetItemBirth(sEvtId);
+                        wxXmlNode *nd=FindItemByGedId(sEvtId, root);
+                        sResult << _T(" -> ") << sEvtId << _T(" - ") << GetItemFirstName(nd) << _T("\n");
+                        sEvent=GetItemBirth(nd);
                         if (!sEvent.IsEmpty())
                             sResult << _T("     ") << sEvent << _T("\n");
-                        sEvent=GetItemDeath(sEvtId);
+                        sEvent=GetItemDeath(nd);
                         if (!sEvent.IsEmpty())
                         {
-                            if ((sEvent==_("Dead")) && (GetItemSex(sEvtId)==GIS_FEMALE))
+                            if ((sEvent==_("Dead")) && (GetItemSex(nd)==GIS_FEMALE))
                                 sEvent=_("Dead_F");
                             sResult << _T("     ") << sEvent << _T("\n");
                         }
@@ -1203,7 +1212,7 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
         {
             if (subNode->GetAttribute(_T("GedId"))==m_arsCompModified[i])
             {
-                sCmp=GetItemInfos(subNode);
+                sCmp=GetItemInfos(subNode, &cmpNode);
                 subNode=NULL;
             }
             else
@@ -1213,8 +1222,11 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
         }
         if (!sSrc.IsEmpty() && !sCmp.IsEmpty())
         {
-            if (sSrc==sCmp)
-                m_arsCompModified.RemoveAt(i);
+            if (sSrc.Length()==sCmp.Length())
+            {
+                if (sSrc.IsSameAs(sCmp))
+                    m_arsCompModified.RemoveAt(i);
+            }
         }
     }
     if (!m_arsCompAdded.IsEmpty())
