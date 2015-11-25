@@ -213,7 +213,7 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems)
     sHtml << _("Alphabetical Index") << _T("</td></tr></tbody></table><br />");
     doc->WriteXml(sHtml);
     doc->SetFont(_T("Helvetica"), _T(""), 12);
-    doc->SetLineHeight(5);
+    doc->SetLineHeight(3);
     sHtml=_T("<table border=\"1\" cellpadding=\"2\"><colgroup><col width=\"30\" span=\"1\" /><col width=\"160\" span=\"1\" /></colgroup><thead><tr><td align=\"center\"><b>");
     sHtml << _("Id") << _T("</b></td><td align=\"center\"><b>") << _("Full name") << _T("</b></td></tr></thead>");
     sHtml << _T("<tbody>");
@@ -276,17 +276,19 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
 
     doc->SetCellMargin(2);
 
+    int iSex=m_datas.GetItemSex(itmNode);
+
     doc->SetFont(_T("Arial"), _T(" "), 15);
     doc->Cell(30, 10, sItmID, wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_RIGHT);
     doc->SetFont(_T("Helvetica"), _T("B"), 18);
-    doc->Cell(160, 10, m_datas.GetItemFullName(itmNode), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT);
+    wxChar c=(iSex==GIS_MALE?_T('M'):(iSex==GIS_FEMALE?_T('F'):_T('?')));
+    doc->Cell(160, 10, m_datas.GetItemFullName(itmNode).Append(wxString::Format(_T(" (%c)"), c)), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT);
 
     wxString sTxt;
-    doc->SetFont(_T("Arial"), _T(" "), 12);
+    doc->SetFont(_T("Arial"), _T(""), 10);
 
     wxXmlNode *subNode=itmNode->GetChildren();
     bool bUnions=false;
-    int iSex=GIS_UNKNOWN;
     while(subNode!=NULL)
     {
         wxString sType=subNode->GetAttribute(_T("Type"));
@@ -299,11 +301,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
             }
             doc->Cell(190, 8, sEvt, wxPDF_BORDER_NONE, 1);
         }
-        if (sType==_T("SEX"))
-        {
-            wxString sSex=subNode->GetAttribute(_T("Value")).Upper();
-            iSex=(sSex==_T("M")?GIS_MALE:(sSex==_T("F")?GIS_FEMALE:GIS_UNKNOWN));
-        }
+
         if (sType==_T("FAMC"))
         {
             AddHrTitle(doc->GetY(), _("Parents"), doc);
@@ -320,8 +318,9 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     sSubId=subEvt->GetAttribute(_T("GedId"));
                     if ((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))
                     {
+                        doc->SetFontSize(12);
                         sTxt=(sSubTyp==_T("HUSB")?_("Father:"):_("Mother:")) + _T(" ") + sSubId + _T(" - ") + m_datas.GetItemFullName(sSubId);
-                        doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+                        doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemBirth(sSubId);
                         doc->SetFontSize(10);
                         if (!sEvent.IsEmpty())
@@ -350,7 +349,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                         if (arsSiblings[s]!=sItmID)
                         {
                             sTxt=arsSiblings[s] + _T(" - ") + m_datas.GetItemFirstName(arsSiblings[s]);
-                            doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+                            doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                             sEvent=m_datas.GetItemBirth(arsSiblings[s]);
                             doc->SetFontSize(10);
                             if (!sEvent.IsEmpty())
@@ -397,7 +396,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     }
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
-                        doc->Cell(190, 8, sEvtId + _T(" - ") + m_datas.GetItemFullName(sEvtId), wxPDF_BORDER_NONE, 1);
+                        doc->Cell(190, 6, sEvtId + _T(" - ") + m_datas.GetItemFullName(sEvtId), wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemBirth(sEvtId);
                         doc->SetFontSize(10);
                         if (!sEvent.IsEmpty())
@@ -414,7 +413,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     if (sSubTyp==_T("CHIL"))
                     {
                         sTxt=_T("      ") + sEvtId + _T(" - ") + m_datas.GetItemFirstName(sEvtId);
-                        doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+                        doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemBirth(sEvtId);
                         doc->SetFontSize(10);
                         if (!sEvent.IsEmpty())

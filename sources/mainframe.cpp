@@ -323,9 +323,11 @@ void MainFrame::UpdateItemDetails()
     wxString sItmID=node->GetAttribute(_T("GedId"));
     if (sItmID.IsEmpty()) return;
 
-    wxString sPage=_T("<h3>") + m_datas.GetItemFullName(node) + _T("</h3>");
+    int iSex=m_datas.GetItemSex(node);
+    wxChar c=(iSex==GIS_MALE?wxChar(0x2642):(iSex==GIS_FEMALE?wxChar(0x2640):wxChar(32)));
+
+    wxString sPage=_T("<h3>") + m_datas.GetItemFullName(node).Prepend(c) + _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
-    int iSex=GIS_UNKNOWN;
     bool bUnions=false;
     while(subNode!=NULL)
     {
@@ -338,12 +340,6 @@ void MainFrame::UpdateItemDetails()
                 sEvt=_("Dead_F");
             }
             sPage << _T("<br />") << sEvt;
-        }
-
-        if (sType==_T("SEX"))
-        {
-            wxString sSex=subNode->GetAttribute(_T("Value")).Upper();
-            iSex=(sSex==_T("M")?GIS_MALE:(sSex==_T("F")?GIS_FEMALE:GIS_UNKNOWN));
         }
 
         if (sType==_T("FAMC"))
