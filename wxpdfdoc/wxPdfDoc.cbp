@@ -224,7 +224,6 @@
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 				</Compiler>
-				<Linker />
 				<Environment>
 					<Variable name="ARCHI" value="32" />
 					<Variable name="COMP" value="Vc" />
@@ -450,7 +449,6 @@
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 				</Compiler>
-				<Linker />
 				<Environment>
 					<Variable name="ARCHI" value="64" />
 					<Variable name="COMP" value="Vc" />
@@ -464,11 +462,11 @@
 		</Build>
 		<VirtualTargets>
 			<Add alias="All Gcc" targets="ReleaseGcc32;DebugGcc32;ReleaseGcc32S;ReleaseGcc64;DebugGcc64;ReleaseGcc64S;" />
-			<Add alias="All Vc" targets="ReleaseVc32;ReleaseVc32S;ReleaseVc64;ReleaseVc64S;" />
 			<Add alias="All Gcc Dynamic" targets="ReleaseGcc32;DebugGcc32;ReleaseGcc64;DebugGcc64;" />
 			<Add alias="All Gcc Release" targets="ReleaseGcc64;ReleaseGcc32;" />
-			<Add alias="All Vc Release" targets="ReleaseVc64;ReleaseVc32;" />
 			<Add alias="All Gcc ReleaseS" targets="ReleaseGcc32S;ReleaseGcc64S;" />
+			<Add alias="All Vc" targets="ReleaseVc32;ReleaseVc32S;ReleaseVc64;ReleaseVc64S;" />
+			<Add alias="All Vc Release" targets="ReleaseVc64;ReleaseVc32;" />
 			<Add alias="All Vc ReleaseS" targets="ReleaseVc32S;ReleaseVc64S;" />
 			<Add alias="All-Targets" targets="ReleaseGcc32;ReleaseVc32;DebugGcc32;ReleaseGcc32S;ReleaseVc32S;ReleaseGcc64;ReleaseVc64;DebugGcc64;ReleaseGcc64S;ReleaseVc64S;" />
 		</VirtualTargets>
@@ -515,6 +513,7 @@
 		<Unit filename="pdfocg.cpp" />
 		<Unit filename="pdfparser.cpp" />
 		<Unit filename="pdfpattern.cpp" />
+		<Unit filename="pdfprint.cpp" />
 		<Unit filename="pdfrijndael.cpp" />
 		<Unit filename="pdftemplate.cpp" />
 		<Unit filename="pdfutility.cpp" />
@@ -567,6 +566,7 @@
 		<Unit filename="wx/pdfobjects.h" />
 		<Unit filename="wx/pdfparser.h" />
 		<Unit filename="wx/pdfpattern.h" />
+		<Unit filename="wx/pdfprint.h" />
 		<Unit filename="wx/pdfproperties.h" />
 		<Unit filename="wx/pdfrijndael.h" />
 		<Unit filename="wx/pdfshape.h" />
