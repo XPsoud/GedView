@@ -52,7 +52,7 @@
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
 			</Target>
-			<Target title="ReleaseVc32">
+			<Target title="ReleaseVc10-32">
 				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../bin" />
 				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
@@ -91,7 +91,51 @@
 				</Linker>
 				<Environment>
 					<Variable name="ARCHI" value="32" />
-					<Variable name="COMP" value="Vc" />
+					<Variable name="COMP" value="Vc10" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc14-32">
+				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
+				<Option type="0" />
+				<Option compiler="microsoft_visual_c_2015_x86" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/O2" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/DWXUSINGDLL" />
+					<Add option="/D__WXMSW__" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+					<Add directory="sources" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
+					<Add library="gdi32.lib" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Vc14" />
 					<Variable name="DBG_FLG" value="" />
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
@@ -201,7 +245,7 @@
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
 			</Target>
-			<Target title="ReleaseVc32S">
+			<Target title="ReleaseVc10-32S">
 				<Option platforms="Windows;" />
 				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)S" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../bin" />
@@ -260,7 +304,71 @@
 				</Linker>
 				<Environment>
 					<Variable name="ARCHI" value="32" />
-					<Variable name="COMP" value="Vc" />
+					<Variable name="COMP" value="Vc10" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc14-32S">
+				<Option platforms="Windows;" />
+				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)S" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
+				<Option type="0" />
+				<Option compiler="microsoft_visual_c_2015_x86" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/MD" />
+					<Add option="/TP" />
+					<Add option="/GR" />
+					<Add option="/O2" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/D__WXMSW__" />
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+					<Add directory="sources" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
+					<Add library="wxregexu$(DBG_FLG).lib" />
+					<Add library="wxpng$(DBG_FLG).lib" />
+					<Add library="wxzlib$(DBG_FLG).lib" />
+					<Add library="wxtiff$(DBG_FLG).lib" />
+					<Add library="wxjpeg$(DBG_FLG).lib" />
+					<Add library="wxexpat$(DBG_FLG).lib" />
+					<Add library="user32.lib" />
+					<Add library="shell32.lib" />
+					<Add library="comdlg32.lib" />
+					<Add library="comctl32.lib" />
+					<Add library="ole32.lib" />
+					<Add library="uuid.lib" />
+					<Add library="oleaut32.lib" />
+					<Add library="winspool.lib" />
+					<Add library="advapi32.lib" />
+					<Add library="gdi32.lib" />
+					<Add library="ws2_32.lib" />
+					<Add library="wldap32.lib" />
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="32" />
+					<Variable name="COMP" value="Vc14" />
 					<Variable name="DBG_FLG" value="" />
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
@@ -311,7 +419,7 @@
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
 			</Target>
-			<Target title="ReleaseVc64">
+			<Target title="ReleaseVc10-64">
 				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../bin" />
 				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
@@ -350,7 +458,51 @@
 				</Linker>
 				<Environment>
 					<Variable name="ARCHI" value="64" />
-					<Variable name="COMP" value="Vc" />
+					<Variable name="COMP" value="Vc10" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc14-64">
+				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
+				<Option type="0" />
+				<Option compiler="microsoft_visual_c_2015_x64" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/O2" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/DWXUSINGDLL" />
+					<Add option="/D__WXMSW__" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+					<Add directory="sources" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
+					<Add library="gdi32.lib" />
+					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Vc14" />
 					<Variable name="DBG_FLG" value="" />
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
@@ -458,7 +610,7 @@
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
 			</Target>
-			<Target title="ReleaseVc64S">
+			<Target title="ReleaseVc10-64S">
 				<Option platforms="Windows;" />
 				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)S" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="../bin" />
@@ -517,7 +669,71 @@
 				</Linker>
 				<Environment>
 					<Variable name="ARCHI" value="64" />
-					<Variable name="COMP" value="Vc" />
+					<Variable name="COMP" value="Vc10" />
+					<Variable name="DBG_FLG" value="" />
+					<Variable name="WX_VERSION" value="31" />
+				</Environment>
+			</Target>
+			<Target title="ReleaseVc14-64S">
+				<Option platforms="Windows;" />
+				<Option output="../bin/GedView$(COMP)$(ARCHI)$(DBG_FLG)S" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
+				<Option type="0" />
+				<Option compiler="microsoft_visual_c_2015_x64" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="/MD" />
+					<Add option="/TP" />
+					<Add option="/GR" />
+					<Add option="/O2" />
+					<Add option="/Zc:wchar_t" />
+					<Add option="/EHsc" />
+					<Add option="/DwxUSE_UNICODE" />
+					<Add option="/DwxDEBUG_LEVEL=0" />
+					<Add option="/D__WXMSW__" />
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+					<Add directory="sources" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
+					<Add directory="$(WX_DIR)/include" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="/MANIFEST:no" />
+					<Add library="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG).lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_html.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
+					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
+					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG).lib" />
+					<Add library="wxregexu$(DBG_FLG).lib" />
+					<Add library="wxpng$(DBG_FLG).lib" />
+					<Add library="wxzlib$(DBG_FLG).lib" />
+					<Add library="wxtiff$(DBG_FLG).lib" />
+					<Add library="wxjpeg$(DBG_FLG).lib" />
+					<Add library="wxexpat$(DBG_FLG).lib" />
+					<Add library="user32.lib" />
+					<Add library="shell32.lib" />
+					<Add library="comdlg32.lib" />
+					<Add library="comctl32.lib" />
+					<Add library="ole32.lib" />
+					<Add library="uuid.lib" />
+					<Add library="oleaut32.lib" />
+					<Add library="winspool.lib" />
+					<Add library="advapi32.lib" />
+					<Add library="gdi32.lib" />
+					<Add library="ws2_32.lib" />
+					<Add library="wldap32.lib" />
+					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)" />
+				</Linker>
+				<Environment>
+					<Variable name="ARCHI" value="64" />
+					<Variable name="COMP" value="Vc14" />
 					<Variable name="DBG_FLG" value="" />
 					<Variable name="WX_VERSION" value="31" />
 				</Environment>
@@ -531,10 +747,13 @@
 			<Add alias="All Gcc Dynamic" targets="ReleaseGcc32;DebugGcc32;ReleaseGcc64;DebugGcc64;" />
 			<Add alias="All Gcc Release" targets="ReleaseGcc64;ReleaseGcc32;" />
 			<Add alias="All Gcc ReleaseS" targets="ReleaseGcc32S;ReleaseGcc64S;" />
-			<Add alias="All Vc" targets="ReleaseVc32;ReleaseVc32S;ReleaseVc64;ReleaseVc64S;" />
-			<Add alias="All Vc Release" targets="ReleaseVc64;ReleaseVc32;" />
-			<Add alias="All Vc ReleaseS" targets="ReleaseVc32S;ReleaseVc64S;" />
-			<Add alias="All-Targets" targets="ReleaseGcc32;ReleaseVc32;DebugGcc32;ReleaseGcc32S;ReleaseVc32S;ReleaseGcc64;ReleaseVc64;DebugGcc64;ReleaseGcc64S;ReleaseVc64S;" />
+			<Add alias="All Vc10" targets="ReleaseVc10-32;ReleaseVc10-32S;ReleaseVc10-64;ReleaseVc10-64S;" />
+			<Add alias="All Vc14" targets="ReleaseVc14-32;ReleaseVc14-32S;ReleaseVc14-64;ReleaseVc14-64S;" />
+			<Add alias="All Vc10 Release" targets="ReleaseVc10-64;ReleaseVc10-32;" />
+			<Add alias="All Vc14 Release" targets="ReleaseVc14-64;ReleaseVc14-32;" />
+			<Add alias="All Vc10 ReleaseS" targets="ReleaseVc10-32S;ReleaseVc10-64S;" />
+			<Add alias="All Vc14 ReleaseS" targets="ReleaseVc14-32S;ReleaseVc14-64S;" />
+			<Add alias="All-Targets" targets="ReleaseGcc32;ReleaseVc10-32;DebugGcc32;ReleaseGcc32S;ReleaseVc10-32S;ReleaseGcc64;ReleaseVc10-64;DebugGcc64;ReleaseGcc64S;ReleaseVc10-64S;ReleaseVc14-32;ReleaseVc14-32S;ReleaseVc14-64;ReleaseVc14-64S;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
