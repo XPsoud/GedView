@@ -1,0 +1,3 @@
+[submodule "wxpdfdoc"]
+	path = wxpdfdoc
+	url = https://github.com/utelle/wxpdfdoc.git

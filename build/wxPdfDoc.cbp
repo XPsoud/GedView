@@ -6,8 +6,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="ReleaseGcc32">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Release$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -54,8 +54,8 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc10-32">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Release$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="msvc10" />
 				<Option createStaticLib="1" />
@@ -80,7 +80,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
-					<Add option="/IMPLIB:..\build\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add option="/IMPLIB:..\build\Release$(COMP)$(ARCHI)\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -107,8 +107,8 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc14-32">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Release$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="microsoft_visual_c_2015_x86" />
 				<Option createStaticLib="1" />
@@ -133,7 +133,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
-					<Add option="/IMPLIB:..\build\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add option="/IMPLIB:..\build\Release$(COMP)$(ARCHI)\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -160,8 +160,8 @@
 				</Environment>
 			</Target>
 			<Target title="DebugGcc32">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Debug$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Debug$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Debug$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createStaticLib="1" />
@@ -209,9 +209,9 @@
 			</Target>
 			<Target title="ReleaseGcc32S">
 				<Option platforms="Windows;" />
-				<Option output="../build/wxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
+				<Option output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
 				<Option type="2" />
 				<Option compiler="gcc" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -256,9 +256,9 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc10-32S">
-				<Option output="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
+				<Option output="../build/Release$(COMP)$(ARCHI)S/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
 				<Option type="2" />
 				<Option compiler="msvc10" />
 				<Option projectCompilerOptionsRelation="1" />
@@ -285,9 +285,9 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc14-32S">
-				<Option output="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
+				<Option output="../build/Release$(COMP)$(ARCHI)S/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
 				<Option type="2" />
 				<Option compiler="microsoft_visual_c_2015_x86" />
 				<Option projectCompilerOptionsRelation="1" />
@@ -314,8 +314,8 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseGcc64">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Release$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="gcc_tdm" />
 				<Option createStaticLib="1" />
@@ -362,8 +362,8 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc10-64">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Release$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="microsoft_visual_c_2010-x64" />
 				<Option projectCompilerOptionsRelation="1" />
@@ -387,7 +387,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
-					<Add option="/IMPLIB:..\build\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add option="/IMPLIB:..\build\Release$(COMP)$(ARCHI)\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -414,8 +414,8 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc14-64">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Release$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="microsoft_visual_c_2015_x64" />
 				<Option projectCompilerOptionsRelation="1" />
@@ -439,7 +439,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="/MANIFEST:no" />
-					<Add option="/IMPLIB:..\build\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
+					<Add option="/IMPLIB:..\build\Release$(COMP)$(ARCHI)\libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_adv.lib" />
 					<Add library="wxbase$(WX_VERSION)u$(DBG_FLG)_xml.lib" />
 					<Add library="wxmsw$(WX_VERSION)u$(DBG_FLG)_core.lib" />
@@ -466,8 +466,8 @@
 				</Environment>
 			</Target>
 			<Target title="DebugGcc64">
-				<Option output="../bin/libwxPdfDoc-0.9.5-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
-				<Option object_output="../build/Debug$(COMP)$(ARCHI)/wxPdfDoc" />
+				<Option output="../bin/libwxPdfDoc-0.9.6-$(COMP)$(ARCHI)$(DBG_FLG).dll" imp_lib="../build/Debug$(COMP)$(ARCHI)/libwxPdfDoc$(COMP)$(ARCHI)$(DBG_FLG).a" def_file="$(TARGET_OUTPUT_DIR)$(TARGET_OUTPUT_BASENAME)" prefix_auto="1" extension_auto="0" />
+				<Option object_output="../build/Debug$(COMP)$(ARCHI)" />
 				<Option type="3" />
 				<Option compiler="gcc_tdm" />
 				<Option createStaticLib="1" />
@@ -515,9 +515,9 @@
 			</Target>
 			<Target title="ReleaseGcc64S">
 				<Option platforms="Windows;" />
-				<Option output="../build/wxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
+				<Option output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
 				<Option type="2" />
 				<Option compiler="gcc_tdm" />
 				<Option projectLinkerOptionsRelation="2" />
@@ -562,9 +562,9 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc10-64S">
-				<Option output="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
+				<Option output="../build/Release$(COMP)$(ARCHI)S/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
 				<Option type="2" />
 				<Option compiler="microsoft_visual_c_2010-x64" />
 				<Option projectCompilerOptionsRelation="1" />
@@ -591,9 +591,9 @@
 				</Environment>
 			</Target>
 			<Target title="ReleaseVc14-64S">
-				<Option output="../build/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
+				<Option output="../build/Release$(COMP)$(ARCHI)S/libwxPdfDoc$(COMP)$(ARCHI)S$(DBG_FLG)" prefix_auto="0" extension_auto="1" />
 				<Option working_dir="" />
-				<Option object_output="../build/Release$(COMP)$(ARCHI)S/wxPdfDoc" />
+				<Option object_output="../build/Release$(COMP)$(ARCHI)S" />
 				<Option type="2" />
 				<Option compiler="microsoft_visual_c_2015_x64" />
 				<Option projectCompilerOptionsRelation="1" />
@@ -640,107 +640,107 @@
 			<Add option="-Wno-unused-local-typedefs" />
 			<Add option="-std=gnu++11" />
 			<Add option="-DEXPORT_LIB" />
-			<Add directory="../wxpdfdoc" />
+			<Add directory="../wxpdfdoc/include" />
 		</Compiler>
-		<Unit filename="pdfannotation.cpp" />
-		<Unit filename="pdfbarcode.cpp" />
-		<Unit filename="pdfcffdecoder.cpp" />
-		<Unit filename="pdfcffindex.cpp" />
-		<Unit filename="pdfcolour.cpp" />
-		<Unit filename="pdfdc.cpp" />
-		<Unit filename="pdfdecode.cpp" />
-		<Unit filename="pdfdocument.cpp" />
-		<Unit filename="pdfencoding.cpp" />
-		<Unit filename="pdfencrypt.cpp" />
-		<Unit filename="pdffont.cpp" />
-		<Unit filename="pdffontdata.cpp" />
-		<Unit filename="pdffontdatacore.cpp" />
-		<Unit filename="pdffontdataopentype.cpp" />
-		<Unit filename="pdffontdatatruetype.cpp" />
-		<Unit filename="pdffontdatatype0.cpp" />
-		<Unit filename="pdffontdatatype1.cpp" />
-		<Unit filename="pdffontdescription.cpp" />
-		<Unit filename="pdffontdetails.cpp" />
-		<Unit filename="pdffontextended.cpp" />
-		<Unit filename="pdffontmanager.cpp" />
-		<Unit filename="pdffontparser.cpp" />
-		<Unit filename="pdffontparsertruetype.cpp" />
-		<Unit filename="pdffontparsertype1.cpp" />
-		<Unit filename="pdffontsubsetcff.cpp" />
-		<Unit filename="pdffontsubsettruetype.cpp" />
-		<Unit filename="pdffontvolt.cpp" />
-		<Unit filename="pdfform.cpp" />
-		<Unit filename="pdfgradient.cpp" />
-		<Unit filename="pdfgraphics.cpp" />
-		<Unit filename="pdfimage.cpp" />
-		<Unit filename="pdfkernel.cpp" />
-		<Unit filename="pdflayer.cpp" />
-		<Unit filename="pdfobjects.cpp" />
-		<Unit filename="pdfocg.cpp" />
-		<Unit filename="pdfparser.cpp" />
-		<Unit filename="pdfpattern.cpp" />
-		<Unit filename="pdfprint.cpp" />
-		<Unit filename="pdfrijndael.cpp" />
-		<Unit filename="pdftemplate.cpp" />
-		<Unit filename="pdfutility.cpp" />
-		<Unit filename="pdfxml.cpp" />
-		<Unit filename="wx/pdfannotation.h" />
-		<Unit filename="wx/pdfarraydouble.h" />
-		<Unit filename="wx/pdfarraytypes.h" />
-		<Unit filename="wx/pdfbarcode.h" />
-		<Unit filename="wx/pdfbookmark.h" />
-		<Unit filename="wx/pdfcffdecoder.h" />
-		<Unit filename="wx/pdfcffindex.h" />
-		<Unit filename="wx/pdfcjkfontdata.h" />
-		<Unit filename="wx/pdfcolour.h" />
-		<Unit filename="wx/pdfcoonspatchmesh.h" />
-		<Unit filename="wx/pdfcorefontdata.h" />
-		<Unit filename="wx/pdfdc.h" />
-		<Unit filename="wx/pdfdc28.h" />
-		<Unit filename="wx/pdfdc29.h" />
-		<Unit filename="wx/pdfdoc.h" />
-		<Unit filename="wx/pdfdocdef.h" />
-		<Unit filename="wx/pdfdocument.h" />
-		<Unit filename="wx/pdfencoding.h" />
-		<Unit filename="wx/pdfencrypt.h" />
-		<Unit filename="wx/pdffont.h" />
-		<Unit filename="wx/pdffontdata.h" />
-		<Unit filename="wx/pdffontdatacore.h" />
-		<Unit filename="wx/pdffontdataopentype.h" />
-		<Unit filename="wx/pdffontdatatruetype.h" />
-		<Unit filename="wx/pdffontdatatype0.h" />
-		<Unit filename="wx/pdffontdatatype1.h" />
-		<Unit filename="wx/pdffontdescription.h" />
-		<Unit filename="wx/pdffontdetails.h" />
-		<Unit filename="wx/pdffontextended.h" />
-		<Unit filename="wx/pdffontmacosx.h" />
-		<Unit filename="wx/pdffontmanager.h" />
-		<Unit filename="wx/pdffontparser.h" />
-		<Unit filename="wx/pdffontparsertruetype.h" />
-		<Unit filename="wx/pdffontparsertype1.h" />
-		<Unit filename="wx/pdffontsubsetcff.h" />
-		<Unit filename="wx/pdffontsubsettruetype.h" />
-		<Unit filename="wx/pdffontvolt.h" />
-		<Unit filename="wx/pdfform.h" />
-		<Unit filename="wx/pdfgradient.h" />
-		<Unit filename="wx/pdfgraphics.h" />
-		<Unit filename="wx/pdfimage.h" />
-		<Unit filename="wx/pdfinfo.h" />
-		<Unit filename="wx/pdflayer.h" />
-		<Unit filename="wx/pdflinestyle.h" />
-		<Unit filename="wx/pdflinks.h" />
-		<Unit filename="wx/pdfobjects.h" />
-		<Unit filename="wx/pdfparser.h" />
-		<Unit filename="wx/pdfpattern.h" />
-		<Unit filename="wx/pdfprint.h" />
-		<Unit filename="wx/pdfproperties.h" />
-		<Unit filename="wx/pdfrijndael.h" />
-		<Unit filename="wx/pdfshape.h" />
-		<Unit filename="wx/pdfspotcolour.h" />
-		<Unit filename="wx/pdftemplate.h" />
-		<Unit filename="wx/pdfutility.h" />
-		<Unit filename="wx/pdfxml.h" />
-		<Unit filename="wxmemdbg.h" />
+		<Unit filename="../wxpdfdoc/src/pdfannotation.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfbarcode.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfcffdecoder.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfcffindex.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfcolour.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfdc.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfdecode.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfdocument.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfencoding.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfencrypt.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffont.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdata.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdatacore.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdataopentype.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdatatruetype.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdatatype0.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdatatype1.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdescription.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontdetails.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontextended.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontmanager.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontparser.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontparsertruetype.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontparsertype1.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontsubsetcff.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontsubsettruetype.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdffontvolt.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfform.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfgradient.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfgraphics.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfimage.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfkernel.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdflayer.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfobjects.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfocg.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfparser.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfpattern.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfprint.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfrijndael.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdftemplate.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfutility.cpp" />
+		<Unit filename="../wxpdfdoc/src/pdfxml.cpp" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfannotation.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfarraydouble.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfarraytypes.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfbarcode.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfbookmark.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfcffdecoder.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfcffindex.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfcjkfontdata.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfcolour.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfcoonspatchmesh.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfcorefontdata.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfdc.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfdc28.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfdc29.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfdoc.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfdocdef.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfdocument.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfencoding.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfencrypt.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffont.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdata.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdatacore.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdataopentype.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdatatruetype.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdatatype0.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdatatype1.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdescription.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontdetails.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontextended.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontmacosx.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontmanager.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontparser.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontparsertruetype.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontparsertype1.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontsubsetcff.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontsubsettruetype.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdffontvolt.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfform.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfgradient.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfgraphics.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfimage.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfinfo.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdflayer.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdflinestyle.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdflinks.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfobjects.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfparser.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfpattern.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfprint.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfproperties.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfrijndael.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfshape.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfspotcolour.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdftemplate.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfutility.h" />
+		<Unit filename="../wxpdfdoc/include/wx/pdfxml.h" />
+		<Unit filename="../wxpdfdoc/src/wxmemdbg.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
