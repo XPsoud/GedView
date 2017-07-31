@@ -9,7 +9,7 @@ extern unsigned char about_png[];
 
 wxBitmap wxGet_about_png_Bitmap();
 
-#define compare_png_Length 1787
+#define compare_png_Length 1186
 extern unsigned char compare_png[];
 
 wxBitmap wxGet_compare_png_Bitmap();
