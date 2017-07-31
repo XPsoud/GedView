@@ -39,6 +39,9 @@ bool MyApp::OnInit()
         m_locale.AddCatalogLookupPathPrefix(sDir);
         m_locale.Init(wxLANGUAGE_DEFAULT, wxLOCALE_LOAD_DEFAULT);
         m_locale.AddCatalog(_T("GedView"));
+#ifdef __WXGTK__
+        m_locale.AddCatalog(_T("wxStd")); // Don't know yet why it isn't loaded automatically :-/
+#endif // __WXGTK__
     }
 
     // Check for single instance

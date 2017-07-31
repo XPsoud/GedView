@@ -9,7 +9,7 @@ resdir = ./resources
 libdir = ./wxpdfdoc
 AppExe = ./bin/$(AppName)
 AppBundle = ./bin/$(AppName).app
-wxPdfDocLib = build/wxpdfdoc//libPdfDocument.a
+wxPdfDocLib = build/wxpdfdoc/libPdfDocument.a
 
 APP_VERSION_MAJOR = `cat sources/appversion.h | tr -d '\r\n\t ' | sed -e 's/.*VERSION_MAJOR\([0-9]*\).*/\1/'`
 APP_VERSION_MINOR = `cat sources/appversion.h | tr -d '\r\n\t ' | sed -e 's/.*VERSION_MINOR\([0-9]*\).*/\1/'`
