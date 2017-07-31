@@ -61,6 +61,7 @@ void SettingsManager::Initialize()
     m_bCompDatas=false;
     m_bCompSettings=false;
     m_sPassword=wxEmptyString;
+    m_bProhibI18N=false;
 
     m_bInitialized=true;
 }
@@ -166,6 +167,11 @@ bool SettingsManager::ReadSettings()
             m_bCompDatas=(node->GetAttribute(_T("Datas"), _T("No"))==_T("Yes"));
             m_bCompSettings=(node->GetAttribute(_T("Settings"), _T("No"))==_T("Yes"));
         }
+        if (nodName==_T("Translation"))
+		{
+			// Allowed ?
+			m_bProhibI18N=(node->GetAttribute(_T("Allowed"), _T("Yes"))!=_T("Yes"));
+		}
 
     	node = node->GetNext();
     }
@@ -251,6 +257,10 @@ bool SettingsManager::SaveSettings()
     node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("MultiInstances")));
     node = node->GetNext();
     node->AddAttribute(_T("Allowed"), (m_bSingleInstance?_T("No"):_T("Yes")));
+    // Allowing (or not) interface translation
+	node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("Translation")));
+	node = node->GetNext();
+	node->AddAttribute(_T("Allowed"), (m_bProhibI18N?_T("No"):_T("Yes")));
 
     wxXmlDocument doc;
     doc.SetRoot(root);
@@ -403,4 +413,13 @@ void SettingsManager::SetCompressDatas(bool value)
         m_bCompDatas=value;
         m_bModified=true;
     }
+}
+
+void SettingsManager::SetProhibitI18N(bool value)
+{
+	if (value!=m_bProhibI18N)
+	{
+		m_bProhibI18N=value;
+		m_bModified=true;
+	}
 }

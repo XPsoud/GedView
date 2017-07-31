@@ -567,8 +567,14 @@ void MainFrame::OnSaveXmlFileClicked(wxCommandEvent& event)
 
 void MainFrame::OnPreferencesClicked(wxCommandEvent& event)
 {
+    // Save the "KeepLang" state
+    bool bOldLng=m_settings.GetProhibitI18N();
     DlgOptions dlg(this);
     dlg.ShowModal();
+    if (m_settings.GetProhibitI18N()!=bOldLng)
+    {
+        wxMessageBox(_("You changed the translation settings.\nYou must restart the application to see this in effect."), _("Restart needed"), wxICON_INFORMATION|wxCENTER|wxOK);
+    }
 }
 
 void MainFrame::OnAboutClicked(wxCommandEvent& event)

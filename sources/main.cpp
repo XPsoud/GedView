@@ -19,20 +19,27 @@ bool MyApp::OnInit()
     SetAppName(_T(PRODUCTNAME));
     // Init the SettingManager instance
     SettingsManager& settings=SettingsManager::Get();
-    // Initialize the local if possible
-#ifdef __WXMAC__
-    wxString sDir=wxStandardPaths::Get().GetResourcesDir();
-#else
-    wxString sDir=settings.GetAppPath();
-#endif // __WXMAC__
-    if (!sDir.EndsWith(wxFileName::GetPathSeparator()))
-        sDir.Append(wxFileName::GetPathSeparator());
-    sDir.Append(_T("langs"));
-    m_locale.AddCatalogLookupPathPrefix(sDir);
-    m_locale.Init(wxLANGUAGE_DEFAULT, wxLOCALE_LOAD_DEFAULT);
-    m_locale.AddCatalog(_T("GedView"));
     // Read the settings file
     settings.ReadSettings();
+    // Initialize the local if possible (and if wanted)
+    // Easter egg for debugging purpose
+    bool bI18N=(settings.GetProhibitI18N()==false);
+    if (wxGetKeyState(WXK_SHIFT))
+        bI18N=!bI18N;
+    if (bI18N)
+    {
+#ifdef __WXMAC__
+        wxString sDir=wxStandardPaths::Get().GetResourcesDir();
+#else
+        wxString sDir=settings.GetAppPath();
+#endif // __WXMAC__
+        if (!sDir.EndsWith(wxFileName::GetPathSeparator()))
+            sDir.Append(wxFileName::GetPathSeparator());
+        sDir.Append(_T("langs"));
+        m_locale.AddCatalogLookupPathPrefix(sDir);
+        m_locale.Init(wxLANGUAGE_DEFAULT, wxLOCALE_LOAD_DEFAULT);
+        m_locale.AddCatalog(_T("GedView"));
+    }
 
     // Check for single instance
     m_pSnglInstChkr=NULL;
