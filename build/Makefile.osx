@@ -1,3 +1,4 @@
+ifeq ($(OS_Detected), Darwin)
 #############################################################################
 # Application configuration
 #############################################################################
@@ -8,7 +9,7 @@ resdir = ./resources
 libdir = ./wxpdfdoc
 AppExe = ./bin/$(AppName)
 AppBundle = ./bin/$(AppName).app
-wxPdfDocLib = build/libPdfDocument.a
+wxPdfDocLib = build/wxpdfdoc//libPdfDocument.a
 
 APP_VERSION_MAJOR = `cat sources/appversion.h | tr -d '\r\n\t ' | sed -e 's/.*VERSION_MAJOR\([0-9]*\).*/\1/'`
 APP_VERSION_MINOR = `cat sources/appversion.h | tr -d '\r\n\t ' | sed -e 's/.*VERSION_MINOR\([0-9]*\).*/\1/'`
@@ -19,14 +20,14 @@ SETFILE = SetFile
 NM = nm
 LIBS= `wx-config --libs` -lcurl
 CXXFLAGS= `wx-config --cxxflags`
-INCLUDES= -I./wxpdfdoc
+INCLUDES= -I./wxpdfdoc/include
 
 ### Variables: ###
 
 CPP_SRC_FILES = $(wildcard $(srcdir)/*.cpp)
-OBJ_SRC_FILES = $(CPP_SRC_FILES:$(srcdir)/%.cpp=build/app_%.o)
-CPP_PDF_FILES = $(wildcard $(libdir)/*.cpp)
-OBJ_PDF_FILES = $(CPP_PDF_FILES:$(libdir)/%.cpp=build/pdfdoc_%.o)
+OBJ_SRC_FILES = $(CPP_SRC_FILES:$(srcdir)/%.cpp=build/sources/%.o)
+CPP_PDF_FILES = $(wildcard $(libdir)/src/*.cpp)
+OBJ_PDF_FILES = $(CPP_PDF_FILES:$(libdir)/src/%.cpp=build/wxpdfdoc/%.o)
 
 
 ### Conditionally set variables: ###
@@ -39,18 +40,18 @@ __app__mac_setfilecmd = \
 all: prebuild $(AppExe) App_Bundle
 
 clean:
-	rm -rf ./.deps ./.pch
-	rm -f ./build/*.o
+	rm -rf ./build/sources
+	rm -rf ./build/wxpdfdoc
 	rm -f $(AppExe)
 	rm -rf $(AppBundle)
 
 minclean:
-	rm -f ./build/app_*.o
+	rm -rf ./build/sources
 	rm -f $(AppExe)
 	rm -rf $(AppBundle)
 
 prebuild:
-	@mkdir -p build bin
+	@mkdir -p build/wxpdfdoc build/sources
 
 $(AppExe): $(wxPdfDocLib) $(OBJ_SRC_FILES)
 	@echo Linking executable $@
@@ -84,12 +85,14 @@ $(wxPdfDocLib): $(OBJ_PDF_FILES)
 	@echo Building lib $@
 	@ar -q $@ $(OBJ_PDF_FILES)
 
-build/app_%.o: sources/%.cpp sources/%.h
+build/sources/%.o: sources/%.cpp sources/%.h
 	@echo Compiling $<
 	@g++ -c -o $@ $(CXXFLAGS) $(INCLUDES) $<
 
-build/pdfdoc_%.o: wxpdfdoc/%.cpp
+build/wxpdfdoc/%.o: wxpdfdoc/src/%.cpp
 	@echo Compiling $<
 	@g++ -c -o $@ $(CXXFLAGS) $(INCLUDES) $<
 
 .PHONY: all install uninstall clean distclean App_Bundle minclean
+
+endif
