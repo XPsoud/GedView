@@ -64,6 +64,7 @@ bool MyApp::OnInit()
     frame->Show();
     frame->Raise();
 
+#ifndef __WXMAC__
     // Is there a file to open given by command line ?
     if (argc>1)
     {
@@ -81,7 +82,7 @@ bool MyApp::OnInit()
             frame->GetEventHandler()->AddPendingEvent(evt);
         }
     }
-
+#endif // ndef __WXMAC__
     return true;
 }
 
@@ -151,3 +152,16 @@ int MyApp::OnRun()
 {
     return wxApp::OnRun();
 }
+#ifdef __WXMAC__
+void MyApp::MacOpenFiles(const wxArrayString& fileNames)
+{
+    if (!fileNames.IsEmpty())
+    {
+        wxCommandEvent evt(wxEVT_FILEOPEN);
+        evt.SetString(fileNames[0]);
+        MainFrame* frm=(MainFrame*)GetTopWindow();
+        if (frm!=NULL)
+            frm->GetEventHandler()->AddPendingEvent(evt);
+    }
+}
+#endif // __WXMAC__

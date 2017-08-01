@@ -13,6 +13,9 @@ class MyApp : public wxApp
         wxString GetBuildInfos(bool all=false);
         wxString GetVersionString(bool full=false, bool build=false);
     private:
+#ifdef __WXMAC__
+        virtual void MacOpenFiles(const wxArrayString& fileNames);
+#endif // __WXMAC
         wxLocale m_locale;
         wxSingleInstanceChecker *m_pSnglInstChkr;
 };
