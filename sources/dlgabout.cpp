@@ -24,7 +24,7 @@ DlgAbout::DlgAbout(wxWindow *parent) : wxDialog(parent, -1, wxGetStockLabel(wxID
 
 	wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
 		wxBoxSizer *szrTop=new wxBoxSizer(wxHORIZONTAL);
-			BmpCtrl=new wxStaticBitmap(this, -1, wxGet_xpsi_png_Bitmap(), wxPoint(10,15), wxDefaultSize, wxBORDER_RAISED);
+			BmpCtrl=new wxStaticBitmap(this, -1, wxGet_xpsi_png_Bitmap(), wxPoint(10,15));
 			szrTop->Add(BmpCtrl, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 			wxBoxSizer *szrRight=new wxBoxSizer(wxVERTICAL);
 				label=new wxStaticText(this, -1, sTitle);
