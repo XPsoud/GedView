@@ -1,7 +1,7 @@
 #ifndef __DLGABOUT_H_INCLUDED__
 #define __DLGABOUT_H_INCLUDED__
 
-#include "wx/wx.h"
+#include <wx/wx.h>
 
 #include <wx/dialog.h>
 

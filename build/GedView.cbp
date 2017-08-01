@@ -748,10 +748,10 @@
 			<Add alias="All Gcc Release" targets="ReleaseGcc64;ReleaseGcc32;" />
 			<Add alias="All Gcc ReleaseS" targets="ReleaseGcc32S;ReleaseGcc64S;" />
 			<Add alias="All Vc10" targets="ReleaseVc10-32;ReleaseVc10-32S;ReleaseVc10-64;ReleaseVc10-64S;" />
-			<Add alias="All Vc14" targets="ReleaseVc14-32;ReleaseVc14-32S;ReleaseVc14-64;ReleaseVc14-64S;" />
 			<Add alias="All Vc10 Release" targets="ReleaseVc10-64;ReleaseVc10-32;" />
-			<Add alias="All Vc14 Release" targets="ReleaseVc14-64;ReleaseVc14-32;" />
 			<Add alias="All Vc10 ReleaseS" targets="ReleaseVc10-32S;ReleaseVc10-64S;" />
+			<Add alias="All Vc14" targets="ReleaseVc14-32;ReleaseVc14-32S;ReleaseVc14-64;ReleaseVc14-64S;" />
+			<Add alias="All Vc14 Release" targets="ReleaseVc14-64;ReleaseVc14-32;" />
 			<Add alias="All Vc14 ReleaseS" targets="ReleaseVc14-32S;ReleaseVc14-64S;" />
 			<Add alias="All-Targets" targets="ReleaseGcc32;ReleaseVc10-32;DebugGcc32;ReleaseGcc32S;ReleaseVc10-32S;ReleaseGcc64;ReleaseVc10-64;DebugGcc64;ReleaseGcc64S;ReleaseVc10-64S;ReleaseVc14-32;ReleaseVc14-32S;ReleaseVc14-64;ReleaseVc14-64S;" />
 		</VirtualTargets>
@@ -760,6 +760,12 @@
 			<Add option="-std=gnu++11" />
 			<Add directory="../wxpdfdoc/include" />
 		</Compiler>
+		<Unit filename="../sources/aboutlogo.cpp">
+			<Option virtualFolder="Graphx/" />
+		</Unit>
+		<Unit filename="../sources/aboutlogo.h">
+			<Option virtualFolder="Graphx/" />
+		</Unit>
 		<Unit filename="../sources/appversion.h">
 			<Option virtualFolder="Misc/" />
 		</Unit>
@@ -844,12 +850,6 @@
 		</Unit>
 		<Unit filename="../sources/treepdfdoc.h">
 			<Option virtualFolder="Datas/" />
-		</Unit>
-		<Unit filename="../sources/xpsi.png.cpp">
-			<Option virtualFolder="Graphx/" />
-		</Unit>
-		<Unit filename="../sources/xpsi.png.h">
-			<Option virtualFolder="Graphx/" />
 		</Unit>
 		<Extensions>
 			<code_completion />

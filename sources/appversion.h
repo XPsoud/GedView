@@ -12,7 +12,7 @@
 #define DESCRIPTION "GedView Application"
 #define wDESCRIPTION _("GedView Application")
 
-#define COPYRIGHT "Copyright (c) X.P.S.I. 2017"
-#define SMALLCOPYRIGHT "(c) X.P.S.I. 2017"
+#define COPYRIGHT "Copyright (c) X.P. 2017"
+#define SMALLCOPYRIGHT "(c) X.P. 2017"
 
 #endif // __APPVERSION_H_INCLUDED__
