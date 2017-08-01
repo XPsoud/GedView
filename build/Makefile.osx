@@ -26,6 +26,7 @@ INCLUDES= -I./wxpdfdoc/include
 
 CPP_SRC_FILES = $(wildcard $(srcdir)/*.cpp)
 OBJ_SRC_FILES = $(CPP_SRC_FILES:$(srcdir)/%.cpp=build/sources/%.o)
+DEP_SRC_FILES = $(OBJ_SRC_FILES:build/sources/%.o=build/sources/%.d)
 CPP_PDF_FILES = $(wildcard $(libdir)/src/*.cpp)
 OBJ_PDF_FILES = $(CPP_PDF_FILES:$(libdir)/src/%.cpp=build/wxpdfdoc/%.o)
 
@@ -79,6 +80,8 @@ $(AppBundle)/Contents/PkgInfo: $(AppExe) ./sources/Info.plist.in ./graphx/wxmac.
 
 App_Bundle: $(AppBundle)/Contents/PkgInfo
 
+-include $(DEP_SRC_FILES)
+
 libpdf: $(wxPdfDocLib)
 
 $(wxPdfDocLib): $(OBJ_PDF_FILES)
@@ -87,7 +90,7 @@ $(wxPdfDocLib): $(OBJ_PDF_FILES)
 
 build/sources/%.o: sources/%.cpp sources/%.h
 	@echo Compiling $<
-	@g++ -c -o $@ $(CXXFLAGS) $(INCLUDES) $<
+	@g++ -c -MMD -o $@ $(CXXFLAGS) $(INCLUDES) $<
 
 build/wxpdfdoc/%.o: wxpdfdoc/src/%.cpp
 	@echo Compiling $<
