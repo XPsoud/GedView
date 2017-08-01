@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-07-31 11:15+0100\n"
-"PO-Revision-Date: 2017-07-31 11:16+0100\n"
+"PO-Revision-Date: 2017-08-01 21:40+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -585,7 +585,7 @@ msgstr "Résultats"
 #: sources/treepdfdoc.cpp:182
 #, c-format
 msgid "Ascending tree of %s %s (%d levels)"
-msgstr "Arbre d'ascendence de %s %s (%d niveaux)"
+msgstr "Arbre d'ascendance de %s %s (%d niveaux)"
 
 #: sources/treepdfdoc.cpp:187
 #, c-format
