@@ -12,6 +12,9 @@
 *.depend
 *.cdTemp
 
+# VS-Code settings folder
+.vscode
+
 # OSX specif files
 .DS_Store
 
