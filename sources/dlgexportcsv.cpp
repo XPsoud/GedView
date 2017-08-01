@@ -84,7 +84,7 @@ void DlgExportCsv::CreateControls()
 
 void DlgExportCsv::ConnectControls()
 {
-    m_btnExport->Connect(wxEVT_BUTTON, wxCommandEventHandler(DlgExportCsv::OnBtnExportClicked), NULL, this);
+    m_btnExport->Bind(wxEVT_BUTTON, &DlgExportCsv::OnBtnExportClicked, this);
 }
 
 void DlgExportCsv::OnBtnExportClicked(wxCommandEvent& event)

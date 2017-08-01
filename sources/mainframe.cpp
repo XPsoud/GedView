@@ -21,7 +21,7 @@
 #include "../graphx/wxwin32x32.xpm"
 #endif // __WXMSW__
 
-const wxEventType wxEVT_FILEOPEN = wxNewEventType();
+wxDEFINE_EVENT(wxEVT_FILEOPEN, wxCommandEvent);
 
 enum SortColumn
 {
@@ -184,37 +184,37 @@ void MainFrame::CreateControls()
 void MainFrame::ConnectControls()
 {
     // General events handlers
-    Connect(wxEVT_SIZE, wxSizeEventHandler(MainFrame::OnSize));
-    Connect(wxEVT_MOVE, wxMoveEventHandler(MainFrame::OnMove));
-    Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(MainFrame::OnClose));
+    Bind(wxEVT_SIZE, &MainFrame::OnSize, this);
+    Bind(wxEVT_MOVE, &MainFrame::OnMove, this);
+    Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnClose, this);
     // Menus/Toolbar items
-    Connect(wxID_OPEN, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnOpenGedFileClicked));
-    Connect(wxID_SAVE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveXmlFileClicked));
-    Connect(wxID_PDFLIST, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfFileClicked));
-    Connect(wxID_PDFTREE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSavePdfTreeClicked));
-    Connect(wxID_CSVFILE, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnSaveCsvFileClicked));
-    Connect(wxID_BACKWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryBackClicked));
-    Connect(wxID_FORWARD, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnHistoryNextClicked));
-    Connect(wxID_SPELL_CHECK, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnCompareClicked));
-    Connect(wxID_PREFERENCES, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnPreferencesClicked));
-    Connect(wxID_ABOUT, wxEVT_TOOL, wxCommandEventHandler(MainFrame::OnAboutClicked));
+    Bind(wxEVT_TOOL, &MainFrame::OnOpenGedFileClicked, this, wxID_OPEN);
+    Bind(wxEVT_TOOL, &MainFrame::OnSaveXmlFileClicked, this, wxID_SAVE);
+    Bind(wxEVT_TOOL, &MainFrame::OnSavePdfFileClicked, this, wxID_PDFLIST);
+    Bind(wxEVT_TOOL, &MainFrame::OnSavePdfTreeClicked, this, wxID_PDFTREE);
+    Bind(wxEVT_TOOL, &MainFrame::OnSaveCsvFileClicked, this, wxID_CSVFILE);
+    Bind(wxEVT_TOOL, &MainFrame::OnHistoryBackClicked, this, wxID_BACKWARD);
+    Bind(wxEVT_TOOL, &MainFrame::OnHistoryNextClicked, this, wxID_FORWARD);
+    Bind(wxEVT_TOOL, &MainFrame::OnCompareClicked, this, wxID_SPELL_CHECK);
+    Bind(wxEVT_TOOL, &MainFrame::OnPreferencesClicked, this, wxID_PREFERENCES);
+    Bind(wxEVT_TOOL, &MainFrame::OnAboutClicked, this, wxID_ABOUT);
     // Other controls events handlers
-    m_lstItems->Connect(wxEVT_LIST_ITEM_SELECTED, wxListEventHandler(MainFrame::OnListItemSelected), NULL, this);
-    m_lstItems->Connect(wxEVT_LIST_ITEM_DESELECTED, wxListEventHandler(MainFrame::OnListItemDeselected), NULL, this);
-    m_lstItems->Connect(wxEVT_LIST_COL_CLICK, wxListEventHandler(MainFrame::OnColumnHeaderClicked), NULL, this);
-    m_lstItems->Connect(wxEVT_LIST_COL_END_DRAG, wxListEventHandler(MainFrame::OnColumnHeaderDragged), NULL, this);
-    m_htwDetails->Connect(wxEVT_HTML_LINK_CLICKED, wxHtmlLinkEventHandler(MainFrame::OnHtmlLinkClicked), NULL, this);
-    m_spwSplitter->Connect(wxEVT_SPLITTER_SASH_POS_CHANGED, wxSplitterEventHandler(MainFrame::OnShashPosChanged), NULL, this);
+    m_lstItems->Bind(wxEVT_LIST_ITEM_SELECTED, &MainFrame::OnListItemSelected, this);
+    m_lstItems->Bind(wxEVT_LIST_ITEM_DESELECTED, &MainFrame::OnListItemDeselected, this);
+    m_lstItems->Bind(wxEVT_LIST_COL_CLICK, &MainFrame::OnColumnHeaderClicked, this);
+    m_lstItems->Bind(wxEVT_LIST_COL_END_DRAG, &MainFrame::OnColumnHeaderDragged, this);
+    m_htwDetails->Bind(wxEVT_HTML_LINK_CLICKED, &MainFrame::OnHtmlLinkClicked, this);
+    m_spwSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGED, &MainFrame::OnShashPosChanged, this);
     // Custom events handlers
-    Connect(wxEVT_FILEOPEN, wxCommandEventHandler(MainFrame::OnAutoOpenGedFile));
+    Bind(wxEVT_FILEOPEN, &MainFrame::OnAutoOpenGedFile, this);
     // UpdateUI events handlers
-    Connect(wxID_SAVE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
-    Connect(wxID_PDFLIST, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
-    Connect(wxID_PDFTREE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_PdfTree));
-    Connect(wxID_CSVFILE, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Save));
-    Connect(wxID_BACKWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Backward));
-    Connect(wxID_FORWARD, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Forward));
-    Connect(wxID_SPELL_CHECK, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(MainFrame::OnUpdateUI_Compare));
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_SAVE);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_PDFLIST);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_PdfTree, this, wxID_PDFTREE);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_CSVFILE);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Backward, this, wxID_BACKWARD);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Forward, this, wxID_FORWARD);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Compare, this, wxID_SPELL_CHECK);
 }
 
 void MainFrame::UpdateSummary()

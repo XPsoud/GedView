@@ -135,11 +135,11 @@ void DlgTreePdf::CreateControls()
 
 void DlgTreePdf::ConnectControls()
 {
-    Connect(wxID_SAVEAS, wxEVT_BUTTON, wxCommandEventHandler(DlgTreePdf::OnSaveAsClicked));
-    Connect(wxID_SAVEAS, wxEVT_UPDATE_UI, wxUpdateUIEventHandler(DlgTreePdf::OnUpdateUI_BtnSaveAs));
+    Bind(wxEVT_BUTTON, &DlgTreePdf::OnSaveAsClicked, this, wxID_SAVEAS);
+    Bind(wxEVT_UPDATE_UI, &DlgTreePdf::OnUpdateUI_BtnSaveAs, this, wxID_SAVEAS);
     for (int i=0; i<3; ++i)
     {
-        m_optSize[i]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgTreePdf::OnOptSizeClicked), NULL, this);
+        m_optSize[i]->Bind(wxEVT_RADIOBUTTON, &DlgTreePdf::OnOptSizeClicked, this);
     }
 }
 

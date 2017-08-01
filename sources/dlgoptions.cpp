@@ -101,20 +101,20 @@ void DlgOptions::CreateControls()
 
 void DlgOptions::ConnectControls()
 {
-    Connect(wxID_APPLY, wxEVT_BUTTON, wxCommandEventHandler(DlgOptions::OnBtnApplyClicked));
-    Connect(wxID_OK, wxEVT_BUTTON, wxCommandEventHandler(DlgOptions::OnBtnOkClicked));
+    Bind(wxEVT_BUTTON, &DlgOptions::OnBtnApplyClicked, this, wxID_APPLY);
+    Bind(wxEVT_BUTTON, &DlgOptions::OnBtnOkClicked, this, wxID_OK);
     for (int i=0; i<2; i++)
     {
-        m_optStartType[i]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgOptions::OnStartupPosTypeChanged), NULL, this);
+        m_optStartType[i]->Bind(wxEVT_RADIOBUTTON, &DlgOptions::OnStartupPosTypeChanged, this);
     }
     for (int i=0; i<9; i++)
     {
-        m_optDefPos[i]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgOptions::OnSomethingHasChanged), NULL, this);
+        m_optDefPos[i]->Bind(wxEVT_RADIOBUTTON, &DlgOptions::OnSomethingHasChanged, this);
     }
-    Connect(wxEVT_CHECKBOX, wxCommandEventHandler(DlgOptions::OnSomethingHasChanged));
-    Connect(wxEVT_TEXT, wxCommandEventHandler(DlgOptions::OnSomethingHasChanged));
-    Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgOptions::OnSomethingHasChanged));
-    Connect(wxEVT_CHOICE, wxCommandEventHandler(DlgOptions::OnSomethingHasChanged));
+    Bind(wxEVT_CHECKBOX, &DlgOptions::OnSomethingHasChanged, this);
+    Bind(wxEVT_TEXT, &DlgOptions::OnSomethingHasChanged, this);
+    Bind(wxEVT_RADIOBUTTON, &DlgOptions::OnSomethingHasChanged, this);
+    Bind(wxEVT_CHOICE, &DlgOptions::OnSomethingHasChanged, this);
 }
 
 void DlgOptions::FillControls()

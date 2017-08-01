@@ -9,7 +9,7 @@
 class SettingsManager;
 class DatasManager;
 
-extern const wxEventType wxEVT_FILEOPEN;
+wxDECLARE_EVENT( wxEVT_FILEOPEN, wxCommandEvent);
 
 class MainFrame: public wxFrame
 {

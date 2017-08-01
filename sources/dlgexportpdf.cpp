@@ -85,8 +85,8 @@ void DlgExportPdf::CreateControls()
 void DlgExportPdf::ConnectControls()
 {
     for (int i=0; i<3; ++i)
-        m_optExportType[i]->Connect(wxEVT_RADIOBUTTON, wxCommandEventHandler(DlgExportPdf::OnOptExportTypeClicked), NULL, this);
-    m_btnExport->Connect(wxEVT_BUTTON, wxCommandEventHandler(DlgExportPdf::OnBtnExportClicked), NULL, this);
+        m_optExportType[i]->Bind(wxEVT_RADIOBUTTON, &DlgExportPdf::OnOptExportTypeClicked, this);
+    m_btnExport->Bind(wxEVT_BUTTON, &DlgExportPdf::OnBtnExportClicked, this);
 }
 
 void DlgExportPdf::UpdateControlsStates()
