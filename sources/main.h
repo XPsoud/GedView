@@ -8,7 +8,6 @@ class MyApp : public wxApp
 {
     public:
         virtual bool OnInit();
-        virtual int OnRun();
         virtual int OnExit();
         wxString GetBuildInfos(bool all=false);
         wxString GetVersionString(bool full=false, bool build=false);

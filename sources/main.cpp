@@ -148,10 +148,6 @@ wxString MyApp::GetVersionString(bool full, bool build)
     return sRes;
 }
 
-int MyApp::OnRun()
-{
-    return wxApp::OnRun();
-}
 #ifdef __WXMAC__
 void MyApp::MacOpenFiles(const wxArrayString& fileNames)
 {
