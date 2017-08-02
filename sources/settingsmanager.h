@@ -65,6 +65,7 @@ class SettingsManager
         // Misc vars
         bool m_bInitialized, m_bModified;
         wxString m_sAppPath, m_sSettingsPath;
+        static const wxChar* m_szSettingsFName;
         // Settings vars
         wxString m_sPassword;
         bool m_bCompSettings, m_bCompDatas;

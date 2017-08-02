@@ -3,6 +3,7 @@
 const wxChar* szStdXmlFileHeader=_T("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 const int iStdXmlHeaderSize=38;
 
+const wxChar* SettingsManager::m_szSettingsFName=_T("settings.xml");
 #include <wx/dir.h>
 #include <wx/zstream.h>
 #include <wx/xml/xml.h>
@@ -45,10 +46,25 @@ void SettingsManager::Initialize()
     wxFileName fname(wxStandardPaths::Get().GetExecutablePath());
     fname.Normalize();
     m_sAppPath=fname.GetPath(wxPATH_GET_VOLUME|wxPATH_GET_SEPARATOR);
+    if (!m_sAppPath.EndsWith(wxFileName::GetPathSeparator()))
+        m_sAppPath.Append(wxFileName::GetPathSeparator());
+#ifndef __WXMAC__
+    // Windows and Linux : switch to portable mode if the
+    // settings file is present in the application folder
+    if (wxFileExists(m_sAppPath + m_szSettingsFName))
+    {
+        m_sSettingsPath=m_sAppPath;
+    }
+    else
+    {
+#endif // ndef __WXMAC__
     // Path for the settings file (platform dependant)
     m_sSettingsPath=wxStandardPaths::Get().GetUserDataDir();
     if (!m_sSettingsPath.EndsWith(wxFileName::GetPathSeparator()))
         m_sSettingsPath.Append(wxFileName::GetPathSeparator());
+#ifndef __WXMAC__
+    }
+#endif // ndef __WXMAC__
     // Default position and size of the main window
     m_iStartPos=wxCENTER_ON_SCREEN;
     m_ptStartPos=wxDefaultPosition;
