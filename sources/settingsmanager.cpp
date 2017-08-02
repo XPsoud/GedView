@@ -45,10 +45,10 @@ void SettingsManager::Initialize()
     wxFileName fname(wxStandardPaths::Get().GetExecutablePath());
     fname.Normalize();
     m_sAppPath=fname.GetPath(wxPATH_GET_VOLUME|wxPATH_GET_SEPARATOR);
-    // Path for the datas file(s) (platform dependant)
-    m_sDatasPath=wxStandardPaths::Get().GetUserDataDir();
-    if (!m_sDatasPath.EndsWith(wxFileName::GetPathSeparator()))
-        m_sDatasPath.Append(wxFileName::GetPathSeparator());
+    // Path for the settings file (platform dependant)
+    m_sSettingsPath=wxStandardPaths::Get().GetUserDataDir();
+    if (!m_sSettingsPath.EndsWith(wxFileName::GetPathSeparator()))
+        m_sSettingsPath.Append(wxFileName::GetPathSeparator());
     // Default position and size of the main window
     m_iStartPos=wxCENTER_ON_SCREEN;
     m_ptStartPos=wxDefaultPosition;
@@ -70,7 +70,11 @@ bool SettingsManager::ReadSettings()
 {
     if (!m_bInitialized) Initialize();
 
-    wxString sFName=m_sDatasPath + _T("Settings.gvw");
+    // Rename the old settings file if it exists
+    if (wxFileExists(m_sSettingsPath + _T("Settings.gvw")))
+        wxRenameFile(m_sSettingsPath + _T("Settings.gvw"), m_sSettingsPath + _T("settings.xml"));
+
+    wxString sFName=m_sSettingsPath + _T("settings.xml");
 
     if (!wxFileExists(sFName)) return false;
 
@@ -186,7 +190,7 @@ bool SettingsManager::SaveSettings()
 
     wxString sVal;
 
-    wxString sFName=m_sDatasPath + _T("Settings.gvw");
+    wxString sFName=m_sSettingsPath + _T("settings.xml");
 
     wxFileName fname(sFName);
 

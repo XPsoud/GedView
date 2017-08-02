@@ -27,7 +27,7 @@ class SettingsManager
 		// Accessors
 		bool IsModified();
 		wxString GetAppPath() { return m_sAppPath; }
-		wxString GetDatasPath() { return m_sDatasPath; }
+		wxString GetSettingsPath() { return m_sSettingsPath; }
 		// General password
 		wxString GetPassword() { return m_sPassword; }
 		void SetPassword(const wxString& pwd);
@@ -64,7 +64,7 @@ class SettingsManager
         static SettingsManager m_instance;
         // Misc vars
         bool m_bInitialized, m_bModified;
-        wxString m_sAppPath, m_sDatasPath;
+        wxString m_sAppPath, m_sSettingsPath;
         // Settings vars
         wxString m_sPassword;
         bool m_bCompSettings, m_bCompDatas;
