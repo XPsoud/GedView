@@ -2,6 +2,7 @@
 #define __SETTINGSMANAGER_H_INCLUDED__
 
 #include <wx/wx.h>
+#include "recentslist.h"
 
 extern const wxChar* szStdXmlFileHeader;
 extern const int iStdXmlHeaderSize;
@@ -53,6 +54,8 @@ class SettingsManager
 		// Prohibit translations and transaltions related stuff
 		bool GetProhibitI18N() { return m_bProhibI18N; }
 		void SetProhibitI18N(bool value);
+		// Misc
+		RecentsList& GetRecentsList() { return m_recents; }
     protected:
     private:
         SettingsManager();
@@ -66,6 +69,7 @@ class SettingsManager
         bool m_bInitialized, m_bModified;
         wxString m_sAppPath, m_sSettingsPath;
         static const wxChar* m_szSettingsFName;
+        RecentsList m_recents;
         // Settings vars
         wxString m_sPassword;
         bool m_bCompSettings, m_bCompDatas;

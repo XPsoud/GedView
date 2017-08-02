@@ -192,6 +192,10 @@ bool SettingsManager::ReadSettings()
 			// Allowed ?
 			m_bProhibI18N=(node->GetAttribute(_T("Allowed"), _T("Yes"))!=_T("Yes"));
 		}
+		if (nodName==_T("RecentsFiles"))
+        {
+            m_recents.FromXmlNode(node);
+        }
 
     	node = node->GetNext();
     }
@@ -281,6 +285,13 @@ bool SettingsManager::SaveSettings()
 	node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("Translation")));
 	node = node->GetNext();
 	node->AddAttribute(_T("Allowed"), (m_bProhibI18N?_T("No"):_T("Yes")));
+	// Recents setups list (only saved if not empty)
+    if (!m_recents.IsEmpty())
+    {
+        node->SetNext(new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("RecentsFiles")));
+        node = node->GetNext();
+        m_recents.ToXmlNode(node);
+    }
 
     wxXmlDocument doc;
     doc.SetRoot(root);
@@ -334,6 +345,8 @@ int SettingsManager::StartupString2Pos(const wxString& sValue)
 
 bool SettingsManager::IsModified()
 {
+    m_bModified |= m_recents.IsModified();
+
     return m_bModified;
 }
 

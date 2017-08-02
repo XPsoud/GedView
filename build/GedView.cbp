@@ -829,9 +829,15 @@
 		<Unit filename="../sources/mytreeitem.h">
 			<Option virtualFolder="Datas/" />
 		</Unit>
+		<Unit filename="../sources/recentslist.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="../sources/recentslist.h">
+			<Option virtualFolder="Datas/" />
+		</Unit>
 		<Unit filename="../sources/resources.rc">
 			<Option compilerVar="WINDRES" />
-			<Option virtualFolder="Misc/" />
+			<Option virtualFolder="Datas/" />
 		</Unit>
 		<Unit filename="../sources/settingsmanager.cpp">
 			<Option virtualFolder="Datas/" />

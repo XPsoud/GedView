@@ -109,7 +109,9 @@ void MainFrame::CreateControls()
     // Toolbar
     wxToolBar* tb=CreateToolBar(wxTB_FLAT);
 
-        tb->AddTool(wxID_OPEN, wxGetStockLabel(wxID_OPEN), wxGet_open_png_Bitmap(), _("Open a ged file"));
+        tb->AddTool(wxID_OPEN, wxGetStockLabel(wxID_OPEN), wxGet_open_png_Bitmap(), _("Open a ged file"), wxITEM_DROPDOWN);
+        wxMenu* mnuRecents = new wxMenu;
+        tb->SetDropdownMenu(wxID_OPEN, mnuRecents);
 
         tb->AddTool(wxID_SAVE, wxGetStockLabel(wxID_SAVE), wxGet_save_png_Bitmap(), _("Save datas to xml file"));
 
@@ -136,6 +138,8 @@ void MainFrame::CreateControls()
         tb->AddTool(wxID_ABOUT, wxGetStockLabel(wxID_ABOUT), wxGet_about_png_Bitmap(), wxGetStockHelpString(wxID_ABOUT, wxSTOCK_MENU));
 
     tb->Realize();
+
+    m_settings.GetRecentsList().SetAssociatedMenu(mnuRecents);
 
     // Controls
     wxPanel *pnl=new wxPanel(this, -1);
@@ -189,6 +193,7 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnClose, this);
     // Menus/Toolbar items
     Bind(wxEVT_TOOL, &MainFrame::OnOpenGedFileClicked, this, wxID_OPEN);
+    Bind(wxEVT_TOOL, &MainFrame::OnReopenGedFileClicked, this, wxID_FILE, wxID_FILE9);
     Bind(wxEVT_TOOL, &MainFrame::OnSaveXmlFileClicked, this, wxID_SAVE);
     Bind(wxEVT_TOOL, &MainFrame::OnSavePdfFileClicked, this, wxID_PDFLIST);
     Bind(wxEVT_TOOL, &MainFrame::OnSavePdfTreeClicked, this, wxID_PDFTREE);
@@ -515,6 +520,28 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
         return;
     }
+    m_settings.GetRecentsList().SetLastUsed(sFName);
+    m_arsHistory.Clear();
+    m_iHistPos=-1;
+    m_bHistClicked=false;
+
+    UpdateSummary();
+
+    UpdateList();
+
+    wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnReopenGedFileClicked(wxCommandEvent& event)
+{
+    wxString sFile=m_settings.GetRecentsList().GetEntry(event.GetId()-wxID_FILE);
+	if (sFile.IsEmpty()) return;
+	if (!m_datas.ReadGedFile(sFile))
+    {
+        wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        return;
+    }
+    m_settings.GetRecentsList().SetLastUsed(sFile);
     m_arsHistory.Clear();
     m_iHistPos=-1;
     m_bHistClicked=false;
@@ -535,6 +562,7 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
         return;
     }
+    m_settings.GetRecentsList().SetLastUsed(sFName);
     wxSetWorkingDirectory(wxPathOnly(sFName));
     m_arsHistory.Clear();
     m_iHistPos=-1;

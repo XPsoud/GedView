@@ -29,6 +29,7 @@ class MainFrame: public wxFrame
         void OnMove(wxMoveEvent &event);
         void OnClose(wxCloseEvent &event);
         void OnOpenGedFileClicked(wxCommandEvent &event);
+        void OnReopenGedFileClicked(wxCommandEvent &event);
         void OnAutoOpenGedFile(wxCommandEvent &event);
         void OnSaveXmlFileClicked(wxCommandEvent &event);
         void OnSavePdfFileClicked(wxCommandEvent &event);
