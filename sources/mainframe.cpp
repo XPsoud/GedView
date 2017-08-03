@@ -557,6 +557,9 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
 {
     wxString sFName=event.GetString();
     if ((sFName.IsEmpty())||(!wxFileExists(sFName))) return;
+    wxFileName fname(sFName);
+    fname.Normalize();
+    sFName=fname.GetFullPath();
     if (!m_datas.ReadGedFile(sFName))
     {
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
