@@ -29,6 +29,9 @@ class MainFrame: public wxFrame
         void OnMove(wxMoveEvent &event);
         void OnClose(wxCloseEvent &event);
         void OnOpenGedFileClicked(wxCommandEvent &event);
+#ifdef __WXMAC__
+        void OnReopenToolClicked(wxCommandEvent &event);
+#endif // __WXMAC__
         void OnReopenGedFileClicked(wxCommandEvent &event);
         void OnAutoOpenGedFile(wxCommandEvent &event);
         void OnSaveXmlFileClicked(wxCommandEvent &event);
@@ -60,6 +63,7 @@ class MainFrame: public wxFrame
         wxHtmlWindow *m_htwDetails;
         wxTimer m_tmrLstSel;
         // Misc vars
+        wxMenu* m_mnuRecents;
         wxArrayString m_arsHistory;
         int m_iHistPos, m_iSortCol;
         bool m_bHistClicked;

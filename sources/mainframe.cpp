@@ -32,6 +32,7 @@ enum SortColumn
     SORTCOL_FNAME
 };
 
+const int wxID_REOPEN  = wxNewId();
 const int wxID_PDFLIST = wxNewId();
 const int wxID_PDFTREE = wxNewId();
 const int wxID_CSVFILE = wxNewId();
@@ -110,9 +111,11 @@ void MainFrame::CreateControls()
     wxToolBar* tb=CreateToolBar(wxTB_FLAT);
 
         tb->AddTool(wxID_OPEN, wxGetStockLabel(wxID_OPEN), wxGet_open_png_Bitmap(), _("Open a ged file"), wxITEM_DROPDOWN);
-        wxMenu* mnuRecents = new wxMenu;
-        tb->SetDropdownMenu(wxID_OPEN, mnuRecents);
-
+        m_mnuRecents = new wxMenu;
+        tb->SetDropdownMenu(wxID_OPEN, m_mnuRecents);
+#ifdef __WXMAC__
+        tb->AddTool(wxID_REOPEN, _("Reopen file"), wxGet_reopen_png_Bitmap(), _("Reopen a ged file"));
+#endif // __WXMAC__
         tb->AddTool(wxID_SAVE, wxGetStockLabel(wxID_SAVE), wxGet_save_png_Bitmap(), _("Save datas to xml file"));
 
         tb->AddTool(wxID_PDFLIST, _("Export as pdf file"), wxGet_pdf_png_Bitmap(), _("Export the datas list to a pdf file"));
@@ -139,7 +142,7 @@ void MainFrame::CreateControls()
 
     tb->Realize();
 
-    m_settings.GetRecentsList().SetAssociatedMenu(mnuRecents);
+    m_settings.GetRecentsList().SetAssociatedMenu(m_mnuRecents);
 
     // Controls
     wxPanel *pnl=new wxPanel(this, -1);
@@ -193,6 +196,9 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_CLOSE_WINDOW, &MainFrame::OnClose, this);
     // Menus/Toolbar items
     Bind(wxEVT_TOOL, &MainFrame::OnOpenGedFileClicked, this, wxID_OPEN);
+#ifdef __WXMAC__
+    Bind(wxEVT_TOOL, &MainFrame::OnReopenToolClicked, this, wxID_REOPEN);
+#endif // __WXMAC__
     Bind(wxEVT_TOOL, &MainFrame::OnReopenGedFileClicked, this, wxID_FILE, wxID_FILE9);
     Bind(wxEVT_TOOL, &MainFrame::OnSaveXmlFileClicked, this, wxID_SAVE);
     Bind(wxEVT_TOOL, &MainFrame::OnSavePdfFileClicked, this, wxID_PDFLIST);
@@ -536,6 +542,13 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
 
     wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
+
+#ifdef __WXMAC__
+void MainFrame::OnReopenToolClicked(wxCommandEvent& event)
+{
+    PopupMenu(m_mnuRecents);
+}
+#endif // __WXMAC__
 
 void MainFrame::OnReopenGedFileClicked(wxCommandEvent& event)
 {

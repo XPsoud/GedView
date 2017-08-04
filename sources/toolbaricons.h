@@ -39,6 +39,11 @@ extern unsigned char preferences_png[];
 
 wxBitmap wxGet_preferences_png_Bitmap();
 
+#define reopen_png_Length 2102
+extern unsigned char reopen_png[];
+
+wxBitmap wxGet_reopen_png_Bitmap();
+
 #define save_png_Length 1915
 extern unsigned char save_png[];
 
