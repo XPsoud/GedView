@@ -18,7 +18,7 @@ APP_VERSION =$(APP_VERSION_MAJOR).$(APP_VERSION_MINOR).$(APP_VERSION_REV)
 
 SETFILE = SetFile
 NM = nm
-LIBS= `wx-config --libs` -lcurl
+LIBS= `wx-config --libs`
 CXXFLAGS= `wx-config --cxxflags`
 INCLUDES= -I./wxpdfdoc/include
 
