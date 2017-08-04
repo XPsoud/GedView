@@ -418,7 +418,12 @@ wxString DatasManager::ParseEvent(wxXmlNode* event)
 
 wxString DatasManager::ParseDate(const wxString& value, bool yearOnly)
 {
-    // static const wxChar* szSpec[]={_T("AFT"), _T("BEF"), _T("ABT"), _T("EST")};
+    static const wxChar* szPrefixSrc[] = { _T("ABT"), _T("BEF"), _T("AFT"), _T("EST")};
+    static const wxChar* szPrefixNew[] = { _("Around"), _("Before"), _("After"), _("Estimated")};
+    static const wxChar* szMonthSrc[] = { _T("JAN"), _T("FEB"), _T("MAR"), _T("APR"), _T("MAY"), _T("JUN"), _T("JUL"), _T("AUG"), _T("SEP"), _T("OCT"), _T("NOV"), _T("DEC")};
+    static const wxChar* szMonthNew[] = { _("January"), _("February"), _("March"), _("April"), _("May"), _("June"), _("July"), _("August"), _("September"), _("October"), _("November"), _("December")};
+    static const int iPrefixCount=WXSIZEOF(szPrefixSrc);
+
     wxString sRes=wxEmptyString;
 
     if (yearOnly)
@@ -437,8 +442,21 @@ wxString DatasManager::ParseDate(const wxString& value, bool yearOnly)
             return g_sUnknownYear;
         }
     }
+    sRes=value;
+    // Replace prefix with a user readable value
+    for (int i=0; i<iPrefixCount; ++i)
+    {
+        if (sRes.Replace(szPrefixSrc[i], wxGetTranslation(szPrefixNew[i]), false)>0)
+            break;
+    }
+    // Replace the month name
+    for (int i=0; i<12; ++i)
+    {
+        if (sRes.Replace(szMonthSrc[i], wxGetTranslation(szMonthNew[i]), false)>0)
+            break;
+    }
 
-    return value;
+    return sRes;
 }
 
 wxString DatasManager::GetItemFirstName(const wxString& itmId)
