@@ -116,7 +116,8 @@ void DlgExportCsv::OnBtnExportClicked(wxCommandEvent& event)
         sLine << _("Id") << m_sSeparator << _("Sex") << m_sSeparator;
         sLine << _("Last Name") << m_sSeparator << _("First Name") << m_sSeparator;
         sLine << _("Birth") << m_sSeparator << _("Birth place") << m_sSeparator;
-        sLine << _("Death") << m_sSeparator << _("Death place");
+        sLine << _("Death") << m_sSeparator << _("Death place") << m_sSeparator;
+        sLine << _("Occupation");
         sLine << _T("\n");
     }
     wxXmlNode *root=m_datas.GetDatas();
@@ -222,7 +223,9 @@ wxString DlgExportCsv::GedItem2CsvLine(wxXmlNode *itmNode)
     {
         sPlace=m_datas.GetItemBurialPlace(itmNode);
     }
-    sResult << sPlace;
+    sResult << sPlace << m_sSeparator;
+
+    sResult << m_datas.GetItemOccupation(itmNode) << m_sSeparator;
 
     return sResult;
 

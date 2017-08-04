@@ -63,6 +63,8 @@ class DatasManager
         wxString GetItemBurial(const wxXmlNode *itmNode, bool yearOnly=false);
         wxString GetItemBurialPlace(const wxString& itmId);
         wxString GetItemBurialPlace(const wxXmlNode *itmNode);
+        wxString GetItemOccupation(const wxString& itmId);
+        wxString GetItemOccupation(const wxXmlNode *itmNode);
         wxString GetItemInfos(wxXmlNode *itmNode, wxXmlNode *root=NULL);
         // Reading and saving datas
         bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);

@@ -8,7 +8,7 @@
 #include <wx/filename.h>
 #include <wx/busyinfo.h>
 
-const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS")};
+const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS"), _T("OCCU")};
 const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR"), _T("BAPM"), _T("BURI")};
 const wxChar* szKnownFamItems[] = { _T("HUSB"), _T("WIFE"), _T("CHIL")};
 const wxChar* g_sUnknownYear=_T("----");
@@ -980,6 +980,37 @@ wxString DatasManager::GetItemBurialPlace(const wxXmlNode* itmNode)
     return wxEmptyString;
 }
 
+wxString DatasManager::GetItemOccupation(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemOccupation(node);
+        }
+        node=node->GetNext();
+    }
+    return wxEmptyString;
+}
+
+wxString DatasManager::GetItemOccupation(const wxXmlNode* itmNode)
+{
+    if (itmNode==NULL) return wxEmptyString;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("OCCU"))
+        {
+            return subNode->GetAttribute(_T("Value"));
+        }
+        subNode=subNode->GetNext();
+    }
+
+    return wxEmptyString;
+}
+
 wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
 {
     if (itmNode==NULL) return wxEmptyString;
@@ -1005,6 +1036,10 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                 sEvt=_("Dead_F");
             }
             sResult << _T(" ") << sEvt << _T("\n");
+        }
+        if (sType==_T("OCCU"))
+        {
+            sResult << _("Occupation:") << _T(" ") << subNode->GetAttribute(_T("Value")) << _T("\n");
         }
         if (sType==_T("FAMC"))
         {

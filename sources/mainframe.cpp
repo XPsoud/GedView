@@ -347,6 +347,11 @@ void MainFrame::UpdateItemDetails()
             sPage << _T("<br />") << sEvt;
         }
 
+        if (sType==_T("OCCU"))
+        {
+            sPage << _T("<br />") << _("Occupation:") << _T(" ") << subNode->GetAttribute(_T("Value"));
+        }
+
         if (sType==_T("FAMC"))
         {
             sPage << _T("<br /><hr /><h4>") << _("Parents") << _T("</h4>");

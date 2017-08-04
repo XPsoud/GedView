@@ -302,6 +302,12 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
             doc->Cell(190, 8, sEvt, wxPDF_BORDER_NONE, 1);
         }
 
+        if (sType==_T("OCCU"))
+        {
+            sTxt= _("Occupation:") + _T(" ") + subNode->GetAttribute(_T("Value"));
+            doc->Cell(190, 8, sTxt, wxPDF_BORDER_NONE, 1);
+        }
+
         if (sType==_T("FAMC"))
         {
             AddHrTitle(doc->GetY(), _("Parents"), doc);
