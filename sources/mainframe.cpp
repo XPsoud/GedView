@@ -337,7 +337,8 @@ void MainFrame::UpdateItemDetails()
     int iSex=m_datas.GetItemSex(node);
     wxChar c=(iSex==GIS_MALE?wxChar(0x2642):(iSex==GIS_FEMALE?wxChar(0x2640):wxChar(32)));
 
-    wxString sPage=_T("<h3>") + m_datas.GetItemFullName(node).Prepend(c) + _T("</h3>");
+    wxString sPage=_T("<h3>");
+    sPage <<  c << _T(" ") << m_datas.GetItemFullName(node) << _T("</h3>");
     wxXmlNode *subNode=node->GetChildren();
     bool bUnions=false;
     while(subNode!=NULL)
