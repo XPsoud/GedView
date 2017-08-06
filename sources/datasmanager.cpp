@@ -107,6 +107,8 @@ int DatasManager::GetItemsCount(GEDITEMTYPE type)
                 case GIT_FAM:
                     if (sType==_T("FAM")) ++iRes;
                         break;
+                default:
+                    break;
             }
         }
 
@@ -630,6 +632,39 @@ GEDITEMSEX DatasManager::GetItemSex(const wxXmlNode* itmNode)
     }
 
     return GIS_UNKNOWN;
+}
+
+const wxChar DatasManager::GetItemSexChar(const wxString& itmId)
+{
+    wxXmlNode *node=m_datas->GetChildren();
+    while(node!=NULL)
+    {
+        if (node->GetAttribute(_T("GedId"))==itmId)
+        {
+            return GetItemSexChar(node);
+        }
+        node=node->GetNext();
+    }
+    return GetItemSexChar(NULL);
+}
+
+const wxChar DatasManager::GetItemSexChar(wxXmlNode* itmNode)
+{
+    int iSex=(itmNode!=NULL?GetItemSex(itmNode):GIS_UNKNOWN);
+    return GetSexChar(iSex);
+}
+
+const wxChar DatasManager::GetSexChar(int gender)
+{
+    switch(gender)
+    {
+        case GIS_MALE:
+            return wxChar(0x2642);
+        case GIS_FEMALE:
+            return wxChar(0x2640);
+        default:
+            return _T('?');
+    }
 }
 
 wxString DatasManager::GetItemBirth(const wxString& itmId, bool yearOnly)

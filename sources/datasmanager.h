@@ -47,6 +47,9 @@ class DatasManager
         wxString GetItemFullName(wxXmlNode* itmNode, bool lastFirst=true);
         GEDITEMSEX GetItemSex(const wxString& itmId);
         GEDITEMSEX GetItemSex(const wxXmlNode *itmNode);
+        const wxChar GetItemSexChar(const wxString& itmId);
+        const wxChar GetItemSexChar(wxXmlNode *itmnode);
+        const wxChar GetSexChar(int gender);
         wxString GetItemBirth(const wxString& itmId, bool yearOnly=false);
         wxString GetItemBirth(const wxXmlNode *itmNode, bool yearOnly=false);
         wxString GetItemBirthPlace(const wxString& itmId);

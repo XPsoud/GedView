@@ -335,7 +335,7 @@ void MainFrame::UpdateItemDetails()
     if (sItmID.IsEmpty()) return;
 
     int iSex=m_datas.GetItemSex(node);
-    wxChar c=(iSex==GIS_MALE?wxChar(0x2642):(iSex==GIS_FEMALE?wxChar(0x2640):wxChar(32)));
+    wxChar c=m_datas.GetSexChar(iSex);
 
     wxString sPage=_T("<h3>");
     sPage <<  c << _T(" ") << m_datas.GetItemFullName(node) << _T("</h3>");
@@ -400,7 +400,7 @@ void MainFrame::UpdateItemDetails()
                     {
                         if (arsSiblings[s]!=sItmID)
                         {
-                            sPage << _T("<br /> <b><a href=\"") << arsSiblings[s] << _T("\">")<< m_datas.GetItemFirstName(arsSiblings[s]) << _T("</a></b>");
+                            sPage << _T("<br />") << m_datas.GetItemSexChar(arsSiblings[s]) << _T(" <b><a href=\"") << arsSiblings[s] << _T("\">")<< m_datas.GetItemFirstName(arsSiblings[s]) << _T("</a></b>");
                             sEvent=m_datas.GetItemBirth(arsSiblings[s]);
                             if (!sEvent.IsEmpty())
                                 sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
@@ -463,7 +463,7 @@ void MainFrame::UpdateItemDetails()
                             sPage << _T("<ul>");
                             bChild=true;
                         }
-                        sPage << _T("<li><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFirstName(sEvtId) << _T("</a>");
+                        sPage << _T("<li> ") << m_datas.GetItemSexChar(sEvtId) << _T("<a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFirstName(sEvtId) << _T("</a>");
                         sEvent=m_datas.GetItemBirth(sEvtId);
                         if (!sEvent.IsEmpty())
                             sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;") << sEvent << _T("</small>");
