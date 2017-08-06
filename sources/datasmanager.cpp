@@ -1119,7 +1119,8 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                         if (arsSiblings[s]!=sItmID)
                         {
                             wxXmlNode *nd=FindItemByGedId(arsSiblings[s], root);
-                            sResult << arsSiblings[s] << _T(" - ")<< GetItemFirstName(nd) << _T("\n");
+                            int iSSex=GetItemSex(nd);
+                            sResult << arsSiblings[s] << _T(" - ")<< GetItemFirstName(nd) << wxString::Format(_T(" (%c) : "), (iSSex==GIS_MALE?_T('M'):(iSSex==GIS_FEMALE?_T('F'):_T('?')))) << _T("\n");
                             sEvent=GetItemBirth(nd);
                             if (!sEvent.IsEmpty())
                                 sResult << _T(" ") << sEvent << _T("\n");
@@ -1178,7 +1179,8 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                     if (sSubTyp==_T("CHIL"))
                     {
                         wxXmlNode *nd=FindItemByGedId(sEvtId, root);
-                        sResult << _T(" -> ") << sEvtId << _T(" - ") << GetItemFirstName(nd) << _T("\n");
+                        int iCSex=GetItemSex(nd);
+                        sResult << _T(" -> ") << sEvtId << _T(" - ") << GetItemFirstName(nd) << wxString::Format(_T(" (%c) : "), (iCSex==GIS_MALE?_T('M'):(iCSex==GIS_FEMALE?_T('F'):_T('?')))) << _T("\n");
                         sEvent=GetItemBirth(nd);
                         if (!sEvent.IsEmpty())
                             sResult << _T("     ") << sEvent << _T("\n");
