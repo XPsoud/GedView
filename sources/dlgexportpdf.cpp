@@ -354,7 +354,9 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     {
                         if (arsSiblings[s]!=sItmID)
                         {
+                            int iSSex=m_datas.GetItemSex(arsSiblings[s]);
                             sTxt=arsSiblings[s] + _T(" - ") + m_datas.GetItemFirstName(arsSiblings[s]);
+                            sTxt << _T(" (") << (iSSex==GIS_MALE?_T('M'):iSSex==GIS_FEMALE?_T('F'):_T('?')) << _T(")";)
                             doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                             sEvent=m_datas.GetItemBirth(arsSiblings[s]);
                             doc->SetFontSize(10);
@@ -363,7 +365,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                             sEvent=m_datas.GetItemDeath(arsSiblings[s]);
                             if (!sEvent.IsEmpty())
                             {
-                                if ((sEvent==_("Dead")) && (m_datas.GetItemSex(arsSiblings[s])==GIS_FEMALE))
+                                if ((sEvent==_("Dead")) && (iSSex==GIS_FEMALE))
                                     sEvent=_("Dead_F");
                                 doc->Cell(190, 5, _T("   ") + sEvent, wxPDF_BORDER_NONE, 1);
                             }
@@ -418,7 +420,9 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     }
                     if (sSubTyp==_T("CHIL"))
                     {
+                        int iCSex=m_datas.GetItemSex(sEvtId);
                         sTxt=_T("      ") + sEvtId + _T(" - ") + m_datas.GetItemFirstName(sEvtId);
+                        sTxt << _T(" (") << (iCSex==GIS_MALE?_T('M'):iCSex==GIS_FEMALE?_T('F'):_T('?')) << _T(")");
                         doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemBirth(sEvtId);
                         doc->SetFontSize(10);
@@ -427,7 +431,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                         sEvent=m_datas.GetItemDeath(sEvtId);
                         if (!sEvent.IsEmpty())
                         {
-                            if ((sEvent==_("Dead")) && (m_datas.GetItemSex(sEvtId)==GIS_FEMALE))
+                            if ((sEvent==_("Dead")) && (iCSex==GIS_FEMALE))
                                 sEvent=_("Dead_F");
                             doc->Cell(190, 5, _T("         ") + sEvent, wxPDF_BORDER_NONE, 1);
                         }
