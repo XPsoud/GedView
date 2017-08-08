@@ -549,6 +549,8 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
 
     UpdateList();
 
+    UpdateItemDetails();
+
     wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
 
@@ -576,6 +578,8 @@ void MainFrame::OnReopenGedFileClicked(wxCommandEvent& event)
     UpdateSummary();
 
     UpdateList();
+
+    UpdateItemDetails();
 
     wxMessageBox(_("Ged file read successfully !"), _("Done"), wxICON_EXCLAMATION|wxCENTER|wxOK);
 }
