@@ -388,10 +388,10 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
             {
                 wxXmlNode *subEvt=evtNode->GetChildren();
                 wxString sSubTyp;
+                // First pass to search for the event type
                 while(subEvt!=NULL)
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
-                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
                     if (subEvt->GetName()==_T("Event"))
                     {
                         sTxt=m_datas.ParseEvent(subEvt);
@@ -402,6 +402,13 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                             doc->SetFontSize(12);
                         }
                     }
+                    subEvt=subEvt->GetNext();
+                }
+                // Second pass for Husband/Wife and children
+                subEvt=evtNode->GetChildren();
+                {
+                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
                         doc->Cell(190, 6, sEvtId + _T(" - ") + m_datas.GetItemFullName(sEvtId), wxPDF_BORDER_NONE, 1);

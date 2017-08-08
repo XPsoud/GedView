@@ -430,16 +430,24 @@ void MainFrame::UpdateItemDetails()
                 wxXmlNode *subEvt=evtNode->GetChildren();
                 wxString sSubTyp;
                 bool bChild=false;
+                // First pass to search for the event type
                 while(subEvt!=NULL)
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
-                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
                     if (subEvt->GetName()==_T("Event"))
                     {
                         wxString sTmp=m_datas.ParseEvent(subEvt);
                         if (!sTmp.IsEmpty())
                             sPage << _T("<br /><small>") << sTmp << _T("</small>");
                     }
+                    subEvt=subEvt->GetNext();
+                }
+                // Second pass for Husband/Wife and children
+                subEvt=evtNode->GetChildren();
+                while(subEvt!=NULL)
+                {
+                    sSubTyp=subEvt->GetAttribute(_T("Type"));
+                    wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
                         sPage << _T("<br /> <b><a href=\"") << sEvtId << _T("\">") << m_datas.GetItemFullName(sEvtId) << _T("</a></b>");
