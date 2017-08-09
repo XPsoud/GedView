@@ -1,6 +1,7 @@
 #include "dlgtreepdf.h"
 
 #include "treepdfdoc.h"
+#include "dlgexportpdf.h"
 #include "datasmanager.h"
 
 #include <wx/xml/xml.h>
@@ -64,6 +65,10 @@ void DlgTreePdf::CreateControls()
         m_chkSosaNmbr=new wxCheckBox(this, -1, _("Add sosa number under each item"));
             m_chkSosaNmbr->SetValue(true);
         szrMain->Add(m_chkSosaNmbr, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
+
+        m_chkDetails=new wxCheckBox(this, -1, _("Add each item's details page"));
+            m_chkDetails->SetValue(false);
+        szrMain->Add(m_chkDetails, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
         m_chkSummary=new wxCheckBox(this, -1, _("Add a small summary in the bottom-left corner"));
             m_chkSummary->SetValue(true);
@@ -205,6 +210,65 @@ void DlgTreePdf::GetPaperSize(int* width, int* height)
     }
 }
 
+void DlgTreePdf::WriteItemsDetails()
+{
+    if ((m_RootItem==NULL)||(m_TreePdf==NULL))
+        return;
+    wxArrayString arsItems;
+    CreateItemsList(arsItems, m_RootItem);
+    arsItems.Sort(DlgTreePdf::GedIdSortCompareFunction);
+    if (arsItems.IsEmpty())
+        return;
+    int iCount=arsItems.GetCount();
+    DlgExportPdf dlg(NULL);
+    while(!arsItems.IsEmpty())
+    {
+        wxString sID=arsItems[0];
+        wxXmlNode* node=m_datas.FindItemByGedId(sID);
+        if (node!=NULL)
+        {
+            dlg.GedItem2Pdf(node, m_TreePdf);
+        }
+        while(!arsItems.IsEmpty())
+        {
+            if (arsItems[0]==sID)
+                arsItems.RemoveAt(0);
+            else
+                break;
+        }
+    }
+}
+
+void DlgTreePdf::CreateItemsList(wxArrayString& lst, MyTreeItem* currItem)
+{
+    if (currItem==NULL) return;
+    lst.Add(currItem->GetItemId());
+    if (currItem->GetFather()!=NULL)
+        CreateItemsList(lst, currItem->GetFather());
+    if (currItem->GetMother()!=NULL)
+        CreateItemsList(lst, currItem->GetMother());
+}
+
+int DlgTreePdf::GedIdSortCompareFunction(const wxString& first, const wxString& second)
+{
+    wxString s1=first, s2=second;
+    long v1=0, v2=0;
+    s1.Replace(_T('@'), _T(' '));
+    s1.Replace(_T('I'), _T(' '));
+    s1.ToLong(&v1);
+    s2.Replace(_T('@'), _T(' '));
+    s2.Replace(_T('I'), _T(' '));
+    s2.ToLong(&v2);
+    if (v1!=v2)
+    {
+        if (v1<v2)
+            return -1;
+        else
+            return 1;
+    }
+    return 0;
+}
+
 void DlgTreePdf::SetSelectedItem(wxXmlNode* itmNode)
 {
     m_SelectedItem=itmNode;
@@ -249,6 +313,11 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     if (m_chkSummary->IsChecked())
     {
         m_TreePdf->WriteSummary();
+    }
+
+    if (m_chkDetails->IsChecked())
+    {
+        WriteItemsDetails();
     }
 
     m_TreePdf->SaveAsFile(sFName);

@@ -15,13 +15,13 @@ class DlgExportPdf : public wxDialog
         DlgExportPdf(wxWindow *parent);
         virtual ~DlgExportPdf();
         void SetSelectedItem(wxXmlNode *itmNode);
+        void GedItem2Pdf(wxXmlNode* itmNode, wxPdfDocument *doc);
     private:
         // Misc functions
         void CreateControls();
         void ConnectControls();
         void UpdateControlsStates();
         void Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems=NULL);
-        void GedItem2Pdf(wxXmlNode* itmNode, wxPdfDocument *doc);
         void AddHrTitle(double Y, const wxString& title, wxPdfDocument *doc);
         void DoExportSelectedItem();
         void DoExportAllItems();

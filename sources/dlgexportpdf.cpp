@@ -265,7 +265,7 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
     if (itmNode==NULL) return;
     wxString sItmID=itmNode->GetAttribute(_T("GedId"));
 
-    doc->AddPage();
+    doc->AddPage(wxPORTRAIT, wxPAPER_A4);
     doc->SetMargins(10, 10, 10);
     doc->SetAutoPageBreak(true, 10);
     wxPdfArrayDouble dash;

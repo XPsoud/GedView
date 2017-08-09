@@ -22,13 +22,16 @@ class DlgTreePdf : public wxDialog
         void UpdateCmbLevels(int maxLvl=-1);
         void UpdateControlsStates();
         void GetPaperSize(int* width, int* height);
+        void WriteItemsDetails();
+        void CreateItemsList(wxArrayString& lst, MyTreeItem* currItem);
+        static int GedIdSortCompareFunction(const wxString& first, const wxString& second);
         // Events handlers
         void OnSaveAsClicked(wxCommandEvent &event);
         void OnOptSizeClicked(wxCommandEvent &event);
         void OnUpdateUI_BtnSaveAs(wxUpdateUIEvent &event);
         // Controls vars
         wxChoice *m_cmbLevels, *m_cmbFormat, *m_cmbHeight, *m_cmbWidth;
-        wxCheckBox *m_chkMarrDate, *m_chkSosaNmbr, *m_chkSummary;
+        wxCheckBox *m_chkMarrDate, *m_chkSosaNmbr, *m_chkDetails, *m_chkSummary;
         wxRadioButton *m_optSize[3];
         wxButton *m_btnSave, *m_btnClose;
         // Misc vars
