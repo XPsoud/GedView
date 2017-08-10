@@ -4,6 +4,7 @@
 
 #include <wx/pdfdoc.h>
 #include <wx/pdffont.h>
+#include <wx/pdffontmanager.h>
 #include <wx/xml/xml.h>
 #include <wx/statline.h>
 
@@ -278,14 +279,13 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
 
     int iSex=m_datas.GetItemSex(itmNode);
 
+    wxString sTxt=wxEmptyString;
+
     doc->SetFont(_T("Arial"), _T(" "), 15);
     doc->Cell(30, 10, sItmID, wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_RIGHT);
-    doc->SetFont(_T("Helvetica"), _T("B"), 18);
-    wxChar c=(iSex==GIS_MALE?_T('M'):(iSex==GIS_FEMALE?_T('F'):_T('?')));
-    doc->Cell(160, 10, m_datas.GetItemFullName(itmNode).Append(wxString::Format(_T(" (%c)"), c)), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT);
-
-    wxString sTxt;
-    doc->SetFont(_T("Arial"), _T(""), 10);
+    doc->SetFontSize(18);
+    sTxt << m_datas.GetSexChar(iSex) << _T(" ") << m_datas.GetItemFullName(itmNode);
+    doc->Cell(160, 10, sTxt, wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT);
 
     wxXmlNode *subNode=itmNode->GetChildren();
     bool bUnions=false;
@@ -299,9 +299,24 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
             {
                 sEvt=_("Dead_F");
             }
+            doc->SetFont(_T("Arial"), _T(""), 10);
             doc->Cell(190, 8, sEvt, wxPDF_BORDER_NONE, 1);
+            // Search for a "Source" sub node of the event
+            wxXmlNode* subSubNode=subNode->GetChildren();
+            while(subSubNode!=NULL)
+            {
+                if (subSubNode->GetAttribute(_T("Type"))==_T("SOUR"))
+                {
+                    sEvt=_T("    ");
+                    sEvt << _("Source:") << _T(" ") << subSubNode->GetAttribute(_T("Value"));
+                    doc->SetFont(_T("Arial"), _T(""), 8);
+                    doc->Cell(190, 4, sEvt, wxPDF_BORDER_NONE, 1);
+                }
+                subSubNode=subSubNode->GetNext();
+            }
         }
 
+        doc->SetFont(_T("Arial"), _T(""), 10);
         if (sType==_T("OCCU"))
         {
             sTxt= _("Occupation:") + _T(" ") + subNode->GetAttribute(_T("Value"));
@@ -384,11 +399,12 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
             }
             wxXmlNode* evtNode=m_datas.FindItemByGedId(subNode->GetAttribute(_T("Value")));
             wxString sEvent;
+            doc->SetFontSize(10);
             if (evtNode!=NULL)
             {
                 wxXmlNode *subEvt=evtNode->GetChildren();
                 wxString sSubTyp;
-                // First pass to search for the event type
+                // First pass to search for the event type and the source
                 while(subEvt!=NULL)
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
@@ -397,15 +413,26 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                         sTxt=m_datas.ParseEvent(subEvt);
                         if (!sTxt.IsEmpty())
                         {
-                            doc->SetFontSize(10);
                             doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
-                            doc->SetFontSize(12);
+                        }
+                        wxXmlNode *subSubNode=subEvt->GetChildren();
+                        while(subSubNode!=NULL)
+                        {
+                            if (subSubNode->GetAttribute(_T("Type"))==_T("SOUR"))
+                            {
+                                sTxt = _T("   ");
+                                sTxt << _("Source:") << _T(" ") << subSubNode->GetAttribute(_T("Value"));
+                                doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                            }
+                            subSubNode=subSubNode->GetNext();
                         }
                     }
                     subEvt=subEvt->GetNext();
                 }
+                doc->SetFontSize(12);
                 // Second pass for Husband/Wife and children
                 subEvt=evtNode->GetChildren();
+                while(subEvt!=NULL)
                 {
                     wxString sEvtId=subEvt->GetAttribute(_T("GedId"));
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
@@ -428,8 +455,8 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     if (sSubTyp==_T("CHIL"))
                     {
                         int iCSex=m_datas.GetItemSex(sEvtId);
-                        sTxt=_T("      ") + sEvtId + _T(" - ") + m_datas.GetItemFirstName(sEvtId);
-                        sTxt << _T(" (") << (iCSex==GIS_MALE?_T('M'):iCSex==GIS_FEMALE?_T('F'):_T('?')) << _T(")");
+                        sTxt=_T("      ");
+                        sTxt << m_datas.GetSexChar(iCSex) << _T(" ") << sEvtId << _T(" - ") << m_datas.GetItemFirstName(sEvtId);
                         doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                         sEvent=m_datas.GetItemBirth(sEvtId);
                         doc->SetFontSize(10);
@@ -453,11 +480,22 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
     }
 }
 
-void DlgExportPdf::DoExportSelectedItem()
+wxPdfDocument* DlgExportPdf::InitPdfDocument()
 {
     wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
-    doc->SetFont(_T("Helvetica"), _T(""), 14);
+
+    wxFont fontArial(14, wxFONTFAMILY_SWISS, wxNORMAL, wxNORMAL, false, wxT("Arial"), wxFONTENCODING_DEFAULT);
+    wxPdfFontManager* fntMngr = wxPdfFontManager::GetFontManager();
+    fntMngr->RegisterFont(fontArial);
+    SetFont(fontArial);
     doc->AliasNbPages();
+
+    return doc;
+}
+
+void DlgExportPdf::DoExportSelectedItem()
+{
+    wxPdfDocument *doc=InitPdfDocument();
 
     GedItem2Pdf(m_SelectedItem, doc);
     doc->SaveAsFile(m_FName.GetFullPath());
@@ -470,9 +508,7 @@ void DlgExportPdf::DoExportAllItems()
 {
     double dTotal=m_datas.GetItemsCount(GIT_INDI), dDone=0., dPrct;
 
-    wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
-    doc->SetFont(_T("Helvetica"), _T(""), 14);
-    doc->AliasNbPages();
+    wxPdfDocument *doc=InitPdfDocument();
 
     wxString sBaseFName=m_FName.GetName();
 
@@ -549,9 +585,7 @@ void DlgExportPdf::DoExportCompResults()
 
     double dTotal=arsItems.GetCount(), dDone=0., dPrct;
 
-    wxPdfDocument *doc=new wxPdfDocument(wxPORTRAIT, _T("mm"), wxPAPER_A4);
-    doc->SetFont(_T("Helvetica"), _T(""), 14);
-    doc->AliasNbPages();
+    wxPdfDocument *doc=InitPdfDocument();
 
     wxString sBaseFName=m_FName.GetName();
 

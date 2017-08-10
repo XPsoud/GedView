@@ -23,6 +23,7 @@ class DlgExportPdf : public wxDialog
         void UpdateControlsStates();
         void Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems=NULL);
         void AddHrTitle(double Y, const wxString& title, wxPdfDocument *doc);
+        wxPdfDocument* InitPdfDocument();
         void DoExportSelectedItem();
         void DoExportAllItems();
         void DoExportCompResults();

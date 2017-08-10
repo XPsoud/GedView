@@ -352,6 +352,17 @@ void MainFrame::UpdateItemDetails()
                 sEvt=_("Dead_F");
             }
             sPage << _T("<br />") << sEvt;
+            // Search for a "Source" sub node of the event
+            wxXmlNode* subSubNode=subNode->GetChildren();
+            while(subSubNode!=NULL)
+            {
+                if (subSubNode->GetAttribute(_T("Type"))==_T("SOUR"))
+                {
+                    sPage << _T("<br />&nbsp;&nbsp;<small>") << _("Source:") << _T(" ");
+                    sPage << subSubNode->GetAttribute(_T("Value")) << _T("</small>");
+                }
+                subSubNode=subSubNode->GetNext();
+            }
         }
 
         if (sType==_T("OCCU"))
@@ -430,7 +441,7 @@ void MainFrame::UpdateItemDetails()
                 wxXmlNode *subEvt=evtNode->GetChildren();
                 wxString sSubTyp;
                 bool bChild=false;
-                // First pass to search for the event type
+                // First pass to search for the event type and the source
                 while(subEvt!=NULL)
                 {
                     sSubTyp=subEvt->GetAttribute(_T("Type"));
@@ -439,6 +450,17 @@ void MainFrame::UpdateItemDetails()
                         wxString sTmp=m_datas.ParseEvent(subEvt);
                         if (!sTmp.IsEmpty())
                             sPage << _T("<br /><small>") << sTmp << _T("</small>");
+                        wxXmlNode *subSubNode=subEvt->GetChildren();
+                        while(subSubNode!=NULL)
+                        {
+                            if (subSubNode->GetAttribute(_T("Type"))==_T("SOUR"))
+                            {
+                                sPage << _T("<br /><small>&nbsp;&nbsp;&nbsp;");
+                                sPage << _("Source:") << _T(" ") << subSubNode->GetAttribute(_T("Value"));
+                                sPage << _T("</small>");
+                            }
+                            subSubNode=subSubNode->GetNext();
+                        }
                     }
                     subEvt=subEvt->GetNext();
                 }

@@ -1,6 +1,7 @@
 #include "treepdfdoc.h"
 
 #include "appversion.h"
+#include <wx/pdffontmanager.h>
 
 TreePdfDoc::TreePdfDoc(MyTreeItem* root, double pageWidth, double pageHeight) : wxPdfDocument(wxPORTRAIT, pageWidth, pageHeight, _T("mm"))
 {
@@ -77,7 +78,10 @@ bool TreePdfDoc::CreateTree(int MaxLevels)
         if (iFound==0) break;
     }
 
-    SetFont(_T("Helvetica"), _T("B"), 6);
+    wxFont fontArial(6, wxFONTFAMILY_SWISS, wxNORMAL, wxNORMAL, false, wxT("Arial"), wxFONTENCODING_DEFAULT);
+    wxPdfFontManager* fntMngr = wxPdfFontManager::GetFontManager();
+    fntMngr->RegisterFont(fontArial);
+    SetFont(fontArial);
     SetMargins(10, 10, 10);
     SetAutoPageBreak(false, 10);
 
