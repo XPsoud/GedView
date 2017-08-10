@@ -1071,6 +1071,15 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                 sEvt=_("Dead_F");
             }
             sResult << _T(" ") << sEvt << _T("\n");
+            wxXmlNode* subSubNode=subNode->GetChildren();
+            while(subSubNode!=NULL)
+            {
+                if (subSubNode->GetAttribute(_T("Type"))==_T("SOUR"))
+                {
+                    sResult << _T("Source:") << subSubNode->GetAttribute(_T("Value")) << _T("\n");
+                }
+                subSubNode=subSubNode->GetNext();
+            }
         }
         if (sType==_T("OCCU"))
         {
@@ -1158,6 +1167,15 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                         wxString sTmp=ParseEvent(subEvt);
                         if (!sTmp.IsEmpty())
                             sResult << _T(" ") << sTmp << _T("\n");
+                        wxXmlNode* subSubNode=subEvt->GetChildren();
+                        while(subSubNode!=NULL)
+                        {
+                            if (subSubNode->GetAttribute(_T("Type"))==_T("SOUR"))
+                            {
+                                sResult << _T("Source:") << subSubNode->GetAttribute(_T("Value")) << _T("\n");
+                            }
+                            subSubNode=subSubNode->GetNext();
+                        }
                     }
                     if (((sSubTyp==_T("HUSB"))||(sSubTyp==_T("WIFE")))&&(!sEvtId.IsEmpty())&&(sEvtId!=sItmID))
                     {
