@@ -1078,6 +1078,17 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                 {
                     sResult << _T("Source:") << subSubNode->GetAttribute(_T("Value")) << _T("\n");
                 }
+                if (subSubNode->GetAttribute(_T("Type"))==_T("NOTE"))
+                {
+                    sResult << _T("Note:") << subSubNode->GetAttribute(_T("Value")) << _T("\n");
+                    wxXmlNode *cont=subSubNode->GetChildren();
+                    while(cont!=NULL)
+                    {
+                        if (cont->GetAttribute(_T("Type"))==_T("CONT"))
+                            sResult << cont->GetAttribute(_T("Value")) << _T("\n");
+                        cont=cont->GetNext();
+                    }
+                }
                 subSubNode=subSubNode->GetNext();
             }
         }
@@ -1174,6 +1185,17 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                             {
                                 sResult << _T("Source:") << subSubNode->GetAttribute(_T("Value")) << _T("\n");
                             }
+                            if (subSubNode->GetAttribute(_T("Type"))==_T("NOTE"))
+                            {
+                                sResult << _T("Note:") << subSubNode->GetAttribute(_T("Value")) << _T("\n");
+                                wxXmlNode *cont=subSubNode->GetChildren();
+                                while(cont!=NULL)
+                                {
+                                    if (cont->GetAttribute(_T("Type"))==_T("CONT"))
+                                        sResult << cont->GetAttribute(_T("Value")) << _T("\n");
+                                    cont=cont->GetNext();
+                                }
+                            }
                             subSubNode=subSubNode->GetNext();
                         }
                     }
@@ -1208,6 +1230,17 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
                             if ((sEvent==_("Dead")) && (GetItemSex(nd)==GIS_FEMALE))
                                 sEvent=_("Dead_F");
                             sResult << _T("     ") << sEvent << _T("\n");
+                        }
+                    }
+                    if (sSubTyp==_T("NOTE"))
+                    {
+                        sResult << _T("Note:") << subEvt->GetAttribute(_T("Value")) << _T("\n");
+                        wxXmlNode *cont=subEvt->GetChildren();
+                        while(cont!=NULL)
+                        {
+                            if (cont->GetAttribute(_T("Type"))==_T("CONT"))
+                                sResult << cont->GetAttribute(_T("Value")) << _T("\n");
+                            cont=cont->GetNext();
                         }
                     }
                     subEvt=subEvt->GetNext();
