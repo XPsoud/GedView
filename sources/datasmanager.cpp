@@ -8,7 +8,7 @@
 #include <wx/filename.h>
 #include <wx/busyinfo.h>
 
-const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS"), _T("OCCU"), _T("SOUR")};
+const wxChar* szKnownSubItems[] = { _T("DATE"), _T("TIME"), _T("NAME"), _T("PLAC"), _T("SEX"), _T("FAMC"), _T("FAMS"), _T("OCCU"), _T("SOUR"), _T("NOTE"), _T("CONT")};
 const wxChar* szKnownEvents[] = {_T("UNKN"), _T("BIRT"), _T("DEAT"), _T("MARR"), _T("BAPM"), _T("BURI")};
 const wxChar* szKnownFamItems[] = { _T("HUSB"), _T("WIFE"), _T("CHIL")};
 const wxChar* g_sUnknownYear=_T("----");

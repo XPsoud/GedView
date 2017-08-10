@@ -312,6 +312,24 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                     doc->SetFont(_T("Arial"), _T(""), 8);
                     doc->Cell(190, 4, sEvt, wxPDF_BORDER_NONE, 1);
                 }
+                if (subSubNode->GetAttribute(_T("Type"))==_T("NOTE"))
+                {
+                    sEvt=_T("    ");
+                    sEvt << _("Note:") << _T(" ")<< subSubNode->GetAttribute(_T("Value"));
+                    doc->SetFont(_T("Arial"), _T(""), 8);
+                    doc->Cell(190, 4, sEvt, wxPDF_BORDER_NONE, 1);
+                    wxXmlNode *cont=subSubNode->GetChildren();
+                    while(cont!=NULL)
+                    {
+                        if (cont->GetAttribute(_T("Type"))==_T("CONT"))
+                        {
+                            sEvt=_T("            ");
+                            sEvt << cont->GetAttribute(_T("Value"));
+                            doc->Cell(190, 4, sEvt, wxPDF_BORDER_NONE, 1);
+                        }
+                        cont=cont->GetNext();
+                    }
+                }
                 subSubNode=subSubNode->GetNext();
             }
         }
@@ -424,7 +442,47 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
                                 sTxt << _("Source:") << _T(" ") << subSubNode->GetAttribute(_T("Value"));
                                 doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
                             }
+                            if (subSubNode->GetAttribute(_T("Type"))==_T("NOTE"))
+                            {
+                                sTxt=_T("   ");
+                                sTxt << _("Note:") << _T(" ")<< subSubNode->GetAttribute(_T("Value"));
+                                doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                                wxXmlNode *cont=subSubNode->GetChildren();
+                                while(cont!=NULL)
+                                {
+                                    if (cont->GetAttribute(_T("Type"))==_T("CONT"))
+                                    {
+                                        sTxt=_T("            ");
+                                        sTxt << cont->GetAttribute(_T("Value"));
+                                        doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                                    }
+                                    cont=cont->GetNext();
+                                }
+                            }
                             subSubNode=subSubNode->GetNext();
+                        }
+                    }
+                    if (subEvt->GetAttribute(_T("Type"))==_T("SOUR"))
+                    {
+                        sTxt = _T("   ");
+                        sTxt << _("Source:") << _T(" ") << subEvt->GetAttribute(_T("Value"));
+                        doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                    }
+                    if (subEvt->GetAttribute(_T("Type"))==_T("NOTE"))
+                    {
+                        sTxt=_T("   ");
+                        sTxt << _("Note:") << _T(" ")<< subEvt->GetAttribute(_T("Value"));
+                        doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                        wxXmlNode *cont=subEvt->GetChildren();
+                        while(cont!=NULL)
+                        {
+                            if (cont->GetAttribute(_T("Type"))==_T("CONT"))
+                            {
+                                sTxt=_T("            ");
+                                sTxt << cont->GetAttribute(_T("Value"));
+                                doc->Cell(190, 5, sTxt, wxPDF_BORDER_NONE, 1);
+                            }
+                            cont=cont->GetNext();
                         }
                     }
                     subEvt=subEvt->GetNext();
