@@ -78,7 +78,7 @@ bool TreePdfDoc::CreateTree(int MaxLevels)
         if (iFound==0) break;
     }
 
-    wxFont fontArial(6, wxFONTFAMILY_SWISS, wxNORMAL, wxNORMAL, false, wxT("Arial"), wxFONTENCODING_DEFAULT);
+    wxFont fontArial(14, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, _T("Arial"), wxFONTENCODING_DEFAULT);
     wxPdfFontManager* fntMngr = wxPdfFontManager::GetFontManager();
     fntMngr->RegisterFont(fontArial);
     SetFont(fontArial);
