@@ -219,7 +219,7 @@ void DlgTreePdf::WriteItemsDetails()
     arsItems.Sort(DlgTreePdf::GedIdSortCompareFunction);
     if (arsItems.IsEmpty())
         return;
-    int iCount=arsItems.GetCount();
+
     DlgExportPdf dlg(NULL);
     while(!arsItems.IsEmpty())
     {
@@ -285,7 +285,10 @@ void DlgTreePdf::SetSelectedItem(wxXmlNode* itmNode)
 void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
 {
     if (m_TreePdf!=NULL)
+    {
         delete m_TreePdf;
+        m_TreePdf=NULL;
+    }
     long lMaxLvl=0;
     m_cmbLevels->GetStringSelection().ToLong(&lMaxLvl);
     if (lMaxLvl==0) return;

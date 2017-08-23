@@ -6,7 +6,7 @@
 #define VERSION_REV     1
 // Add "201" before the number below to obtain
 // the complete date in format : YYYYMMJJ
-#define VERSION_BUILD   70809
+#define VERSION_BUILD   70823
 
 #define PRODUCTNAME "GedView"
 #define DESCRIPTION "GedView Application"
