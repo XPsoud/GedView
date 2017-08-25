@@ -1,5 +1,6 @@
 #include "dlgtreepdf.h"
 
+#include "appversion.h"
 #include "treepdfdoc.h"
 #include "dlgexportpdf.h"
 #include "datasmanager.h"
@@ -322,6 +323,14 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     {
         WriteItemsDetails();
     }
+
+    // Write document tags (see also DlgExportPdf::InitPdfDocument)
+    wxString sTag=wxTheApp->GetAppName();
+    sTag << _T("-v") << VERSION_MAJOR << _T(".") << VERSION_MINOR << _T(".") << VERSION_REV;
+    m_TreePdf->SetCreator(sTag);
+
+    m_TreePdf->SetAuthor(wxGetUserName());
+
 
     m_TreePdf->SaveAsFile(sFName);
     wxMessageBox(_("Pdf file successfully created!"), _("Success"), wxICON_INFORMATION|wxCENTER|wxOK);

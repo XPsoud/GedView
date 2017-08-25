@@ -1,5 +1,6 @@
 #include "dlgexportpdf.h"
 
+#include "appversion.h"
 #include "datasmanager.h"
 
 #include <wx/pdfdoc.h>
@@ -547,6 +548,13 @@ wxPdfDocument* DlgExportPdf::InitPdfDocument()
     fntMngr->RegisterFont(fontArial);
     SetFont(fontArial);
     doc->AliasNbPages();
+
+    // Write document tags (see also in DlgTreePdf::OnSaveAsClicked)
+    wxString sTag=wxTheApp->GetAppName();
+    sTag << _T("-v") << VERSION_MAJOR << _T(".") << VERSION_MINOR << _T(".") << VERSION_REV;
+    doc->SetCreator(sTag);
+
+    doc->SetAuthor(wxGetUserName());
 
     return doc;
 }
