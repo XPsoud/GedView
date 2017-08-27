@@ -15,7 +15,7 @@ class DlgExportPdf : public wxDialog
         DlgExportPdf(wxWindow *parent);
         virtual ~DlgExportPdf();
         void SetSelectedItem(wxXmlNode *itmNode);
-        void GedItem2Pdf(wxXmlNode* itmNode, wxPdfDocument *doc);
+        void GedItem2Pdf(wxXmlNode* itmNode, wxPdfDocument *doc, int link=-1);
     private:
         // Misc functions
         void CreateControls();

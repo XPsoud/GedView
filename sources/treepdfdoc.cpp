@@ -13,6 +13,7 @@ TreePdfDoc::TreePdfDoc(MyTreeItem* root, double pageWidth, double pageHeight) : 
     m_rootItem=root;
     m_dScale=1.;
     m_dDecX=10.; m_dDecY=10.;
+    m_bAddLinks=false;
 }
 
 TreePdfDoc::~TreePdfDoc()
@@ -172,6 +173,7 @@ bool TreePdfDoc::Generate(double pageWidth, double pageHeight)
     sTxt.Printf(_T("RootItem : X=%0.2f, Y=%0.2f W=%0.2f H=%0.2f %d sub-items"), m_rootItem->GetXPos(), m_rootItem->GetYPos(), m_rootItem->GetItemWidth(), m_rootItem->GetItemHeight(), m_rootItem->GetSubItemsCount());
     Cell(GetPageWidth()-GetLeftMargin()-GetRightMargin(), GetLineHeight()+GetTopMargin(), sTxt, wxPDF_BORDER_NONE, 1);
 */
+    m_hmLinks.clear();
     DrawItem(m_rootItem);
     return true;
 }
@@ -228,6 +230,7 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     double dY0=m_dDecY-(item->GetYPos()*m_dScale)-(dh/2.);
     double dR=(dw<dh?dw/6:dh/6);
     double delta=dh/4;
+    int iLink;
 
     SetLineWidth(0.2*m_dScale);
 
@@ -238,7 +241,9 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     Cell(dw, delta, item->GetItemFirstName(), 0, 0, wxPDF_ALIGN_CENTER);
     SetXY(dX0, dY0+2*delta);
     SetFont(_T("Courier"), _T("I"), 5*m_dScale);
-    Cell(dw, delta, item->GetItemId(), 0, 0, wxPDF_ALIGN_CENTER);
+    iLink=(m_bAddLinks?AddLink():-1);
+    m_hmLinks[item->GetItemId()]=iLink;
+    Cell(dw, delta, item->GetItemId(), 0, 0, wxPDF_ALIGN_CENTER, 0, iLink);
     SetXY(dX0, dY0+3*delta);
     SetFont(_T("Courier"), _T(""), 4*m_dScale);
     Cell(dw, delta, item->GetItemDates(), 0, 0, wxPDF_ALIGN_CENTER);

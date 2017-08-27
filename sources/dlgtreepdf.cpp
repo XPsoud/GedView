@@ -222,13 +222,14 @@ void DlgTreePdf::WriteItemsDetails()
         return;
 
     DlgExportPdf dlg(NULL);
+    PdfLinksMap& hmLinks=m_TreePdf->GetLinks();
     while(!arsItems.IsEmpty())
     {
         wxString sID=arsItems[0];
         wxXmlNode* node=m_datas.FindItemByGedId(sID);
         if (node!=NULL)
         {
-            dlg.GedItem2Pdf(node, m_TreePdf);
+            dlg.GedItem2Pdf(node, m_TreePdf, hmLinks[sID]);
         }
         while(!arsItems.IsEmpty())
         {
@@ -306,6 +307,9 @@ void DlgTreePdf::OnSaveAsClicked(wxCommandEvent& event)
     m_TreePdf=new TreePdfDoc(m_RootItem);
     int iWdth, iHght;
     GetPaperSize(&iWdth, &iHght);
+
+    if (m_chkDetails->IsChecked())
+        m_TreePdf->EnableLinks();
 
     m_TreePdf->CreateTree(lMaxLvl);
     m_TreePdf->Generate(iWdth, iHght);

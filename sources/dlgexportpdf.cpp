@@ -253,8 +253,9 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems)
     arsItems.Sort();
     for (size_t i=0; i<arsItems.GetCount(); ++i)
     {
+        wxString sId=arsItems[i].Right(10).Trim(false);
         sHtml << _T("<tr>");
-        sHtml << _T("<td align=\"right\">") << arsItems[i].Right(10) << _T("</td>");
+        sHtml << _T("<td align=\"right\"><a href=\"#") << sId << _T("\">") << sId << _T("</a></td>");
         sHtml << _T("<td>") << arsItems[i].Left(arsItems[i].Length()-10).Trim(false) << _T("</td>");
         sHtml << _T("</tr>");
     }
@@ -262,12 +263,20 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems)
     doc->WriteXml(sHtml);
 }
 
-void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc)
+void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc, int link)
 {
     if (itmNode==NULL) return;
     wxString sItmID=itmNode->GetAttribute(_T("GedId"));
 
     doc->AddPage(wxPORTRAIT, wxPAPER_A4);
+    if (link!=-1)
+    {
+        doc->SetLink(link);
+    }
+    else
+    {
+        doc->WriteXml(wxString::Format(_T("<a name=\"%s\"></a>"), sItmID));
+    }   
     doc->SetMargins(10, 10, 10);
     doc->SetAutoPageBreak(true, 10);
     wxPdfArrayDouble dash;
