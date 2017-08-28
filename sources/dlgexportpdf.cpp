@@ -268,7 +268,7 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems, boo
             iLink=doc->AddLink();
         m_hmLinks[sId]=iLink;
         doc->Cell(30, 7, sId, wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_RIGHT, 0, iLink);
-        doc->Cell(160, 7, arsItems[i].Left(arsItems[i].Length()-10).Trim(false), wxPDF_BORDER_FRAME, 1);
+        doc->Cell(160, 7, arsItems[i].Left(arsItems[i].Length()-10).Trim(false), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_LEFT, 0, iLink);
     }
 }
 
