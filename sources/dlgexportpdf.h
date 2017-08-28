@@ -8,6 +8,7 @@
 class wxXmlNode;
 class DatasManager;
 class wxPdfDocument;
+#include "treepdfdoc.h"
 
 class DlgExportPdf : public wxDialog
 {
@@ -21,7 +22,7 @@ class DlgExportPdf : public wxDialog
         void CreateControls();
         void ConnectControls();
         void UpdateControlsStates();
-        void Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems=NULL);
+        void Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems=NULL, bool links=false);
         void AddHrTitle(double Y, const wxString& title, wxPdfDocument *doc);
         wxPdfDocument* InitPdfDocument();
         void DoExportSelectedItem();
@@ -39,6 +40,7 @@ class DlgExportPdf : public wxDialog
         wxXmlNode *m_SelectedItem;
         wxFileName m_FName;
         DatasManager& m_datas;
+        PdfLinksMap m_hmLinks;
 };
 
 #endif // __DLGEXPORTPDF_H_INCLUDED__

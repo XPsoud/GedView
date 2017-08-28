@@ -205,20 +205,19 @@ void DlgExportPdf::AddHrTitle(double Y, const wxString& title, wxPdfDocument *do
     doc->SetFont(sName, sStyle, dSize);
 }
 
-void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems)
+void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems, bool links)
 {
     doc->AddPage();
+
     doc->SetMargins(10, 10, 10);
-    doc->SetAutoPageBreak(true, 10);
+    doc->SetAutoPageBreak(true, 2);
     doc->SetFont(_T("Helvetica"), _T(""), 20);
-    wxString sHtml=_T("<table border=\"0\" width=\"100%\"><tbody><tr><td align=\"center\">");
-    sHtml << _("Alphabetical Index") << _T("</td></tr></tbody></table><br />");
-    doc->WriteXml(sHtml);
+    doc->Cell(190, 10, _("Alphabetical Index"), wxPDF_BORDER_NONE, 1, wxPDF_ALIGN_CENTER);
+
+    doc->SetFont(_T("Helvetica"), _T("B"), 12);
+    doc->Cell(30, 7, _("Id"), wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_CENTER);
+    doc->Cell(160, 7, _("Full name"), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_CENTER);
     doc->SetFont(_T("Helvetica"), _T(""), 12);
-    doc->SetLineHeight(3);
-    sHtml=_T("<table border=\"1\" cellpadding=\"2\"><colgroup><col width=\"30\" span=\"1\" /><col width=\"160\" span=\"1\" /></colgroup><thead><tr><td align=\"center\"><b>");
-    sHtml << _("Id") << _T("</b></td><td align=\"center\"><b>") << _("Full name") << _T("</b></td></tr></thead>");
-    sHtml << _T("<tbody>");
 
     wxArrayString arsItems;
     arsItems.Clear();
@@ -251,16 +250,26 @@ void DlgExportPdf::Summary2Pdf(wxPdfDocument *doc, wxArrayString* pArsItems)
         }
     }
     arsItems.Sort();
+    m_hmLinks.clear();
+    int iLink=-1;
     for (size_t i=0; i<arsItems.GetCount(); ++i)
     {
+        if (doc->GetY()>280)
+        {
+            doc->AddPage();
+            doc->SetAutoPageBreak(true, 2);
+            doc->SetFont(_T("Helvetica"), _T("B"), 12);
+            doc->Cell(30, 7, _("Id"), wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_CENTER);
+            doc->Cell(160, 7, _("Full name"), wxPDF_BORDER_FRAME, 1, wxPDF_ALIGN_CENTER);
+            doc->SetFont(_T("Helvetica"), _T(""), 12);
+        }
         wxString sId=arsItems[i].Right(10).Trim(false);
-        sHtml << _T("<tr>");
-        sHtml << _T("<td align=\"right\"><a href=\"#") << sId << _T("\">") << sId << _T("</a></td>");
-        sHtml << _T("<td>") << arsItems[i].Left(arsItems[i].Length()-10).Trim(false) << _T("</td>");
-        sHtml << _T("</tr>");
+        if (links)
+            iLink=doc->AddLink();
+        m_hmLinks[sId]=iLink;
+        doc->Cell(30, 7, sId, wxPDF_BORDER_FRAME, 0, wxPDF_ALIGN_RIGHT, 0, iLink);
+        doc->Cell(160, 7, arsItems[i].Left(arsItems[i].Length()-10).Trim(false), wxPDF_BORDER_FRAME, 1);
     }
-    sHtml << _T("</tbody></table>"),
-    doc->WriteXml(sHtml);
 }
 
 void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc, int link)
@@ -273,10 +282,6 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc, int link)
     {
         doc->SetLink(link);
     }
-    else
-    {
-        doc->WriteXml(wxString::Format(_T("<a name=\"%s\"></a>"), sItmID));
-    }   
     doc->SetMargins(10, 10, 10);
     doc->SetAutoPageBreak(true, 10);
     wxPdfArrayDouble dash;
@@ -589,7 +594,7 @@ void DlgExportPdf::DoExportAllItems()
 
     if (m_chkSummary->IsChecked())
     {
-        Summary2Pdf(doc);
+        Summary2Pdf(doc, NULL, (m_chkSplitPdf->IsChecked()==false));
         if (m_chkSplitPdf->IsChecked())
         {
             dTotal++;
@@ -619,7 +624,7 @@ void DlgExportPdf::DoExportAllItems()
             m_pgbProgress->SetValue(dPrct);
             m_pgbProgress->Refresh();
             wxTheApp->Yield();
-            GedItem2Pdf(item, doc);
+            GedItem2Pdf(item, doc, m_hmLinks[item->GetAttribute(_T("GedId"))]);
             if (m_chkSplitPdf->IsChecked())
             {
                 wxString sName=sBaseFName + _T("-") + item->GetAttribute(_T("GedId"));
@@ -666,7 +671,7 @@ void DlgExportPdf::DoExportCompResults()
 
     if (m_chkSummary->IsChecked())
     {
-        Summary2Pdf(doc, &arsItems);
+        Summary2Pdf(doc, &arsItems, (m_chkSplitPdf->IsChecked()==false));
         if (m_chkSplitPdf->IsChecked())
         {
             dTotal++;
@@ -698,7 +703,7 @@ void DlgExportPdf::DoExportCompResults()
             m_pgbProgress->SetValue(dPrct);
             m_pgbProgress->Refresh();
             wxTheApp->Yield();
-            GedItem2Pdf(item, doc);
+            GedItem2Pdf(item, doc, m_hmLinks[sId]);
             if (m_chkSplitPdf->IsChecked())
             {
                 wxString sName=sBaseFName + _T("-") + item->GetAttribute(_T("GedId"));
