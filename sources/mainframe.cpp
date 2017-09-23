@@ -144,6 +144,23 @@ void MainFrame::CreateControls()
 
     m_settings.GetRecentsList().SetAssociatedMenu(m_mnuRecents);
 
+    // OSX only : create the Preferences, About and Exit menu entries to be attached
+    // to the OSX-specific menu
+#ifdef __WXMAC__
+    wxMenuBar *menuBar = new wxMenuBar();
+    // Temporary menu for creating the entries
+    wxMenu *tmpMenu = new wxMenu();
+    tmpMenu->Append(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES, wxSTOCK_WITH_MNEMONIC|wxSTOCK_WITH_ACCELERATOR), _("Edit application settings"));
+    tmpMenu->Append(wxID_EXIT, wxGetStockLabel(wxID_EXIT, wxSTOCK_WITH_MNEMONIC|wxSTOCK_WITH_ACCELERATOR), wxGetStockHelpString(wxID_EXIT));
+    tmpMenu->Append(wxID_ABOUT, wxGetStockLabel(wxID_ABOUT, wxSTOCK_WITH_MNEMONIC|wxSTOCK_WITH_ACCELERATOR), wxGetStockHelpString(wxID_ABOUT));
+    menuBar->Append(tmpMenu, wxGetStockLabel(wxID_FILE));
+    SetMenuBar(menuBar);
+    // Now, the 3 menu entries have been automatically placed in the OSX menu
+    // The temporary menu is empty, we can remove and delete it
+    menuBar->Remove(0);
+    delete tmpMenu;
+#endif // __WXMAC__
+
     // Controls
     wxPanel *pnl=new wxPanel(this, -1);
     wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
