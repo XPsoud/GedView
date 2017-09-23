@@ -73,7 +73,7 @@ $(AppBundle)/Contents/PkgInfo: $(AppExe) ./sources/Info.plist.in ./graphx/wxmac.
 
 	@/bin/echo "APPL????" >$(AppBundle)/Contents/PkgInfo
 
-	@ln -f $(AppExe) $(AppBundle)/Contents/MacOS/$(AppName)
+	@mv $(AppExe) $(AppBundle)/Contents/MacOS/$(AppName)
 	@cp -f ./graphx/wxmac.icns $(AppBundle)/Contents/Resources/wxmac.icns
 	@cp -R ./bin/langs $(AppBundle)/Contents/Resources/
 	@find $(AppBundle) -name *.po -exec rm {} \;
