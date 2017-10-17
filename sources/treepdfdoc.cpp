@@ -235,7 +235,7 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
     SetLineWidth(0.2*m_dScale);
 
     SetFont(_T("Helvetica"), _T("B"), 6*m_dScale);
-    SetXY(dX0, dY0);
+    SetXY(dX0, dY0+0.25*m_dScale);
     Cell(dw, delta, item->GetItemLastName(), 0, 0, wxPDF_ALIGN_CENTER);
     SetXY(dX0, dY0+delta);
     Cell(dw, delta, item->GetItemFirstName(), 0, 0, wxPDF_ALIGN_CENTER);
