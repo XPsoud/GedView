@@ -16,7 +16,13 @@ class DlgCheckDatas : public wxDialog
 		// Misc functions
 		void CreateControls();
 		void ConnectControls();
+		// Events handlers
+		void OnBtnStartStopClicked(wxCommandEvent &event);
+		void OnUpdateUI_BtnClose(wxUpdateUIEvent &event);
+		// Controls vars
+		wxButton *m_btnStartStop;
 		// Misc vars
+		bool m_bIsRunning;
 		DatasManager& m_datas;
 };
 
