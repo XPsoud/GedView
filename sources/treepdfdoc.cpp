@@ -234,15 +234,16 @@ void TreePdfDoc::DrawItem(MyTreeItem* item)
 
     SetLineWidth(0.2*m_dScale);
 
-    SetFont(_T("Helvetica"), _T("B"), 6*m_dScale);
-    SetXY(dX0, dY0+0.25*m_dScale);
-    Cell(dw, delta, item->GetItemLastName(), 0, 0, wxPDF_ALIGN_CENTER);
-    SetXY(dX0, dY0+delta);
-    Cell(dw, delta, item->GetItemFirstName(), 0, 0, wxPDF_ALIGN_CENTER);
-    SetXY(dX0, dY0+2*delta);
-    SetFont(_T("Courier"), _T("I"), 5*m_dScale);
     iLink=(m_bAddLinks?AddLink():-1);
     m_hmLinks[item->GetItemId()]=iLink;
+
+    SetFont(_T("Helvetica"), _T("B"), 6*m_dScale);
+    SetXY(dX0, dY0+0.25*m_dScale);
+    Cell(dw, delta, item->GetItemLastName(), 0, 0, wxPDF_ALIGN_CENTER, 0, iLink);
+    SetXY(dX0, dY0+delta);
+    Cell(dw, delta, item->GetItemFirstName(), 0, 0, wxPDF_ALIGN_CENTER, 0, iLink);
+    SetXY(dX0, dY0+2*delta);
+    SetFont(_T("Courier"), _T("I"), 5*m_dScale);
     Cell(dw, delta, item->GetItemId(), 0, 0, wxPDF_ALIGN_CENTER, 0, iLink);
     SetXY(dX0, dY0+3*delta);
     SetFont(_T("Courier"), _T(""), 4*m_dScale);
