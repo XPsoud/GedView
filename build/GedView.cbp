@@ -781,6 +781,12 @@
 		<Unit filename="../sources/dlgabout.h">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>
+		<Unit filename="../sources/dlgcheckdatas.cpp">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
+		<Unit filename="../sources/dlgcheckdatas.h">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
 		<Unit filename="../sources/dlgexportcsv.cpp">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>

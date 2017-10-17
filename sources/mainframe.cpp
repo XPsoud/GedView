@@ -9,6 +9,7 @@
 #include "dlgexportcsv.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
+#include "dlgcheckdatas.h"
 #include "settingsmanager.h"
 
 #include <wx/display.h>
@@ -983,7 +984,8 @@ void MainFrame::OnCompareClicked(wxCommandEvent& event)
 
 void MainFrame::OnCheckDatasClicked(wxCommandEvent& event)
 {
-    wxMessageBox(_("Sorry, but this function isn't implemented yet !"), _("Check datas"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+    DlgCheckDatas dlg(this);
+    dlg.ShowModal();
 }
 
 void MainFrame::OnShashPosChanged(wxSplitterEvent& event)
