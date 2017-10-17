@@ -19,6 +19,11 @@ extern unsigned char csv_png[];
 
 wxBitmap wxGet_csv_png_Bitmap();
 
+#define datacheck_png_Length 1458
+extern unsigned char datacheck_png[];
+
+wxBitmap wxGet_datacheck_png_Bitmap();
+
 #define open_png_Length 1521
 extern unsigned char open_png[];
 
