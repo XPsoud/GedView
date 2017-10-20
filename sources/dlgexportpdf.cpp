@@ -403,8 +403,8 @@ void DlgExportPdf::GedItem2Pdf(wxXmlNode *itmNode, wxPdfDocument *doc, int link)
                         if (arsSiblings[s]!=sItmID)
                         {
                             int iSSex=m_datas.GetItemSex(arsSiblings[s]);
-                            sTxt=arsSiblings[s] + _T(" - ") + m_datas.GetItemFirstName(arsSiblings[s]);
-                            sTxt << _T(" (") << (iSSex==GIS_MALE?_T('M'):iSSex==GIS_FEMALE?_T('F'):_T('?')) << _T(")";)
+                            sTxt=wxEmptyString;
+                            sTxt << m_datas.GetSexChar(iSSex) << _T(" ") << arsSiblings[s] <<_T(" - ") << m_datas.GetItemFirstName(arsSiblings[s]);
                             doc->Cell(190, 6, sTxt, wxPDF_BORDER_NONE, 1);
                             sEvent=m_datas.GetItemBirth(arsSiblings[s]);
                             doc->SetFontSize(10);
