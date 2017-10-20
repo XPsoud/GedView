@@ -73,6 +73,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -117,6 +118,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -164,6 +166,7 @@
 					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -209,6 +212,7 @@
 					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)/mswu$(DBG_FLG)" />
@@ -269,6 +273,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
@@ -333,6 +338,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
@@ -396,6 +402,7 @@
 					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -440,6 +447,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -484,6 +492,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -530,6 +539,7 @@
 					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/gcc_dll$(ARCHI)/mswu$(DBG_FLG)" />
@@ -574,6 +584,7 @@
 					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)/mswu$(DBG_FLG)" />
@@ -634,6 +645,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
@@ -698,6 +710,7 @@
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
 					<Add directory="$(WX_DIR)/include" />
 					<Add directory="../sources" />
+					<Add directory="sources" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(WX_DIR)/lib/vc_lib$(ARCHI)/mswu$(DBG_FLG)" />
@@ -816,6 +829,12 @@
 		</Unit>
 		<Unit filename="../sources/emptyclass.h">
 			<Option virtualFolder="Misc/" />
+		</Unit>
+		<Unit filename="../sources/geddate.cpp">
+			<Option virtualFolder="Datas/" />
+		</Unit>
+		<Unit filename="../sources/geddate.h">
+			<Option virtualFolder="Datas/" />
 		</Unit>
 		<Unit filename="../sources/main.cpp">
 			<Option virtualFolder="Misc/" />
