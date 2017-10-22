@@ -730,7 +730,7 @@ bool DatasManager::GetItemBirth(const wxXmlNode* itmNode, GedDate& result)
             {
                 if (subSubNode->GetAttribute(_T("Type"))==_T("DATE"))
                 {
-                    result.FromGedString(subNode->GetAttribute(_T("Value")));
+                    result.FromGedString(subSubNode->GetAttribute(_T("Value")));
                     return true;
                 }
                 subSubNode=subSubNode->GetNext();
@@ -929,7 +929,7 @@ bool DatasManager::GetItemDeath(const wxXmlNode* itmNode, GedDate& result)
             {
                 if (subSubNode->GetAttribute(_T("Type"))==_T("DATE"))
                 {
-                    result.FromGedString(subNode->GetAttribute(_T("Value")));
+                    result.FromGedString(subSubNode->GetAttribute(_T("Value")));
                     return true;
                 }
                 subSubNode=subSubNode->GetNext();
