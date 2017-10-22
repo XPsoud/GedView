@@ -1,5 +1,6 @@
 #include "dlgcheckdatas.h"
 
+#include <wx/xml/xml.h>
 #include <wx/statline.h>
 
 #include "datasmanager.h"
@@ -8,6 +9,8 @@ wxDEFINE_EVENT(wxEVT_DBCHECK_STARTED, wxCommandEvent);
 wxDEFINE_EVENT(wxEVT_DBCHECK_WORKING, wxCommandEvent);
 wxDEFINE_EVENT(wxEVT_DBCHECK_STOPPED, wxCommandEvent);
 wxDEFINE_EVENT(wxEVT_DBCHECK_ENDED, wxCommandEvent);
+
+#define PGB_RANGE 1000
 
 DlgCheckDatas::DlgCheckDatas(wxWindow *parent) : wxDialog(parent, -1, _("Check loaded datas")),
 	m_datas(DatasManager::Get())
@@ -63,7 +66,7 @@ void DlgCheckDatas::CreateControls()
 			m_txtLog=new wxTextCtrl(m_pnlResults, -1, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxTE_MULTILINE);
 			pnlszr->Add(m_txtLog, 1, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
 
-			m_pgbWork=new wxGauge(m_pnlResults, -1, 100);
+			m_pgbWork=new wxGauge(m_pnlResults, -1, PGB_RANGE);
 			pnlszr->Add(m_pgbWork, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
 
 			m_pnlResults->SetSizer(pnlszr);
@@ -97,22 +100,66 @@ void DlgCheckDatas::DoCheckDB()
 	m_bIsRunning=true;
 	m_bStopWanted=false;
 	wxCommandEvent evt(wxEVT_DBCHECK_STARTED);
-	GetEventHandler()->AddPendingEvent(evt);
-	wxStopWatch sw;
-	int i=0;
+	AddPendingEvent(evt);
+	m_arsErrors.Clear();
+
+	int iCount=m_datas.GetItemsCount(GIT_INDI);
+	int iNbSteps=iCount;
+	int iCurrStep=0;
+	double dPrct=0., dOldPrct=0.;
+	int iCurrItem=0, iPrct;
 	evt.SetEventType(wxEVT_DBCHECK_WORKING);
-	while((i<100) && (m_bStopWanted==false))
+
+	wxXmlNode *root=m_datas.GetDatas();
+	wxXmlNode *item=root->GetChildren();
+	int iErrs=0;
+	evt.SetString(wxString(_T("\n"))<<_("- Checking isolated people"));
+	evt.SetInt(dPrct);
+	AddPendingEvent(evt);
+	evt.SetString(wxEmptyString);
+	while((item!=NULL) && (m_bStopWanted==false))
 	{
-		evt.SetString(wxString::Format(_T("\n- Step #%02d"), i+1));
-		evt.SetInt(i+1);
-		GetEventHandler()->AddPendingEvent(evt);
-
-		while(sw.Time()<50)
-			wxTheApp->Yield();
-		sw.Start();
-
-		i++;
+		if (item->GetAttribute(_T("Type"))==_T("INDI"))
+		{
+			iCurrStep++;
+			dPrct=PGB_RANGE*iCurrStep/iNbSteps;
+			iPrct=dPrct*10;
+			dPrct=iPrct/10;
+			if (dPrct!=dOldPrct)
+			{
+				evt.SetInt(dPrct);
+				AddPendingEvent(evt);
+				dOldPrct=dPrct;
+			}
+			wxXmlNode *subItem=item->GetChildren();
+			bool bOk=false;
+			while(subItem!=NULL)
+			{
+				if ((subItem->GetAttribute(_T("Type"))==_T("FAMC"))||(subItem->GetAttribute(_T("Type"))==_T("FAMS")))
+					bOk=true;
+				subItem=subItem->GetNext();
+			}
+			if (!bOk)
+			{
+				iErrs++;
+				m_arsErrors.Add(wxString::Format(_("Person with ID %s seems to be isolated"), item->GetAttribute(_T("GedId"))));
+			}
+		}
+		item=item->GetNext();
 	}
+	if (iErrs==0)
+	{
+		evt.SetString(_T(" => Ok"));
+	}
+	else
+	{
+		if (iErrs==1)
+			evt.SetString(_(" => 1 Error"));
+		else
+			evt.SetString(wxString::Format(_(" => %d Errors"), iErrs));
+	}
+	AddPendingEvent(evt);
+
 	if (m_bStopWanted)
 	{
 		evt.SetEventType(wxEVT_DBCHECK_STOPPED);
@@ -124,7 +171,7 @@ void DlgCheckDatas::DoCheckDB()
 		evt.SetString(_T("\nTerminated successfully"));
 	}
 	m_bIsRunning=false;
-	GetEventHandler()->AddPendingEvent(evt);
+	AddPendingEvent(evt);
 }
 
 void DlgCheckDatas::OnBtnStartStopClicked(wxCommandEvent& event)
@@ -159,7 +206,8 @@ void DlgCheckDatas::OnDbCheckEvent(wxCommandEvent& event)
 	if (iType==wxEVT_DBCHECK_WORKING)
 	{
 		m_pgbWork->SetValue(event.GetInt());
-		*m_txtLog << event.GetString();
+		if (!event.GetString().IsEmpty())
+			*m_txtLog << event.GetString();
 	}
 	if (iType==wxEVT_DBCHECK_STOPPED)
 	{
@@ -176,6 +224,18 @@ void DlgCheckDatas::OnDbCheckEvent(wxCommandEvent& event)
 	if (iType==wxEVT_DBCHECK_ENDED)
 	{
 		*m_txtLog << event.GetString();
+		if (m_arsErrors.IsEmpty())
+		{
+			*m_txtLog << _T("\n") << _("No errors found");
+		}
+		else
+		{
+			*m_txtLog << _T("\n") << _("Some errors were found:");
+			for (size_t i=0; i<m_arsErrors.GetCount(); ++i)
+			{
+				*m_txtLog << _T("\n") << m_arsErrors[i];
+			}
+		}
 		m_btnStartStop->Disable();
 	}
 }

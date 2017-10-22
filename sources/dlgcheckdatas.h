@@ -34,6 +34,7 @@ class DlgCheckDatas : public wxDialog
 		wxButton *m_btnStartStop;
 		// Misc vars
 		bool m_bIsRunning, m_bStopWanted;
+		wxArrayString m_arsErrors;
 		DatasManager& m_datas;
 };
 
