@@ -240,6 +240,9 @@
 					<Add library="libgdi32.a" />
 					<Add library="libws2_32.a" />
 					<Add library="libwldap32.a" />
+					<Add library="libshlwapi.a" />
+					<Add library="liboleacc.a" />
+					<Add library="libversion.a" />
 					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)" />
 				</Linker>
 				<Environment>
@@ -612,6 +615,9 @@
 					<Add library="libgdi32.a" />
 					<Add library="libws2_32.a" />
 					<Add library="libwldap32.a" />
+					<Add library="libshlwapi.a" />
+					<Add library="liboleacc.a" />
+					<Add library="libversion.a" />
 					<Add directory="$(WX_DIR)/lib/gcc_lib$(ARCHI)" />
 				</Linker>
 				<Environment>
