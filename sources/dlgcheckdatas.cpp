@@ -3,6 +3,7 @@
 #include <wx/xml/xml.h>
 #include <wx/statline.h>
 
+#include "geddate.h"
 #include "datasmanager.h"
 
 wxDEFINE_EVENT(wxEVT_DBCHECK_STARTED, wxCommandEvent);
@@ -104,15 +105,20 @@ void DlgCheckDatas::DoCheckDB()
 	m_arsErrors.Clear();
 
 	int iCount=m_datas.GetItemsCount(GIT_INDI);
-	int iNbSteps=iCount;
+	int iNbSteps=iCount; // 1 pass for isolated people
+	iNbSteps += iCount;  // 1 pass for death date / marriage date and child birth
 	int iCurrStep=0;
 	double dPrct=0., dOldPrct=0.;
 	int iCurrItem=0, iPrct;
 	evt.SetEventType(wxEVT_DBCHECK_WORKING);
 
-	wxXmlNode *root=m_datas.GetDatas();
-	wxXmlNode *item=root->GetChildren();
-	int iErrs=0;
+	wxXmlNode *root, *item;
+	int iErrs;
+
+	/// First pass : Check for isolated people (no family)
+	root=m_datas.GetDatas();
+	item=root->GetChildren();
+	iErrs=0;
 	evt.SetString(wxString(_T("\n"))<<_("- Checking isolated people"));
 	evt.SetInt(dPrct);
 	AddPendingEvent(evt);
@@ -147,29 +153,113 @@ void DlgCheckDatas::DoCheckDB()
 		}
 		item=item->GetNext();
 	}
-	if (iErrs==0)
-	{
-		evt.SetString(_T(" => Ok"));
-	}
-	else
-	{
-		if (iErrs==1)
-			evt.SetString(_(" => 1 Error"));
-		else
-			evt.SetString(wxString::Format(_(" => %d Errors"), iErrs));
-	}
-	AddPendingEvent(evt);
-
 	if (m_bStopWanted)
 	{
 		evt.SetEventType(wxEVT_DBCHECK_STOPPED);
 		evt.SetString(_("\nCancelled..."));
+		AddPendingEvent(evt);
+		return;
 	}
 	else
 	{
-		evt.SetEventType(wxEVT_DBCHECK_ENDED);
-		evt.SetString(_T("\nTerminated successfully"));
+		if (iErrs==0)
+		{
+			evt.SetString(_T(" => Ok"));
+		}
+		else
+		{
+			if (iErrs==1)
+				evt.SetString(_(" => 1 Error"));
+			else
+				evt.SetString(wxString::Format(_(" => %d Errors"), iErrs));
+		}
 	}
+	AddPendingEvent(evt);
+
+	/// Second pass : Death date before child birth (can arrive, but rarely) and marriage date
+	item=root->GetChildren();
+	iErrs=0;
+	evt.SetString(wxString(_T("\n"))<<_("- Checking death date / marriage date and child birth"));
+	evt.SetInt(dPrct);
+	AddPendingEvent(evt);
+	evt.SetString(wxEmptyString);
+	while((item!=NULL) && (m_bStopWanted==false))
+	{
+		if (item->GetAttribute(_T("Type"))==_T("INDI"))
+		{
+			iCurrStep++;
+			dPrct=PGB_RANGE*iCurrStep/iNbSteps;
+			iPrct=dPrct*10;
+			dPrct=iPrct/10;
+			if (dPrct!=dOldPrct)
+			{
+				evt.SetInt(dPrct);
+				AddPendingEvent(evt);
+				dOldPrct=dPrct;
+			}
+			GedDate gdDeath;
+			if (m_datas.GetItemDeath(item, gdDeath))
+			{
+				wxXmlNode *subItem=item->GetChildren();
+				while(subItem!=NULL)
+				{
+					if (subItem->GetAttribute(_T("Type"))==_T("FAMS"))
+					{
+						wxXmlNode* evtNode=m_datas.FindItemByGedId(subItem->GetAttribute(_T("Value")));
+						if (evtNode!=NULL)
+						{
+							// First search and check the marriage date
+							wxXmlNode *subEvtNode=evtNode->GetChildren();
+							while(subEvtNode)
+							{
+								if (subEvtNode->GetAttribute(_T("Type"))==_T("MARR"))
+								{
+									GedDate gdMarr;
+									if (m_datas.GetEventDate(subEvtNode, gdMarr))
+									{
+										// We can do the check
+										if (gdDeath.IsAfter(gdMarr))
+										{
+											iErrs++;
+											m_arsErrors.Add(wxString::Format(_("Person with ID %s is dead before its marriage"), item->GetAttribute(_T("GedId"))));
+										}
+									}
+								}
+								subEvtNode=subEvtNode->GetNext();
+							}
+						}
+					}
+					subItem=subItem->GetNext();
+				}
+			}
+		}
+		item=item->GetNext();
+	}
+	if (m_bStopWanted)
+	{
+		evt.SetEventType(wxEVT_DBCHECK_STOPPED);
+		evt.SetString(_("\nCancelled..."));
+		AddPendingEvent(evt);
+		return;
+	}
+	else
+	{
+		if (iErrs==0)
+		{
+			evt.SetString(_T(" => Ok"));
+		}
+		else
+		{
+			if (iErrs==1)
+				evt.SetString(_(" => 1 Error"));
+			else
+				evt.SetString(wxString::Format(_(" => %d Errors"), iErrs));
+		}
+	}
+	AddPendingEvent(evt);
+
+	evt.SetEventType(wxEVT_DBCHECK_ENDED);
+	evt.SetString(_T("\nTerminated successfully"));
 	m_bIsRunning=false;
 	AddPendingEvent(evt);
 }

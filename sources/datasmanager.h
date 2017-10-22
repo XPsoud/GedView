@@ -6,6 +6,7 @@
 extern const wxChar* g_sUnknownYear;
 
 class wxXmlNode;
+class GedDate;
 
 enum GEDITEMTYPE
 {
@@ -52,6 +53,7 @@ class DatasManager
         const wxChar GetSexChar(int gender);
         wxString GetItemBirth(const wxString& itmId, bool yearOnly=false);
         wxString GetItemBirth(const wxXmlNode *itmNode, bool yearOnly=false);
+        bool GetItemBirth(const wxXmlNode *itmNode, GedDate& result);
         wxString GetItemBirthPlace(const wxString& itmId);
         wxString GetItemBirthPlace(const wxXmlNode *itmNode);
         wxString GetItemBaptism(const wxString& itmId, bool yearOnly=false);
@@ -60,6 +62,7 @@ class DatasManager
         wxString GetItemBaptismPlace(const wxXmlNode *itmNode);
         wxString GetItemDeath(const wxString& itmId, bool yearOnly=false);
         wxString GetItemDeath(const wxXmlNode *itmNode, bool yearOnly=false);
+        bool GetItemDeath(const wxXmlNode *itmNode, GedDate& result);
         wxString GetItemDeathPlace(const wxString& itmId);
         wxString GetItemDeathPlace(const wxXmlNode *itmNode);
         wxString GetItemBurial(const wxString& itmId, bool yearOnly=false);
@@ -69,6 +72,7 @@ class DatasManager
         wxString GetItemOccupation(const wxString& itmId);
         wxString GetItemOccupation(const wxXmlNode *itmNode);
         wxString GetItemInfos(wxXmlNode *itmNode, wxXmlNode *root=NULL);
+        bool GetEventDate(wxXmlNode *evtNode, GedDate& result);
         // Reading and saving datas
         bool ParseGedToXml(wxInputStream *source, wxXmlNode* dest);
         bool ReadGedFile(const wxString& filename);
