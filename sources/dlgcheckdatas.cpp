@@ -46,11 +46,24 @@ void DlgCheckDatas::CreateControls()
 		// First part of the dialog : parameters
 		m_pnlParams=new wxPanel(this, wxID_STATIC);
 			pnlszr=new wxBoxSizer(wxVERTICAL);
+
+			label=new wxStaticText(m_pnlParams, wxID_STATIC, _("Basic check operations:"));
+			pnlszr->Add(label, 0, wxALL, 5);
+			label=new wxStaticText(m_pnlParams, wxID_STATIC, _("- Isolated people"));
+			pnlszr->Add(label, 0, wxLEFT|wxRIGHT, 5);
+			label=new wxStaticText(m_pnlParams, wxID_STATIC, _("- People death date regarding its marriage date"));
+			pnlszr->Add(label, 0, wxLEFT|wxRIGHT, 5);
+			label=new wxStaticText(m_pnlParams, wxID_STATIC, _("- People death regarding its children birth"));
+			pnlszr->Add(label, 0, wxLEFT|wxRIGHT, 5);
+
 				lnszr=new wxBoxSizer(wxHORIZONTAL);
-					label=new wxStaticText(m_pnlParams, wxID_STATIC, _("Parameters:"));
+					label=new wxStaticText(m_pnlParams, wxID_STATIC, _("Customizable parameters:"));
 				lnszr->Add(label, 0, wxALL|wxALIGN_CENTER_VERTICAL, 0);
 				lnszr->Add(new wxStaticLine(m_pnlParams, wxID_STATIC), 1, wxLEFT|wxALIGN_CENTER_VERTICAL, 5);
 			pnlszr->Add(lnszr, 0, wxALL|wxEXPAND, 5);
+
+			label=new wxStaticText(m_pnlParams, wxID_STATIC, _("None yet..."));
+			pnlszr->Add(label, 0, wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
 			m_pnlParams->SetSizer(pnlszr);
 		m_szrMain->Add(m_pnlParams, 1, wxALL|wxEXPAND, 0);
@@ -203,6 +216,7 @@ void DlgCheckDatas::DoCheckDB()
 				AddPendingEvent(evt);
 				dOldPrct=dPrct;
 			}
+			GEDITEMSEX itmSex=m_datas.GetItemSex(item);
 			GedDate gdDeath;
 			if (m_datas.GetItemDeath(item, gdDeath))
 			{
@@ -244,7 +258,10 @@ void DlgCheckDatas::DoCheckDB()
 											if (gdDeath.IsBefore(gdBirth))
 											{
 												iErrs++;
-												m_arsErrors.Add(wxString::Format(_("Person with ID %s is dead death before its child %s birth"), item->GetAttribute(_T("GedId")), subEvtNode->GetAttribute(_T("GedId"))));
+												wxString sErr=wxString::Format(_("Person with ID %s is dead death before its child %s birth"), item->GetAttribute(_T("GedId")), subEvtNode->GetAttribute(_T("GedId")));
+												if (itmSex==GIS_MALE)
+													sErr << _T(" (") << _("this can be normal because it is a man") << _T(")");
+												m_arsErrors.Add(sErr);
 											}
 										}
 									}
