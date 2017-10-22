@@ -39,6 +39,8 @@ const int wxID_PDFTREE = wxNewId();
 const int wxID_CSVFILE = wxNewId();
 const int wxID_CHKDATA = wxNewId();
 
+#define MAINFRAME_MINIMAL_SIZE wxSize(600, 400)
+
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
 {
@@ -54,6 +56,8 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_bHistClicked=false;
 
     CreateControls();
+
+    SetMinSize(MAINFRAME_MINIMAL_SIZE);
 
     UpdateSummary();
     UpdateItemDetails();
