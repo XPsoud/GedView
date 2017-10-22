@@ -109,7 +109,7 @@ void DlgCheckDatas::DoCheckDB()
 	iNbSteps += iCount;  // 1 pass for death date / marriage date and child birth
 	int iCurrStep=0;
 	double dPrct=0., dOldPrct=0.;
-	int iCurrItem=0, iPrct;
+	int iPrct;
 	evt.SetEventType(wxEVT_DBCHECK_WORKING);
 
 	wxXmlNode *root, *item;
@@ -174,6 +174,12 @@ void DlgCheckDatas::DoCheckDB()
 				evt.SetString(wxString::Format(_(" => %d Errors"), iErrs));
 		}
 	}
+	// Make a 1/2 second wait until continuation
+	{
+		wxStopWatch sw;
+		while(sw.Time()<500)
+			wxTheApp->Yield();
+	}
 	AddPendingEvent(evt);
 
 	/// Second pass : Death date before child birth (can arrive, but rarely) and marriage date
@@ -208,20 +214,38 @@ void DlgCheckDatas::DoCheckDB()
 						wxXmlNode* evtNode=m_datas.FindItemByGedId(subItem->GetAttribute(_T("Value")));
 						if (evtNode!=NULL)
 						{
-							// First search and check the marriage date
 							wxXmlNode *subEvtNode=evtNode->GetChildren();
 							while(subEvtNode)
 							{
 								if (subEvtNode->GetAttribute(_T("Type"))==_T("MARR"))
 								{
+									// Check the marriage date
 									GedDate gdMarr;
 									if (m_datas.GetEventDate(subEvtNode, gdMarr))
 									{
 										// We can do the check
-										if (gdDeath.IsAfter(gdMarr))
+										if (gdDeath.IsBefore(gdMarr))
 										{
 											iErrs++;
 											m_arsErrors.Add(wxString::Format(_("Person with ID %s is dead before its marriage"), item->GetAttribute(_T("GedId"))));
+										}
+									}
+								}
+								if (subEvtNode->GetAttribute(_T("Type"))==_T("CHIL"))
+								{
+									// Check child birth date
+									wxXmlNode *chldNode=m_datas.FindItemByGedId(subEvtNode->GetAttribute(_T("GedId")));
+									if (chldNode!=NULL)
+									{
+										GedDate gdBirth;
+										if (m_datas.GetItemBirth(chldNode, gdBirth))
+										{
+											// We can do the check
+											if (gdDeath.IsBefore(gdBirth))
+											{
+												iErrs++;
+												m_arsErrors.Add(wxString::Format(_("Person with ID %s is dead death before its child %s birth"), item->GetAttribute(_T("GedId")), subEvtNode->GetAttribute(_T("GedId"))));
+											}
 										}
 									}
 								}
