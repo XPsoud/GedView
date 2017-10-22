@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-10 13:39+0100\n"
-"PO-Revision-Date: 2017-08-10 13:39+0100\n"
+"POT-Creation-Date: 2017-10-22 18:24+0100\n"
+"PO-Revision-Date: 2017-10-22 18:24+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -18,201 +18,201 @@ msgstr ""
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: sources\n"
 
-#: sources/datasmanager.cpp:379
+#: sources/datasmanager.cpp:381
 msgid "Birth:"
 msgstr "Naissance :"
 
-#: sources/datasmanager.cpp:384 sources/datasmanager.cpp:1069
-#: sources/datasmanager.cpp:1112 sources/datasmanager.cpp:1139
-#: sources/datasmanager.cpp:1190 sources/datasmanager.cpp:1208
-#: sources/dlgexportpdf.cpp:298 sources/dlgexportpdf.cpp:352
-#: sources/dlgexportpdf.cpp:383 sources/dlgexportpdf.cpp:449
-#: sources/dlgexportpdf.cpp:468 sources/mainframe.cpp:350
-#: sources/mainframe.cpp:411 sources/mainframe.cpp:436
-#: sources/mainframe.cpp:497 sources/mainframe.cpp:518
+#: sources/datasmanager.cpp:386 sources/datasmanager.cpp:1121
+#: sources/datasmanager.cpp:1175 sources/datasmanager.cpp:1202
+#: sources/datasmanager.cpp:1264 sources/datasmanager.cpp:1282
+#: sources/dlgexportpdf.cpp:313 sources/dlgexportpdf.cpp:385
+#: sources/dlgexportpdf.cpp:416 sources/dlgexportpdf.cpp:522
+#: sources/dlgexportpdf.cpp:541 sources/mainframe.cpp:373
+#: sources/mainframe.cpp:435 sources/mainframe.cpp:460
+#: sources/mainframe.cpp:558 sources/mainframe.cpp:579
 msgid "Dead"
 msgstr "Décédé"
 
-#: sources/datasmanager.cpp:386
+#: sources/datasmanager.cpp:388
 msgid "Death:"
 msgstr "Décès :"
 
-#: sources/datasmanager.cpp:391
+#: sources/datasmanager.cpp:393
 msgid "Marriage:"
 msgstr "Mariage :"
 
-#: sources/datasmanager.cpp:396
+#: sources/datasmanager.cpp:398
 msgid "Baptism:"
 msgstr "Baptême :"
 
-#: sources/datasmanager.cpp:401
+#: sources/datasmanager.cpp:403
 msgid "Inhumation:"
 msgstr "Inhumation :"
 
-#: sources/datasmanager.cpp:404
+#: sources/datasmanager.cpp:406
 msgid "Unknown event:"
 msgstr "Événement inconnu :"
 
-#: sources/datasmanager.cpp:413
+#: sources/datasmanager.cpp:415
 msgid "in"
 msgstr "à"
 
-#: sources/datasmanager.cpp:424
+#: sources/datasmanager.cpp:426
 msgid "Around"
 msgstr "Vers"
 
-#: sources/datasmanager.cpp:424
+#: sources/datasmanager.cpp:426
 msgid "Before"
 msgstr "Avant"
 
-#: sources/datasmanager.cpp:424
+#: sources/datasmanager.cpp:426
 msgid "After"
 msgstr "Après"
 
-#: sources/datasmanager.cpp:424
+#: sources/datasmanager.cpp:426
 msgid "Estimated"
 msgstr "Peut-être"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "January"
 msgstr "Janvier"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "February"
 msgstr "Février"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "March"
 msgstr "Mars"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "April"
 msgstr "Avril"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "May"
 msgstr "Mai"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "June"
 msgstr "Juin"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "July"
 msgstr "Juillet"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "August"
 msgstr "Août"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "September"
 msgstr "Septembre"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "October"
 msgstr "Octobre"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "November"
 msgstr "Novembre"
 
-#: sources/datasmanager.cpp:426
+#: sources/datasmanager.cpp:428 sources/geddate.cpp:5
 msgid "December"
 msgstr "Décembre"
 
-#: sources/datasmanager.cpp:1071 sources/datasmanager.cpp:1113
-#: sources/datasmanager.cpp:1140 sources/datasmanager.cpp:1192
-#: sources/datasmanager.cpp:1209 sources/dlgexportpdf.cpp:300
-#: sources/dlgexportpdf.cpp:353 sources/dlgexportpdf.cpp:384
-#: sources/dlgexportpdf.cpp:450 sources/dlgexportpdf.cpp:469
-#: sources/mainframe.cpp:352 sources/mainframe.cpp:412
-#: sources/mainframe.cpp:437 sources/mainframe.cpp:499
-#: sources/mainframe.cpp:519
+#: sources/datasmanager.cpp:1123 sources/datasmanager.cpp:1176
+#: sources/datasmanager.cpp:1203 sources/datasmanager.cpp:1266
+#: sources/datasmanager.cpp:1283 sources/dlgexportpdf.cpp:315
+#: sources/dlgexportpdf.cpp:386 sources/dlgexportpdf.cpp:417
+#: sources/dlgexportpdf.cpp:523 sources/dlgexportpdf.cpp:542
+#: sources/mainframe.cpp:375 sources/mainframe.cpp:436
+#: sources/mainframe.cpp:461 sources/mainframe.cpp:560
+#: sources/mainframe.cpp:580
 msgid "Dead_F"
 msgstr "Décédée"
 
-#: sources/datasmanager.cpp:1086 sources/dlgexportpdf.cpp:322
-#: sources/mainframe.cpp:385
+#: sources/datasmanager.cpp:1149 sources/dlgexportpdf.cpp:355
+#: sources/mainframe.cpp:409
 msgid "Occupation:"
 msgstr "Activité :"
 
-#: sources/datasmanager.cpp:1090 sources/dlgexportpdf.cpp:328
-#: sources/mainframe.cpp:390
+#: sources/datasmanager.cpp:1153 sources/dlgexportpdf.cpp:361
+#: sources/mainframe.cpp:414
 msgid "Parents"
 msgstr "Parents"
 
-#: sources/datasmanager.cpp:1104 sources/dlgexportpdf.cpp:343
-#: sources/mainframe.cpp:404
+#: sources/datasmanager.cpp:1167 sources/dlgexportpdf.cpp:376
+#: sources/mainframe.cpp:428
 msgid "Father:"
 msgstr "Père :"
 
-#: sources/datasmanager.cpp:1104 sources/dlgexportpdf.cpp:343
-#: sources/mainframe.cpp:404
+#: sources/datasmanager.cpp:1167 sources/dlgexportpdf.cpp:376
+#: sources/mainframe.cpp:428
 msgid "Mother:"
 msgstr "Mère :"
 
-#: sources/datasmanager.cpp:1125 sources/dlgexportpdf.cpp:367
-#: sources/mainframe.cpp:424
+#: sources/datasmanager.cpp:1188 sources/dlgexportpdf.cpp:400
+#: sources/mainframe.cpp:448
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
-#: sources/datasmanager.cpp:1152 sources/dlgexportpdf.cpp:397
-#: sources/mainframe.cpp:449
+#: sources/datasmanager.cpp:1215 sources/dlgexportpdf.cpp:430
+#: sources/mainframe.cpp:473
 msgid "Union(s)"
 msgstr "Union(s)"
 
-#: sources/datasmanager.cpp:1227
+#: sources/datasmanager.cpp:1328
 msgid "No datas in memory can be compared"
 msgstr "Aucunes données en mémoire ne peuvents être comparées"
 
-#: sources/datasmanager.cpp:1232
+#: sources/datasmanager.cpp:1333
 msgid "The selected file is already loaded in memory"
 msgstr "Le fichier sélectionné est déjà chargé en mémoire"
 
-#: sources/datasmanager.cpp:1239
+#: sources/datasmanager.cpp:1340
 msgid "Unable to open the selected file"
 msgstr "Impossible d'ouvrir le fichier sélectionné"
 
-#: sources/datasmanager.cpp:1246
+#: sources/datasmanager.cpp:1347
 msgid "Unable to parse the selected file"
 msgstr "Impossible d'analyser le fichier sélectionné"
 
-#: sources/datasmanager.cpp:1256
+#: sources/datasmanager.cpp:1357
 msgid "Comparing datas"
 msgstr "Comparaison des données"
 
-#: sources/datasmanager.cpp:1257
+#: sources/datasmanager.cpp:1358
 msgid "Please wait..."
 msgstr "Patientez, svp..."
 
-#: sources/datasmanager.cpp:1408
+#: sources/datasmanager.cpp:1509
 msgid "Changes from file:"
 msgstr "Modifications depuis le fichier :"
 
-#: sources/datasmanager.cpp:1415
+#: sources/datasmanager.cpp:1516
 msgid "1 item added:"
 msgstr "1 élément ajouté :"
 
-#: sources/datasmanager.cpp:1417
+#: sources/datasmanager.cpp:1518
 #, c-format
 msgid "%d items added:"
 msgstr "%d éléments ajoutés :"
 
-#: sources/datasmanager.cpp:1427
+#: sources/datasmanager.cpp:1528
 msgid "1 item removed:"
 msgstr "1 élément supprimé :"
 
-#: sources/datasmanager.cpp:1429
+#: sources/datasmanager.cpp:1530
 #, c-format
 msgid "%d items removed:"
 msgstr "%d éléments supprimés :"
 
-#: sources/datasmanager.cpp:1439
+#: sources/datasmanager.cpp:1540
 msgid "1 item modified:"
 msgstr "1 élément modifié :"
 
-#: sources/datasmanager.cpp:1441
+#: sources/datasmanager.cpp:1542
 #, c-format
 msgid "%d items modified:"
 msgstr "%d éléments modifiés :"
@@ -220,6 +220,108 @@ msgstr "%d éléments modifiés :"
 #: sources/dlgabout.cpp:19
 msgid "Made with"
 msgstr "Créé avec"
+
+#: sources/dlgcheckdatas.cpp:16
+msgid "Check loaded datas"
+msgstr "Vérifier les données chargées"
+
+#: sources/dlgcheckdatas.cpp:50
+msgid "Basic check operations:"
+msgstr "Opérations basiques de vérification :"
+
+#: sources/dlgcheckdatas.cpp:52
+msgid "- Isolated people"
+msgstr "- Personnes isolées"
+
+#: sources/dlgcheckdatas.cpp:54
+msgid "- People death date regarding its marriage date"
+msgstr "- Date de décès d'une personne par rapport à sa date de mariage"
+
+#: sources/dlgcheckdatas.cpp:56
+msgid "- People death regarding its children birth"
+msgstr ""
+"- Date de décès d'une personne par rapport à la naissance de ses enfants"
+
+#: sources/dlgcheckdatas.cpp:60
+msgid "Customizable parameters:"
+msgstr "Paramètres modificables :"
+
+#: sources/dlgcheckdatas.cpp:65
+msgid "None yet..."
+msgstr "Aucun pour l'instant..."
+
+#: sources/dlgcheckdatas.cpp:75
+msgid "Results:"
+msgstr "Résultats :"
+
+#: sources/dlgcheckdatas.cpp:91 sources/dlgcheckdatas.cpp:350
+msgid "Start"
+msgstr "Démarrer"
+
+#: sources/dlgcheckdatas.cpp:135
+msgid "- Checking isolated people"
+msgstr "- Vérification des personnes isolées"
+
+#: sources/dlgcheckdatas.cpp:164
+#, c-format
+msgid "Person with ID %s seems to be isolated"
+msgstr "La personne avec l'ID %s semble isolée"
+
+#: sources/dlgcheckdatas.cpp:172
+msgid ""
+"\n"
+"Cancelled..."
+msgstr ""
+"\n"
+"Annulé..."
+
+#: sources/dlgcheckdatas.cpp:185 sources/dlgcheckdatas.cpp:295
+msgid " => 1 Error"
+msgstr "=> 1 Erreur"
+
+#: sources/dlgcheckdatas.cpp:187 sources/dlgcheckdatas.cpp:297
+#, c-format
+msgid " => %d Errors"
+msgstr " => %d Erreurs"
+
+#: sources/dlgcheckdatas.cpp:201
+msgid "- Checking death date / marriage date and children birth"
+msgstr ""
+"- Vérirication de la date de décès / date de mariage et naissance des enfants"
+
+#: sources/dlgcheckdatas.cpp:244
+#, c-format
+msgid "Person with ID %s is dead before its marriage"
+msgstr "La personne avec l'ID %s est morte avant son mariage"
+
+#: sources/dlgcheckdatas.cpp:261
+#, c-format
+msgid "Person with ID %s is dead death before its child %s birth"
+msgstr "La personne avec l'ID %s est morte avant la naissance de son enfant %s"
+
+#: sources/dlgcheckdatas.cpp:263
+msgid "this can be normal because it is a man"
+msgstr "cela peut être normal car il s'agit d'un homme"
+
+#: sources/dlgcheckdatas.cpp:282
+msgid "Cancelled..."
+msgstr "Annulé..."
+
+#: sources/dlgcheckdatas.cpp:303
+msgid "Terminated successfully"
+msgstr "Terminé avec succès"
+
+#: sources/dlgcheckdatas.cpp:330
+msgid "Stop"
+msgstr "Arrêter"
+
+#: sources/dlgcheckdatas.cpp:360
+msgid "No errors found"
+msgstr "Pas d'erreurs trouvées"
+
+#: sources/dlgcheckdatas.cpp:364
+msgid "Some errors were found:"
+msgstr "Des erreurs ont été trouvées"
 
 #: sources/dlgexportcsv.cpp:11
 msgid "Tabulation"
@@ -245,11 +347,11 @@ msgstr "Séparateur de colonnes :"
 msgid "Add columns names on the first line"
 msgstr "Ajouter les noms de colonnes sur la première ligne"
 
-#: sources/dlgexportcsv.cpp:69 sources/dlgexportpdf.cpp:70
+#: sources/dlgexportcsv.cpp:69 sources/dlgexportpdf.cpp:71
 msgid "Export"
 msgstr "Exporter"
 
-#: sources/dlgexportcsv.cpp:74 sources/dlgexportpdf.cpp:75
+#: sources/dlgexportcsv.cpp:74 sources/dlgexportpdf.cpp:76
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -265,26 +367,27 @@ msgstr "Fichiers csv (*.csv)|*.csv|Tous les fichiers (*.*)|*.*"
 msgid "An error occurred while opening the output file"
 msgstr "Une erreur est survenue lors de l'ouverture du fichier de sortie !"
 
-#: sources/dlgexportcsv.cpp:108 sources/dlgexportpdf.cpp:573
-#: sources/main.cpp:76 sources/mainframe.cpp:577 sources/mainframe.cpp:607
-#: sources/mainframe.cpp:633 sources/mainframe.cpp:661
-#: sources/mainframe.cpp:911
+#: sources/dlgexportcsv.cpp:108 sources/dlgexportpdf.cpp:653
+#: sources/main.cpp:76 sources/mainframe.cpp:638 sources/mainframe.cpp:668
+#: sources/mainframe.cpp:694 sources/mainframe.cpp:722
+#: sources/mainframe.cpp:977
 msgid "Error"
 msgstr "Erreur"
 
-#: sources/dlgexportcsv.cpp:116 sources/dlgexportpdf.cpp:219
+#: sources/dlgexportcsv.cpp:116 sources/dlgexportpdf.cpp:218
+#: sources/dlgexportpdf.cpp:262
 msgid "Id"
 msgstr "Id"
 
-#: sources/dlgexportcsv.cpp:116 sources/mainframe.cpp:169
+#: sources/dlgexportcsv.cpp:116 sources/mainframe.cpp:190
 msgid "Sex"
 msgstr "Sexe"
 
-#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:174
+#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:195
 msgid "Last Name"
 msgstr "Nom de famille"
 
-#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:176
+#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:197
 msgid "First Name"
 msgstr "Prénom"
 
@@ -312,65 +415,72 @@ msgstr "Activité"
 msgid "CSV file successfully created!"
 msgstr "Fichier CSV créé avec succès !"
 
-#: sources/dlgexportcsv.cpp:137 sources/dlgtreepdf.cpp:324
-#: sources/mainframe.cpp:833
+#: sources/dlgexportcsv.cpp:137 sources/dlgtreepdf.cpp:340
+#: sources/mainframe.cpp:899
 msgid "Success"
 msgstr "Succès"
 
-#: sources/dlgexportpdf.cpp:11 sources/mainframe.cpp:121
+#: sources/dlgexportpdf.cpp:12 sources/mainframe.cpp:123
 msgid "Export as pdf file"
 msgstr "Exporter comme fichier pdf"
 
-#: sources/dlgexportpdf.cpp:41
+#: sources/dlgexportpdf.cpp:42
 msgid "What do you want to export:"
 msgstr "Que voulez-vous exporter :"
 
-#: sources/dlgexportpdf.cpp:48
+#: sources/dlgexportpdf.cpp:49
 msgid "The selected item only"
 msgstr "Seulement l'élément sélectionné"
 
-#: sources/dlgexportpdf.cpp:50
+#: sources/dlgexportpdf.cpp:51
 msgid "All the items in memory"
 msgstr "Tous les éléments en mémoire"
 
-#: sources/dlgexportpdf.cpp:52
+#: sources/dlgexportpdf.cpp:53
 msgid "Items affected by the last comparison"
 msgstr "Éléments concernés par la dernière comparaison"
 
-#: sources/dlgexportpdf.cpp:57
+#: sources/dlgexportpdf.cpp:58
 msgid "Add a summary of the exported items"
 msgstr "Ajouter un sommaire aux éléments exportés"
 
-#: sources/dlgexportpdf.cpp:60
+#: sources/dlgexportpdf.cpp:61
 msgid "Create one pdf file per item"
 msgstr "Créer un fichier pdf par élément"
 
-#: sources/dlgexportpdf.cpp:163 sources/dlgtreepdf.cpp:296
+#: sources/dlgexportpdf.cpp:164 sources/dlgtreepdf.cpp:301
 msgid "Select the \"PDF\" file to create"
 msgstr "Sélectionnez le fichier \"PDF\" à créer"
 
-#: sources/dlgexportpdf.cpp:164 sources/dlgtreepdf.cpp:297
+#: sources/dlgexportpdf.cpp:165 sources/dlgtreepdf.cpp:302
 msgid "Pdf files (*.pdf)|*.pdf|All files (*.*)|*.*"
 msgstr "Fichiers pdf (*.pdf)|*.pdf|Tous les fichiers (*.*)|*.*"
 
-#: sources/dlgexportpdf.cpp:214
+#: sources/dlgexportpdf.cpp:215
 msgid "Alphabetical Index"
 msgstr "Index Alphabétique"
 
-#: sources/dlgexportpdf.cpp:219
+#: sources/dlgexportpdf.cpp:219 sources/dlgexportpdf.cpp:263
 msgid "Full name"
 msgstr "Nom complet"
 
-#: sources/dlgexportpdf.cpp:311 sources/dlgexportpdf.cpp:424
-#: sources/mainframe.cpp:361 sources/mainframe.cpp:474
+#: sources/dlgexportpdf.cpp:326 sources/dlgexportpdf.cpp:457
+#: sources/dlgexportpdf.cpp:483 sources/mainframe.cpp:384
+#: sources/mainframe.cpp:498 sources/mainframe.cpp:522
 msgid "Source:"
 msgstr "Source :"
 
-#: sources/dlgexportpdf.cpp:522 sources/dlgexportpdf.cpp:599
+#: sources/dlgexportpdf.cpp:333 sources/dlgexportpdf.cpp:463
+#: sources/dlgexportpdf.cpp:489 sources/mainframe.cpp:389
+#: sources/mainframe.cpp:503 sources/mainframe.cpp:527
+msgid "Note:"
+msgstr "Note :"
+
+#: sources/dlgexportpdf.cpp:602 sources/dlgexportpdf.cpp:679
 msgid "Summary"
 msgstr "Index"
 
-#: sources/dlgexportpdf.cpp:573
+#: sources/dlgexportpdf.cpp:653
 msgid "No exportable comparison results!"
 msgstr "Aucun résultat de comparaison exportable !"
 
@@ -450,65 +560,65 @@ msgstr "Conserver l'interface en anglais (redémarrage nécessaire)"
 msgid "General"
 msgstr "Général"
 
-#: sources/dlgtreepdf.cpp:12 sources/mainframe.cpp:123
+#: sources/dlgtreepdf.cpp:13 sources/mainframe.cpp:125
 msgid "Create pdf tree"
 msgstr "Créer un arbre pdf"
 
-#: sources/dlgtreepdf.cpp:49
+#: sources/dlgtreepdf.cpp:50
 msgid "Tree options:"
 msgstr "Options de l'arbre"
 
-#: sources/dlgtreepdf.cpp:55
+#: sources/dlgtreepdf.cpp:56
 msgid "Maximum levels of the tree:"
 msgstr "Nombre maxi de niveaux de l'arbre :"
 
-#: sources/dlgtreepdf.cpp:61
+#: sources/dlgtreepdf.cpp:62
 msgid "Add marriage year at each junction point"
 msgstr "Ajouter l'année de mariage à chaque point de jonction"
 
-#: sources/dlgtreepdf.cpp:65
+#: sources/dlgtreepdf.cpp:66
 msgid "Add sosa number under each item"
 msgstr "Ajouter le numéro sosa sous chaque élément"
 
-#: sources/dlgtreepdf.cpp:69
+#: sources/dlgtreepdf.cpp:70
 msgid "Add each item's details page"
 msgstr "Ajouter une page pour les détails de chaque élément"
 
-#: sources/dlgtreepdf.cpp:73
+#: sources/dlgtreepdf.cpp:74
 msgid "Add a small summary in the bottom-left corner"
 msgstr "Ajouter un petit sommaire dans le coin bas-gauche"
 
-#: sources/dlgtreepdf.cpp:78
+#: sources/dlgtreepdf.cpp:79
 msgid "Pdf file format:"
 msgstr "Format du fichier pdf"
 
-#: sources/dlgtreepdf.cpp:84
+#: sources/dlgtreepdf.cpp:85
 msgid "Predefined size:"
 msgstr "Taille prédéfinie :"
 
-#: sources/dlgtreepdf.cpp:89
+#: sources/dlgtreepdf.cpp:90
 #, c-format
 msgid "A%d Landscape (%d mm x %d mm)"
 msgstr "A%d Paysage (%d mm x %d mm)"
 
-#: sources/dlgtreepdf.cpp:96
+#: sources/dlgtreepdf.cpp:97
 msgid "Variable width and fixed height of"
 msgstr "Largeur variable et hauteur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:101 sources/dlgtreepdf.cpp:113
+#: sources/dlgtreepdf.cpp:102 sources/dlgtreepdf.cpp:114
 #, c-format
 msgid "%d mm"
 msgstr "%d mm"
 
-#: sources/dlgtreepdf.cpp:104 sources/dlgtreepdf.cpp:116
+#: sources/dlgtreepdf.cpp:105 sources/dlgtreepdf.cpp:117
 msgid "mm"
 msgstr "mm"
 
-#: sources/dlgtreepdf.cpp:109
+#: sources/dlgtreepdf.cpp:110
 msgid "Variable height and fixed width of"
 msgstr "Hauteur variable et largeur prédéfinie de"
 
-#: sources/dlgtreepdf.cpp:324
+#: sources/dlgtreepdf.cpp:340
 msgid "Pdf file successfully created!"
 msgstr "Fichier pdf créé avec succès !"
 
@@ -524,126 +634,130 @@ msgstr "Instances multiples interdites"
 msgid "Invalid file given to command line!"
 msgstr "Fichier passé à la ligne de commande invalide !"
 
-#: sources/mainframe.cpp:113
+#: sources/mainframe.cpp:115
 msgid "Open a ged file"
 msgstr "Ouvrir un fichier ged"
 
-#: sources/mainframe.cpp:117
+#: sources/mainframe.cpp:119
 msgid "Reopen file"
 msgstr "Réouvrir un fichier"
 
-#: sources/mainframe.cpp:117
+#: sources/mainframe.cpp:119
 msgid "Reopen a ged file"
 msgstr "Réouvrir un fichier ged"
 
-#: sources/mainframe.cpp:119
+#: sources/mainframe.cpp:121
 msgid "Save datas to xml file"
 msgstr "Sauver les données dans un fichier xml"
 
-#: sources/mainframe.cpp:121
+#: sources/mainframe.cpp:123
 msgid "Export the datas list to a pdf file"
 msgstr "Exporter la liste des données dans un fichier pdf"
 
-#: sources/mainframe.cpp:123
+#: sources/mainframe.cpp:125
 msgid "Export selected item's tree to a pdf file"
 msgstr "Exporter l'arbre de l'élément sélectionné dans un fichier pdf"
 
-#: sources/mainframe.cpp:125
+#: sources/mainframe.cpp:127
 msgid "Export to csv"
 msgstr "Exporter en csv"
 
-#: sources/mainframe.cpp:125
+#: sources/mainframe.cpp:127
 msgid "Export datas to a csv file"
 msgstr "Exporter la liste des données dans un fichier csv"
 
-#: sources/mainframe.cpp:129
+#: sources/mainframe.cpp:131
 msgid "Go backward in shown items history"
 msgstr "Reculer dans l'historique des éléments affichés"
 
-#: sources/mainframe.cpp:131
+#: sources/mainframe.cpp:133
 msgid "Go forward in shown items history"
 msgstr "Avancer dans l'historique des éléments affichés"
 
-#: sources/mainframe.cpp:135
+#: sources/mainframe.cpp:137
 msgid "Compare"
 msgstr "Comparer"
 
-#: sources/mainframe.cpp:135
+#: sources/mainframe.cpp:137
 msgid "Compare datas with an other ged file"
 msgstr "Comparer les données avec un autre fichier ged"
 
 #: sources/mainframe.cpp:139
+msgid "Check"
+msgstr "Verifier"
+
+#: sources/mainframe.cpp:139
+msgid "Check loaded datas for potential errors"
+msgstr "Vérifier les erreurs potentielles des données chargées"
+
+#: sources/mainframe.cpp:143 sources/mainframe.cpp:157
 msgid "Edit application settings"
 msgstr "Éditer les réglages de l'application"
 
-#: sources/mainframe.cpp:151
+#: sources/mainframe.cpp:172
 msgid "Datas summary:"
 msgstr "Résumé des données :"
 
-#: sources/mainframe.cpp:172
+#: sources/mainframe.cpp:193
 msgid "ID"
 msgstr "ID"
 
-#: sources/mainframe.cpp:233
+#: sources/mainframe.cpp:256
 msgid "Gedcom file:"
 msgstr "Fichier Gedcom :"
 
-#: sources/mainframe.cpp:237
+#: sources/mainframe.cpp:260
 #, c-format
 msgid "Total items: %d - Individuals: %d - Family events: %d"
 msgstr "Éléments en tout : %d - Individus : %d - Événements familiaux : %d"
 
-#: sources/mainframe.cpp:241
+#: sources/mainframe.cpp:264
 msgid "No file loaded"
 msgstr "Pas de fichier chargé"
 
-#: sources/mainframe.cpp:241
+#: sources/mainframe.cpp:264
 msgid "No datas present in memory"
 msgstr "Pas de données présentes en mémoire"
 
-#: sources/mainframe.cpp:366
-msgid "Note:"
-msgstr "Note :"
-
-#: sources/mainframe.cpp:571 sources/mainframe.cpp:904
+#: sources/mainframe.cpp:632 sources/mainframe.cpp:970
 msgid "Select the \"GED\" file to open"
 msgstr "Sélectionnez le fichier \"GED\" à ouvrir"
 
-#: sources/mainframe.cpp:572 sources/mainframe.cpp:905
+#: sources/mainframe.cpp:633 sources/mainframe.cpp:971
 msgid "Gedcom files (*.ged)|*.ged|All files (*.*)|*.*"
 msgstr "Fichiers Gedcom (*.ged)|*.ged|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:577 sources/mainframe.cpp:607
-#: sources/mainframe.cpp:633
+#: sources/mainframe.cpp:638 sources/mainframe.cpp:668
+#: sources/mainframe.cpp:694
 msgid "An error occurred while reading the ged file !"
 msgstr "Une erreur est survenue lors de la lecture du fichier ged !"
 
-#: sources/mainframe.cpp:591 sources/mainframe.cpp:621
+#: sources/mainframe.cpp:652 sources/mainframe.cpp:682
 msgid "Ged file read successfully !"
 msgstr "Fichier ged lu avec succès !"
 
-#: sources/mainframe.cpp:591 sources/mainframe.cpp:621
-#: sources/mainframe.cpp:664
+#: sources/mainframe.cpp:652 sources/mainframe.cpp:682
+#: sources/mainframe.cpp:725
 msgid "Done"
 msgstr "Fait"
 
-#: sources/mainframe.cpp:654
+#: sources/mainframe.cpp:715
 msgid "Select the \"XML\" file to create"
 msgstr "Sélectionnez le fichier \"XML\" à créer"
 
-#: sources/mainframe.cpp:655
+#: sources/mainframe.cpp:716
 msgid "Xml files (*.xml)|*.xml|All files (*.*)|*.*"
 msgstr "Fichiers xml (*.xml)|*.xml|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:661
+#: sources/mainframe.cpp:722
 msgid "An error occurred while writing the xml file !"
 msgstr "Une erreur est survenue lors de l'écriture du fichier xml !"
 
-#: sources/mainframe.cpp:664
+#: sources/mainframe.cpp:725
 msgid "Datas successfully saved to"
 msgstr "Données sauvées avec succès vers"
 
-#: sources/mainframe.cpp:675
+#: sources/mainframe.cpp:736
 msgid ""
 "You changed the translation settings.\n"
 "You must restart the application to see this in effect."
@@ -651,31 +765,31 @@ msgstr ""
 "Vous avez modifié les réglages de traduction.\n"
 "Vous devez redémarrer l'application pour que cela soit effectif."
 
-#: sources/mainframe.cpp:675
+#: sources/mainframe.cpp:736
 msgid "Restart needed"
 msgstr "Redémarrage nécessaire"
 
-#: sources/mainframe.cpp:833
+#: sources/mainframe.cpp:899
 msgid "The pdf file creation terminated !"
 msgstr "Création du fichier pdf terminée !"
 
-#: sources/mainframe.cpp:895
+#: sources/mainframe.cpp:961
 msgid "Datas has already been compared with the following file:"
 msgstr "Les données ont déjà été comparées avec le fichier suivant :"
 
-#: sources/mainframe.cpp:897
+#: sources/mainframe.cpp:963
 msgid "- Click \"Yes\" to see the results of this comparison"
 msgstr "- Cliquez sur \"Oui\" pour voir les résultats de cette comparaison"
 
-#: sources/mainframe.cpp:898
+#: sources/mainframe.cpp:964
 msgid "- Click \"No\" to make a new comparison"
 msgstr "- Cliquez sur \"Non\" pour faire une nouvelle comparaison"
 
-#: sources/mainframe.cpp:899
+#: sources/mainframe.cpp:965
 msgid "Already done"
 msgstr "Déjà effectué"
 
-#: sources/mainframe.cpp:916
+#: sources/mainframe.cpp:982
 msgid "Results"
 msgstr "Résultats"
 
@@ -688,17 +802,17 @@ msgstr "Liste vide"
 msgid "Open file \"%s\""
 msgstr "Ouvrir le fichier \"%s\""
 
-#: sources/treepdfdoc.cpp:186
+#: sources/treepdfdoc.cpp:188
 #, c-format
 msgid "Ascending tree of %s %s (%d levels)"
 msgstr "Arbre d'ascendance de %s %s (%d niveaux)"
 
-#: sources/treepdfdoc.cpp:191
+#: sources/treepdfdoc.cpp:193
 #, c-format
 msgid "Generated on %s with"
 msgstr "Généré le %s avec"
 
-#: sources/treepdfdoc.cpp:208
+#: sources/treepdfdoc.cpp:210
 #, c-format
 msgid "Number of elements of the tree: %d"
 msgstr "Nombre d'éléments de l'arbre : %d"

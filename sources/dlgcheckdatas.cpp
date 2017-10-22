@@ -198,7 +198,7 @@ void DlgCheckDatas::DoCheckDB()
 	/// Second pass : Death date before child birth (can arrive, but rarely) and marriage date
 	item=root->GetChildren();
 	iErrs=0;
-	evt.SetString(wxString(_T("\n"))<<_("- Checking death date / marriage date and child birth"));
+	evt.SetString(wxString(_T("\n"))<<_("- Checking death date / marriage date and children birth"));
 	evt.SetInt(dPrct);
 	AddPendingEvent(evt);
 	evt.SetString(wxEmptyString);
@@ -279,7 +279,7 @@ void DlgCheckDatas::DoCheckDB()
 	if (m_bStopWanted)
 	{
 		evt.SetEventType(wxEVT_DBCHECK_STOPPED);
-		evt.SetString(_("\nCancelled..."));
+		evt.SetString(wxString(_T("\n")) << _("Cancelled..."));
 		AddPendingEvent(evt);
 		return;
 	}
@@ -300,7 +300,7 @@ void DlgCheckDatas::DoCheckDB()
 	AddPendingEvent(evt);
 
 	evt.SetEventType(wxEVT_DBCHECK_ENDED);
-	evt.SetString(_T("\nTerminated successfully"));
+	evt.SetString(wxString(_T("\n")) << _("Terminated successfully"));
 	m_bIsRunning=false;
 	AddPendingEvent(evt);
 }
