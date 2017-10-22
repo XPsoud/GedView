@@ -1,5 +1,7 @@
 #include "datasmanager.h"
 
+#include "geddate.h"
+
 #include <wx/artprov.h>
 #include <wx/xml/xml.h>
 #include <wx/txtstrm.h>
@@ -714,6 +716,31 @@ wxString DatasManager::GetItemBirth(const wxXmlNode* itmNode, bool yearOnly)
     return (yearOnly?g_sUnknownYear:wxEmptyString);
 }
 
+bool DatasManager::GetItemBirth(const wxXmlNode* itmNode, GedDate& result)
+{
+    if (itmNode==NULL) return false;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("BIRT")))
+        {
+            wxXmlNode *subSubNode=subNode->GetChildren();
+            while(subSubNode)
+            {
+                if (subSubNode->GetAttribute(_T("Type"))==_T("DATE"))
+                {
+                    result.FromGedString(subSubNode->GetAttribute(_T("Value")));
+                    return true;
+                }
+                subSubNode=subSubNode->GetNext();
+            }
+        }
+        subNode=subNode->GetNext();
+    }
+    return false;
+}
+
 wxString DatasManager::GetItemBirthPlace(const wxString& itmId)
 {
     wxXmlNode *node=m_datas->GetChildren();
@@ -886,6 +913,31 @@ wxString DatasManager::GetItemDeath(const wxXmlNode* itmNode, bool yearOnly)
     }
 
     return (yearOnly?g_sUnknownYear:wxEmptyString);
+}
+
+bool DatasManager::GetItemDeath(const wxXmlNode* itmNode, GedDate& result)
+{
+    if (itmNode==NULL) return false;
+
+    wxXmlNode *subNode=itmNode->GetChildren();
+    while(subNode!=NULL)
+    {
+        if ((subNode->GetName()==_T("Event")) && (subNode->GetAttribute(_T("Type"))==_T("DEAT")))
+        {
+            wxXmlNode *subSubNode=subNode->GetChildren();
+            while(subSubNode)
+            {
+                if (subSubNode->GetAttribute(_T("Type"))==_T("DATE"))
+                {
+                    result.FromGedString(subSubNode->GetAttribute(_T("Value")));
+                    return true;
+                }
+                subSubNode=subSubNode->GetNext();
+            }
+        }
+        subNode=subNode->GetNext();
+    }
+    return false;
 }
 
 wxString DatasManager::GetItemDeathPlace(const wxString& itmId)
@@ -1251,6 +1303,22 @@ wxString DatasManager::GetItemInfos(wxXmlNode* itmNode, wxXmlNode *root)
     }
 
     return sResult;
+}
+
+bool DatasManager::GetEventDate(wxXmlNode* evtNode, GedDate& result)
+{
+    if (evtNode==NULL)
+        return false;
+    wxXmlNode *subNode=evtNode->GetChildren();
+    while(subNode)
+    {
+        if (subNode->GetAttribute(_T("Type"))==_T("DATE"))
+        {
+            return result.FromGedString(subNode->GetAttribute(_T("Value")));
+        }
+        subNode=subNode->GetNext();
+    }
+    return false;
 }
 
 bool DatasManager::CompareWithGedFile(const wxString& filename)

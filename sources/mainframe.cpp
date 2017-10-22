@@ -9,6 +9,7 @@
 #include "dlgexportcsv.h"
 #include "toolbaricons.h"
 #include "datasmanager.h"
+#include "dlgcheckdatas.h"
 #include "settingsmanager.h"
 
 #include <wx/display.h>
@@ -36,6 +37,7 @@ const int wxID_REOPEN  = wxNewId();
 const int wxID_PDFLIST = wxNewId();
 const int wxID_PDFTREE = wxNewId();
 const int wxID_CSVFILE = wxNewId();
+const int wxID_CHKDATA = wxNewId();
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
     m_settings(SettingsManager::Get()), m_datas(DatasManager::Get())
@@ -134,6 +136,8 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_SPELL_CHECK, _("Compare"), wxGet_compare_png_Bitmap(), _("Compare datas with an other ged file"));
 
+        tb->AddTool(wxID_CHKDATA, _("Check"), wxGet_datacheck_png_Bitmap(), _("Check loaded datas for potential errors"));
+
         tb->AddStretchableSpace();
 
         tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
@@ -224,6 +228,7 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_TOOL, &MainFrame::OnHistoryBackClicked, this, wxID_BACKWARD);
     Bind(wxEVT_TOOL, &MainFrame::OnHistoryNextClicked, this, wxID_FORWARD);
     Bind(wxEVT_TOOL, &MainFrame::OnCompareClicked, this, wxID_SPELL_CHECK);
+    Bind(wxEVT_TOOL, &MainFrame::OnCheckDatasClicked, this, wxID_CHKDATA);
     Bind(wxEVT_TOOL, &MainFrame::OnPreferencesClicked, this, wxID_PREFERENCES);
     Bind(wxEVT_TOOL, &MainFrame::OnAboutClicked, this, wxID_ABOUT);
     // Other controls events handlers
@@ -243,6 +248,7 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Backward, this, wxID_BACKWARD);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Forward, this, wxID_FORWARD);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Compare, this, wxID_SPELL_CHECK);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_CheckDatas, this, wxID_CHKDATA);
 }
 
 void MainFrame::UpdateSummary()
@@ -764,6 +770,11 @@ void MainFrame::OnUpdateUI_Compare(wxUpdateUIEvent& event)
     event.Enable(m_datas.HasDatas());
 }
 
+void MainFrame::OnUpdateUI_CheckDatas(wxUpdateUIEvent& event)
+{
+    event.Enable(m_datas.HasDatas());
+}
+
 void MainFrame::OnListItemSelected(wxListEvent& event)
 {
     UpdateItemDetails();
@@ -969,6 +980,12 @@ void MainFrame::OnCompareClicked(wxCommandEvent& event)
     }
 
     wxMessageBox(m_datas.GetCompResultsSummary(), _("Results"), wxICON_INFORMATION|wxCENTER|wxOK);
+}
+
+void MainFrame::OnCheckDatasClicked(wxCommandEvent& event)
+{
+    DlgCheckDatas dlg(this);
+    dlg.ShowModal();
 }
 
 void MainFrame::OnShashPosChanged(wxSplitterEvent& event)

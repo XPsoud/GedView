@@ -49,12 +49,14 @@ class MainFrame: public wxFrame
         void OnHistoryBackClicked(wxCommandEvent &event);
         void OnHistoryNextClicked(wxCommandEvent &event);
         void OnCompareClicked(wxCommandEvent &event);
+        void OnCheckDatasClicked(wxCommandEvent &event);
         void OnShashPosChanged(wxSplitterEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         void OnUpdateUI_PdfTree(wxUpdateUIEvent &event);
         void OnUpdateUI_Backward(wxUpdateUIEvent& event);
         void OnUpdateUI_Forward(wxUpdateUIEvent& event);
         void OnUpdateUI_Compare(wxUpdateUIEvent& event);
+        void OnUpdateUI_CheckDatas(wxUpdateUIEvent& event);
         static int wxCALLBACK SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
         // Controls vars
         wxStaticText *m_lblSummary;
