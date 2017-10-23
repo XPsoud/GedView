@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-10-22 18:24+0100\n"
-"PO-Revision-Date: 2017-10-22 18:24+0100\n"
-"Last-Translator: Xaviou <x.psoud@gmail.com>\n"
+"PO-Revision-Date: 2017-10-23 08:39+0100\n"
+"Last-Translator: \n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: sources/dlgcheckdatas.cpp:60
 msgid "Customizable parameters:"
-msgstr "Paramètres modificables :"
+msgstr "Paramètres modifiables :"
 
 #: sources/dlgcheckdatas.cpp:65
 msgid "None yet..."
