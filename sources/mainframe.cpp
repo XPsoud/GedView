@@ -61,7 +61,6 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(NULL, -1, title),
 
     SetMinSize(MAINFRAME_MINIMAL_SIZE);
 
-    UpdateSummary();
     UpdateItemDetails();
 
     int iStartPos=m_settings.GetMainWndStartupPos();
@@ -177,19 +176,6 @@ void MainFrame::CreateControls()
     wxPanel *pnl=new wxPanel(this, -1);
     wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
 
-        wxStaticBoxSizer *stbszr=new wxStaticBoxSizer(wxVERTICAL, pnl, _("Datas summary:"));
-
-            stbszr->AddSpacer(1);
-
-            m_lblSummary=new wxStaticText(pnl, -1, _T(" \n "), wxDefaultPosition, wxDefaultSize, wxST_NO_AUTORESIZE);
-                wxFont fnt=m_lblSummary->GetFont();
-                fnt.MakeBold();
-                m_lblSummary->SetFont(fnt);
-
-        stbszr->Add(m_lblSummary, 0, wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND, 5);
-
-    szrMain->Add(stbszr, 0, wxALL|wxEXPAND, 5);
-
     m_spwSplitter=new wxSplitterWindow(pnl, -1);
 
         m_lstItems=new wxListView(m_spwSplitter, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
@@ -259,22 +245,6 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_SPELL_CHECK);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_CHKDATA);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_DBINFOS);
-}
-
-void MainFrame::UpdateSummary()
-{
-    wxString sTxt=_("Gedcom file:");
-    if (m_datas.HasDatas())
-    {
-        sTxt << _T(" ") << m_datas.GetCurrentFileName() << _T("\n");
-        sTxt << wxString::Format(_("Total items: %d - Individuals: %d - Family events: %d"), m_datas.GetItemsCount(), m_datas.GetItemsCount(GIT_INDI), m_datas.GetItemsCount(GIT_FAM));
-    }
-    else
-    {
-        sTxt << _T(" ") << _("No file loaded") << _T("\n") << _("No datas present in memory");
-    }
-
-    m_lblSummary->SetLabel(sTxt);
 }
 
 void MainFrame::UpdateList()
@@ -653,8 +623,6 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
     m_iHistPos=-1;
     m_bHistClicked=false;
 
-    UpdateSummary();
-
     UpdateList();
 
     UpdateItemDetails();
@@ -683,8 +651,6 @@ void MainFrame::OnReopenGedFileClicked(wxCommandEvent& event)
     m_iHistPos=-1;
     m_bHistClicked=false;
 
-    UpdateSummary();
-
     UpdateList();
 
     UpdateItemDetails();
@@ -709,8 +675,6 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
     m_arsHistory.Clear();
     m_iHistPos=-1;
     m_bHistClicked=false;
-
-    UpdateSummary();
 
     UpdateList();
 }

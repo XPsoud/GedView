@@ -20,7 +20,6 @@ class MainFrame: public wxFrame
         // Misc functions
         void CreateControls();
         void ConnectControls();
-        void UpdateSummary();
         void UpdateList();
         void UpdateListItem(long item);
         void UpdateItemDetails();
@@ -59,7 +58,6 @@ class MainFrame: public wxFrame
         void OnUpdateUI_DatasTools(wxUpdateUIEvent& event);
         static int wxCALLBACK SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
         // Controls vars
-        wxStaticText *m_lblSummary;
         wxSplitterWindow *m_spwSplitter;
         wxListView *m_lstItems;
         wxHtmlWindow *m_htwDetails;
