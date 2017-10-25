@@ -15,9 +15,10 @@ class DlgDatasInfos : public wxDialog
 	private:
 		// Misc functions
 		void CreateControls();
-		void ConnectControls();
+		void FillControls();
 		// Events handlers
 		// Controls vars
+		wxStaticText *m_lblFileName, *m_lblItems, *m_lblFileSource, *m_lblFileDate;
 		// Misc vars
 		DatasManager& m_datas;
 };
