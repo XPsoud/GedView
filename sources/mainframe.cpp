@@ -10,6 +10,7 @@
 #include "toolbaricons.h"
 #include "datasmanager.h"
 #include "dlgcheckdatas.h"
+#include "dlgdatasinfos.h"
 #include "settingsmanager.h"
 
 #include <wx/display.h>
@@ -38,6 +39,7 @@ const int wxID_PDFLIST = wxNewId();
 const int wxID_PDFTREE = wxNewId();
 const int wxID_CSVFILE = wxNewId();
 const int wxID_CHKDATA = wxNewId();
+const int wxID_DBINFOS = wxNewId();
 
 #define MAINFRAME_MINIMAL_SIZE wxSize(600, 400)
 
@@ -142,6 +144,8 @@ void MainFrame::CreateControls()
 
         tb->AddTool(wxID_CHKDATA, _("Check"), wxGet_datacheck_png_Bitmap(), _("Check loaded datas for potential errors"));
 
+        tb->AddTool(wxID_DBINFOS, _("Informations"), wxGet_infos_png_Bitmap(), _("Show informations about the loaded gedcom file"));
+
         tb->AddStretchableSpace();
 
         tb->AddTool(wxID_PREFERENCES, wxGetStockLabel(wxID_PREFERENCES), wxGet_preferences_png_Bitmap(), _("Edit application settings"));
@@ -233,6 +237,7 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_TOOL, &MainFrame::OnHistoryNextClicked, this, wxID_FORWARD);
     Bind(wxEVT_TOOL, &MainFrame::OnCompareClicked, this, wxID_SPELL_CHECK);
     Bind(wxEVT_TOOL, &MainFrame::OnCheckDatasClicked, this, wxID_CHKDATA);
+    Bind(wxEVT_TOOL, &MainFrame::OnDatasInfosClicked, this, wxID_DBINFOS);
     Bind(wxEVT_TOOL, &MainFrame::OnPreferencesClicked, this, wxID_PREFERENCES);
     Bind(wxEVT_TOOL, &MainFrame::OnAboutClicked, this, wxID_ABOUT);
     // Other controls events handlers
@@ -251,8 +256,9 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_CSVFILE);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Backward, this, wxID_BACKWARD);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Forward, this, wxID_FORWARD);
-    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Compare, this, wxID_SPELL_CHECK);
-    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_CheckDatas, this, wxID_CHKDATA);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_SPELL_CHECK);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_CHKDATA);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_DBINFOS);
 }
 
 void MainFrame::UpdateSummary()
@@ -769,12 +775,7 @@ void MainFrame::OnUpdateUI_Forward(wxUpdateUIEvent& event)
     event.Enable((m_iHistPos>-1) && (m_iHistPos<(iCount-1)));
 }
 
-void MainFrame::OnUpdateUI_Compare(wxUpdateUIEvent& event)
-{
-    event.Enable(m_datas.HasDatas());
-}
-
-void MainFrame::OnUpdateUI_CheckDatas(wxUpdateUIEvent& event)
+void MainFrame::OnUpdateUI_DatasTools(wxUpdateUIEvent& event)
 {
     event.Enable(m_datas.HasDatas());
 }
@@ -989,6 +990,12 @@ void MainFrame::OnCompareClicked(wxCommandEvent& event)
 void MainFrame::OnCheckDatasClicked(wxCommandEvent& event)
 {
     DlgCheckDatas dlg(this);
+    dlg.ShowModal();
+}
+
+void MainFrame::OnDatasInfosClicked(wxCommandEvent& event)
+{
+    DlgDatasInfos dlg(this);
     dlg.ShowModal();
 }
 

@@ -806,6 +806,12 @@
 		<Unit filename="../sources/dlgcheckdatas.h">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>
+		<Unit filename="../sources/dlgdatasinfos.cpp">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
+		<Unit filename="../sources/dlgdatasinfos.h">
+			<Option virtualFolder="Dialogs/" />
+		</Unit>
 		<Unit filename="../sources/dlgexportcsv.cpp">
 			<Option virtualFolder="Dialogs/" />
 		</Unit>
