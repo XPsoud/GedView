@@ -6,6 +6,7 @@
 #include <wx/splitter.h>
 #include <wx/html/htmlwin.h>
 
+#include "panelfilter.h"
 class SettingsManager;
 class DatasManager;
 
@@ -58,6 +59,7 @@ class MainFrame: public wxFrame
         void OnUpdateUI_DatasTools(wxUpdateUIEvent& event);
         static int wxCALLBACK SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData);
         // Controls vars
+        PanelFilter* m_pnlFilter;
         wxSplitterWindow *m_spwSplitter;
         wxListView *m_lstItems;
         wxHtmlWindow *m_htwDetails;

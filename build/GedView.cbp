@@ -866,6 +866,12 @@
 		<Unit filename="../sources/mytreeitem.h">
 			<Option virtualFolder="Datas/" />
 		</Unit>
+		<Unit filename="../sources/panelfilter.cpp">
+			<Option virtualFolder="Interface/" />
+		</Unit>
+		<Unit filename="../sources/panelfilter.h">
+			<Option virtualFolder="Interface/" />
+		</Unit>
 		<Unit filename="../sources/recentslist.cpp">
 			<Option virtualFolder="Datas/" />
 		</Unit>

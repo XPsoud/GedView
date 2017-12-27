@@ -176,6 +176,9 @@ void MainFrame::CreateControls()
     wxPanel *pnl=new wxPanel(this, -1);
     wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
 
+    m_pnlFilter=new PanelFilter(pnl);
+    szrMain->Add(m_pnlFilter, 0, wxALL|wxEXPAND, 0);
+
     m_spwSplitter=new wxSplitterWindow(pnl, -1);
 
         m_lstItems=new wxListView(m_spwSplitter, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
