@@ -874,7 +874,7 @@
 		</Unit>
 		<Unit filename="../sources/resources.rc">
 			<Option compilerVar="WINDRES" />
-			<Option virtualFolder="Datas/" />
+			<Option virtualFolder="Misc/" />
 		</Unit>
 		<Unit filename="../sources/settingsmanager.cpp">
 			<Option virtualFolder="Datas/" />
