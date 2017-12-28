@@ -64,7 +64,7 @@ void PanelFilter::ConnectControls()
 	Bind(wxEVT_SEARCHCTRL_SEARCH_BTN, &PanelFilter::OnSearchButtonClicked, this);
 	Bind(wxEVT_SEARCHCTRL_CANCEL_BTN, &PanelFilter::OnSearchButtonClicked, this);
 	Bind(wxEVT_TEXT_ENTER, &PanelFilter::OnSearchButtonClicked, this);
-	for (int i=0; i<WXSIZEOF(m_optSearch); ++i)
+	for (size_t i=0; i<WXSIZEOF(m_optSearch); ++i)
 	{
 		m_optSearch[i]->Bind(wxEVT_RADIOBUTTON, &PanelFilter::OnOptSearchClicked, this);
 	}
