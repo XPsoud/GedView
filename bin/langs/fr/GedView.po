@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 12:16+0100\n"
-"PO-Revision-Date: 2017-12-27 12:16+0100\n"
+"POT-Creation-Date: 2017-12-28 18:38+0100\n"
+"PO-Revision-Date: 2017-12-28 18:38+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -417,10 +417,12 @@ msgid "Sex"
 msgstr "Sexe"
 
 #: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:192
+#: sources/panelfilter.cpp:44
 msgid "Last Name"
 msgstr "Nom de famille"
 
 #: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:194
+#: sources/panelfilter.cpp:41
 msgid "First Name"
 msgstr "Prénom"
 
@@ -494,6 +496,7 @@ msgid "Alphabetical Index"
 msgstr "Index Alphabétique"
 
 #: sources/dlgexportpdf.cpp:219 sources/dlgexportpdf.cpp:263
+#: sources/panelfilter.cpp:47
 msgid "Full name"
 msgstr "Nom complet"
 
@@ -813,9 +816,17 @@ msgstr "Déjà effectué"
 msgid "Results"
 msgstr "Résultats"
 
-#: sources/panelfilter.cpp:25
+#: sources/panelfilter.cpp:30
 msgid "View filter:"
 msgstr "Filtre d'affichage :"
+
+#: sources/panelfilter.cpp:32
+msgid "String to search:"
+msgstr "Chaîne à chercher :"
+
+#: sources/panelfilter.cpp:38
+msgid "Search in:"
+msgstr "Chercher dans :"
 
 #: sources/recentslist.cpp:83
 msgid "Empty list"
