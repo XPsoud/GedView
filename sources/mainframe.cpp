@@ -976,7 +976,49 @@ void MainFrame::OnShashPosChanged(wxSplitterEvent& event)
 
 void MainFrame::OnFilterChanged(wxCommandEvent& event)
 {
-	wxMessageBox(_T("Filter changed"));
+	if (!m_datas.HasDatas()) return;
+
+	long lSel=m_lstItems->GetFirstSelected();
+	wxXmlNode *selNode=(lSel==wxNOT_FOUND)?NULL:(wxXmlNode*)m_lstItems->GetItemData(lSel);
+	m_lstItems->Freeze();
+
+	m_lstItems->DeleteAllItems();
+
+    wxXmlNode *node=m_datas.GetDatas()->GetChildren();
+    wxString sType, sTxt, sName;
+    long lItem=0;
+
+    while(node!=NULL)
+    {
+        sType=node->GetAttribute(_T("Type"));
+        if (sType==_T("INDI"))
+        {
+        	if (m_pnlFilter->DoesItemMatchSearch(node))
+            {
+            	sTxt=node->GetAttribute(_T("GedId"));
+
+				lItem=m_lstItems->InsertItem(lItem+1, _T(""));
+				m_lstItems->SetItem(lItem, LST_COL_ID, sTxt);
+				m_lstItems->SetItemPtrData(lItem, (wxUIntPtr)node);
+
+				UpdateListItem(lItem);
+            }
+        }
+
+        node=node->GetNext();
+    }
+
+    if (selNode!=NULL)
+	{
+		lSel=m_lstItems->FindItem(0, wxUIntPtr(selNode));
+		if (lSel!=wxNOT_FOUND)
+		{
+			m_lstItems->Select(lSel, true);
+			m_lstItems->EnsureVisible(lSel);
+		}
+	}
+
+	m_lstItems->Thaw();
 }
 
 int MainFrame::SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)

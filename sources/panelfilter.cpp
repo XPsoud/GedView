@@ -3,9 +3,12 @@
 #include <wx/xml/xml.h>
 #include <wx/srchctrl.h>
 
+#include "datasmanager.h"
+
 wxDEFINE_EVENT(wxEVT_FILTER_CHANGED, wxCommandEvent);
 
-PanelFilter::PanelFilter(wxWindow *parent, wxWindowID id) : wxPanel(parent, id)
+PanelFilter::PanelFilter(wxWindow *parent, wxWindowID id) : wxPanel(parent, id),
+	m_datas(DatasManager::Get())
 {
 #ifdef __WXDEBUG__
     wxPrintf(_T("Creating a \"PanelFilter\" object\n"));
@@ -69,7 +72,18 @@ void PanelFilter::ConnectControls()
 
 bool PanelFilter::DoesItemMatchSearch(wxXmlNode* item)
 {
-	return true;
+	if (m_txtSearch->IsEmpty())
+		return true;
+
+	if (item==NULL)
+		return false;
+
+	wxString sTxt=(m_optSearch[0]->GetValue()?m_datas.GetItemFirstName(item):(m_optSearch[1]->GetValue()?m_datas.GetItemLastName(item):m_datas.GetItemFullName(item)));
+
+	// Try to match undepending on case
+	sTxt.MakeLower();
+
+	return (sTxt.Find(m_txtSearch->GetValue().Lower())!=wxNOT_FOUND);
 }
 
 void PanelFilter::OnSearchButtonClicked(wxCommandEvent& event)

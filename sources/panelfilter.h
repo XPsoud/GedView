@@ -7,6 +7,7 @@ wxDECLARE_EVENT(wxEVT_FILTER_CHANGED, wxCommandEvent);
 
 class wxXmlNode;
 class wxSearchCtrl;
+class DatasManager;
 
 class PanelFilter : public wxPanel
 {
@@ -28,6 +29,7 @@ class PanelFilter : public wxPanel
 		wxRadioButton *m_optSearch[3];
 		// Misc vars
 		bool m_bLastSearchEmpty;
+		DatasManager& m_datas;
 };
 
 #endif // __PANELFILTER_H_INCLUDED__
