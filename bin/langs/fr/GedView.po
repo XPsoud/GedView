@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-25 19:01+0100\n"
-"PO-Revision-Date: 2017-10-25 19:01+0100\n"
+"POT-Creation-Date: 2017-12-28 18:38+0100\n"
+"PO-Revision-Date: 2017-12-28 18:38+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -27,9 +27,9 @@ msgstr "Naissance :"
 #: sources/datasmanager.cpp:1264 sources/datasmanager.cpp:1282
 #: sources/dlgexportpdf.cpp:313 sources/dlgexportpdf.cpp:385
 #: sources/dlgexportpdf.cpp:416 sources/dlgexportpdf.cpp:522
-#: sources/dlgexportpdf.cpp:541 sources/mainframe.cpp:353
-#: sources/mainframe.cpp:415 sources/mainframe.cpp:440
-#: sources/mainframe.cpp:538 sources/mainframe.cpp:559
+#: sources/dlgexportpdf.cpp:541 sources/mainframe.cpp:356
+#: sources/mainframe.cpp:418 sources/mainframe.cpp:443
+#: sources/mainframe.cpp:541 sources/mainframe.cpp:562
 msgid "Dead"
 msgstr "Décédé"
 
@@ -126,39 +126,39 @@ msgstr "Décembre"
 #: sources/datasmanager.cpp:1283 sources/dlgexportpdf.cpp:315
 #: sources/dlgexportpdf.cpp:386 sources/dlgexportpdf.cpp:417
 #: sources/dlgexportpdf.cpp:523 sources/dlgexportpdf.cpp:542
-#: sources/mainframe.cpp:355 sources/mainframe.cpp:416
-#: sources/mainframe.cpp:441 sources/mainframe.cpp:540
-#: sources/mainframe.cpp:560
+#: sources/mainframe.cpp:358 sources/mainframe.cpp:419
+#: sources/mainframe.cpp:444 sources/mainframe.cpp:543
+#: sources/mainframe.cpp:563
 msgid "Dead_F"
 msgstr "Décédée"
 
 #: sources/datasmanager.cpp:1149 sources/dlgexportpdf.cpp:355
-#: sources/mainframe.cpp:389
+#: sources/mainframe.cpp:392
 msgid "Occupation:"
 msgstr "Activité :"
 
 #: sources/datasmanager.cpp:1153 sources/dlgexportpdf.cpp:361
-#: sources/mainframe.cpp:394
+#: sources/mainframe.cpp:397
 msgid "Parents"
 msgstr "Parents"
 
 #: sources/datasmanager.cpp:1167 sources/dlgexportpdf.cpp:376
-#: sources/mainframe.cpp:408
+#: sources/mainframe.cpp:411
 msgid "Father:"
 msgstr "Père :"
 
 #: sources/datasmanager.cpp:1167 sources/dlgexportpdf.cpp:376
-#: sources/mainframe.cpp:408
+#: sources/mainframe.cpp:411
 msgid "Mother:"
 msgstr "Mère :"
 
 #: sources/datasmanager.cpp:1188 sources/dlgexportpdf.cpp:400
-#: sources/mainframe.cpp:428
+#: sources/mainframe.cpp:431
 msgid "Siblings"
 msgstr "Frères et Soeurs"
 
 #: sources/datasmanager.cpp:1215 sources/dlgexportpdf.cpp:430
-#: sources/mainframe.cpp:453
+#: sources/mainframe.cpp:456
 msgid "Union(s)"
 msgstr "Union(s)"
 
@@ -401,9 +401,9 @@ msgid "An error occurred while opening the output file"
 msgstr "Une erreur est survenue lors de l'ouverture du fichier de sortie !"
 
 #: sources/dlgexportcsv.cpp:108 sources/dlgexportpdf.cpp:653
-#: sources/main.cpp:76 sources/mainframe.cpp:618 sources/mainframe.cpp:646
-#: sources/mainframe.cpp:670 sources/mainframe.cpp:696
-#: sources/mainframe.cpp:946
+#: sources/main.cpp:76 sources/mainframe.cpp:621 sources/mainframe.cpp:649
+#: sources/mainframe.cpp:673 sources/mainframe.cpp:699
+#: sources/mainframe.cpp:949
 msgid "Error"
 msgstr "Erreur"
 
@@ -412,15 +412,17 @@ msgstr "Erreur"
 msgid "Id"
 msgstr "Id"
 
-#: sources/dlgexportcsv.cpp:116 sources/mainframe.cpp:184
+#: sources/dlgexportcsv.cpp:116 sources/mainframe.cpp:187
 msgid "Sex"
 msgstr "Sexe"
 
-#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:189
+#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:192
+#: sources/panelfilter.cpp:44
 msgid "Last Name"
 msgstr "Nom de famille"
 
-#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:191
+#: sources/dlgexportcsv.cpp:117 sources/mainframe.cpp:194
+#: sources/panelfilter.cpp:41
 msgid "First Name"
 msgstr "Prénom"
 
@@ -449,7 +451,7 @@ msgid "CSV file successfully created!"
 msgstr "Fichier CSV créé avec succès !"
 
 #: sources/dlgexportcsv.cpp:137 sources/dlgtreepdf.cpp:340
-#: sources/mainframe.cpp:868
+#: sources/mainframe.cpp:871
 msgid "Success"
 msgstr "Succès"
 
@@ -494,18 +496,19 @@ msgid "Alphabetical Index"
 msgstr "Index Alphabétique"
 
 #: sources/dlgexportpdf.cpp:219 sources/dlgexportpdf.cpp:263
+#: sources/panelfilter.cpp:47
 msgid "Full name"
 msgstr "Nom complet"
 
 #: sources/dlgexportpdf.cpp:326 sources/dlgexportpdf.cpp:457
-#: sources/dlgexportpdf.cpp:483 sources/mainframe.cpp:364
-#: sources/mainframe.cpp:478 sources/mainframe.cpp:502
+#: sources/dlgexportpdf.cpp:483 sources/mainframe.cpp:367
+#: sources/mainframe.cpp:481 sources/mainframe.cpp:505
 msgid "Source:"
 msgstr "Source :"
 
 #: sources/dlgexportpdf.cpp:333 sources/dlgexportpdf.cpp:463
-#: sources/dlgexportpdf.cpp:489 sources/mainframe.cpp:369
-#: sources/mainframe.cpp:483 sources/mainframe.cpp:507
+#: sources/dlgexportpdf.cpp:489 sources/mainframe.cpp:372
+#: sources/mainframe.cpp:486 sources/mainframe.cpp:510
 msgid "Note:"
 msgstr "Note :"
 
@@ -735,49 +738,49 @@ msgstr "Afficher des informations sur le fichier gedcom chargé"
 msgid "Edit application settings"
 msgstr "Éditer les réglages de l'application"
 
-#: sources/mainframe.cpp:187
+#: sources/mainframe.cpp:190
 msgid "ID"
 msgstr "ID"
 
-#: sources/mainframe.cpp:612 sources/mainframe.cpp:939
+#: sources/mainframe.cpp:615 sources/mainframe.cpp:942
 msgid "Select the \"GED\" file to open"
 msgstr "Sélectionnez le fichier \"GED\" à ouvrir"
 
-#: sources/mainframe.cpp:613 sources/mainframe.cpp:940
+#: sources/mainframe.cpp:616 sources/mainframe.cpp:943
 msgid "Gedcom files (*.ged)|*.ged|All files (*.*)|*.*"
 msgstr "Fichiers Gedcom (*.ged)|*.ged|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:618 sources/mainframe.cpp:646
-#: sources/mainframe.cpp:670
+#: sources/mainframe.cpp:621 sources/mainframe.cpp:649
+#: sources/mainframe.cpp:673
 msgid "An error occurred while reading the ged file !"
 msgstr "Une erreur est survenue lors de la lecture du fichier ged !"
 
-#: sources/mainframe.cpp:630 sources/mainframe.cpp:658
+#: sources/mainframe.cpp:633 sources/mainframe.cpp:661
 msgid "Ged file read successfully !"
 msgstr "Fichier ged lu avec succès !"
 
-#: sources/mainframe.cpp:630 sources/mainframe.cpp:658
-#: sources/mainframe.cpp:699
+#: sources/mainframe.cpp:633 sources/mainframe.cpp:661
+#: sources/mainframe.cpp:702
 msgid "Done"
 msgstr "Fait"
 
-#: sources/mainframe.cpp:689
+#: sources/mainframe.cpp:692
 msgid "Select the \"XML\" file to create"
 msgstr "Sélectionnez le fichier \"XML\" à créer"
 
-#: sources/mainframe.cpp:690
+#: sources/mainframe.cpp:693
 msgid "Xml files (*.xml)|*.xml|All files (*.*)|*.*"
 msgstr "Fichiers xml (*.xml)|*.xml|Tous les fichiers (*.*)|*.*"
 
-#: sources/mainframe.cpp:696
+#: sources/mainframe.cpp:699
 msgid "An error occurred while writing the xml file !"
 msgstr "Une erreur est survenue lors de l'écriture du fichier xml !"
 
-#: sources/mainframe.cpp:699
+#: sources/mainframe.cpp:702
 msgid "Datas successfully saved to"
 msgstr "Données sauvées avec succès vers"
 
-#: sources/mainframe.cpp:710
+#: sources/mainframe.cpp:713
 msgid ""
 "You changed the translation settings.\n"
 "You must restart the application to see this in effect."
@@ -785,33 +788,45 @@ msgstr ""
 "Vous avez modifié les réglages de traduction.\n"
 "Vous devez redémarrer l'application pour que cela soit effectif."
 
-#: sources/mainframe.cpp:710
+#: sources/mainframe.cpp:713
 msgid "Restart needed"
 msgstr "Redémarrage nécessaire"
 
-#: sources/mainframe.cpp:868
+#: sources/mainframe.cpp:871
 msgid "The pdf file creation terminated !"
 msgstr "Création du fichier pdf terminée !"
 
-#: sources/mainframe.cpp:930
+#: sources/mainframe.cpp:933
 msgid "Datas has already been compared with the following file:"
 msgstr "Les données ont déjà été comparées avec le fichier suivant :"
 
-#: sources/mainframe.cpp:932
+#: sources/mainframe.cpp:935
 msgid "- Click \"Yes\" to see the results of this comparison"
 msgstr "- Cliquez sur \"Oui\" pour voir les résultats de cette comparaison"
 
-#: sources/mainframe.cpp:933
+#: sources/mainframe.cpp:936
 msgid "- Click \"No\" to make a new comparison"
 msgstr "- Cliquez sur \"Non\" pour faire une nouvelle comparaison"
 
-#: sources/mainframe.cpp:934
+#: sources/mainframe.cpp:937
 msgid "Already done"
 msgstr "Déjà effectué"
 
-#: sources/mainframe.cpp:951
+#: sources/mainframe.cpp:954
 msgid "Results"
 msgstr "Résultats"
+
+#: sources/panelfilter.cpp:30
+msgid "View filter:"
+msgstr "Filtre d'affichage :"
+
+#: sources/panelfilter.cpp:32
+msgid "String to search:"
+msgstr "Chaîne à chercher :"
+
+#: sources/panelfilter.cpp:38
+msgid "Search in:"
+msgstr "Chercher dans :"
 
 #: sources/recentslist.cpp:83
 msgid "Empty list"

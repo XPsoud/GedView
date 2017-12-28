@@ -40,6 +40,7 @@ const int wxID_PDFTREE = wxNewId();
 const int wxID_CSVFILE = wxNewId();
 const int wxID_CHKDATA = wxNewId();
 const int wxID_DBINFOS = wxNewId();
+const int wxID_FLTRPNL = wxNewId();
 
 #define MAINFRAME_MINIMAL_SIZE wxSize(600, 400)
 
@@ -176,6 +177,9 @@ void MainFrame::CreateControls()
     wxPanel *pnl=new wxPanel(this, -1);
     wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
 
+    m_pnlFilter=new PanelFilter(pnl, wxID_FLTRPNL);
+    szrMain->Add(m_pnlFilter, 0, wxALL|wxEXPAND, 0);
+
     m_spwSplitter=new wxSplitterWindow(pnl, -1);
 
         m_lstItems=new wxListView(m_spwSplitter, -1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL);
@@ -235,6 +239,7 @@ void MainFrame::ConnectControls()
     m_spwSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGED, &MainFrame::OnShashPosChanged, this);
     // Custom events handlers
     Bind(wxEVT_FILEOPEN, &MainFrame::OnAutoOpenGedFile, this);
+    Bind(wxEVT_FILTER_CHANGED, &MainFrame::OnFilterChanged, this);
     // UpdateUI events handlers
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_SAVE);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_PDFLIST);
@@ -245,6 +250,7 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_SPELL_CHECK);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_CHKDATA);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_DBINFOS);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_FLTRPNL);
 }
 
 void MainFrame::UpdateList()
@@ -966,6 +972,53 @@ void MainFrame::OnDatasInfosClicked(wxCommandEvent& event)
 void MainFrame::OnShashPosChanged(wxSplitterEvent& event)
 {
     m_settings.SetLastSashPos(m_spwSplitter->GetSashPosition());
+}
+
+void MainFrame::OnFilterChanged(wxCommandEvent& event)
+{
+	if (!m_datas.HasDatas()) return;
+
+	long lSel=m_lstItems->GetFirstSelected();
+	wxXmlNode *selNode=(lSel==wxNOT_FOUND)?NULL:(wxXmlNode*)m_lstItems->GetItemData(lSel);
+	m_lstItems->Freeze();
+
+	m_lstItems->DeleteAllItems();
+
+    wxXmlNode *node=m_datas.GetDatas()->GetChildren();
+    wxString sType, sTxt, sName;
+    long lItem=0;
+
+    while(node!=NULL)
+    {
+        sType=node->GetAttribute(_T("Type"));
+        if (sType==_T("INDI"))
+        {
+        	if (m_pnlFilter->DoesItemMatchSearch(node))
+            {
+            	sTxt=node->GetAttribute(_T("GedId"));
+
+				lItem=m_lstItems->InsertItem(lItem+1, _T(""));
+				m_lstItems->SetItem(lItem, LST_COL_ID, sTxt);
+				m_lstItems->SetItemPtrData(lItem, (wxUIntPtr)node);
+
+				UpdateListItem(lItem);
+            }
+        }
+
+        node=node->GetNext();
+    }
+
+    if (selNode!=NULL)
+	{
+		lSel=m_lstItems->FindItem(0, wxUIntPtr(selNode));
+		if (lSel!=wxNOT_FOUND)
+		{
+			m_lstItems->Select(lSel, true);
+			m_lstItems->EnsureVisible(lSel);
+		}
+	}
+
+	m_lstItems->Thaw();
 }
 
 int MainFrame::SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
