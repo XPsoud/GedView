@@ -40,6 +40,7 @@ const int wxID_PDFTREE = wxNewId();
 const int wxID_CSVFILE = wxNewId();
 const int wxID_CHKDATA = wxNewId();
 const int wxID_DBINFOS = wxNewId();
+const int wxID_FLTRPNL = wxNewId();
 
 #define MAINFRAME_MINIMAL_SIZE wxSize(600, 400)
 
@@ -176,7 +177,7 @@ void MainFrame::CreateControls()
     wxPanel *pnl=new wxPanel(this, -1);
     wxBoxSizer *szrMain=new wxBoxSizer(wxVERTICAL);
 
-    m_pnlFilter=new PanelFilter(pnl);
+    m_pnlFilter=new PanelFilter(pnl, wxID_FLTRPNL);
     szrMain->Add(m_pnlFilter, 0, wxALL|wxEXPAND, 0);
 
     m_spwSplitter=new wxSplitterWindow(pnl, -1);
@@ -238,6 +239,7 @@ void MainFrame::ConnectControls()
     m_spwSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGED, &MainFrame::OnShashPosChanged, this);
     // Custom events handlers
     Bind(wxEVT_FILEOPEN, &MainFrame::OnAutoOpenGedFile, this);
+    Bind(wxEVT_FILTER_CHANGED, &MainFrame::OnFilterChanged, this);
     // UpdateUI events handlers
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_SAVE);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_PDFLIST);
@@ -248,6 +250,7 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_SPELL_CHECK);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_CHKDATA);
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_DatasTools, this, wxID_DBINFOS);
+    Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_FLTRPNL);
 }
 
 void MainFrame::UpdateList()
@@ -969,6 +972,11 @@ void MainFrame::OnDatasInfosClicked(wxCommandEvent& event)
 void MainFrame::OnShashPosChanged(wxSplitterEvent& event)
 {
     m_settings.SetLastSashPos(m_spwSplitter->GetSashPosition());
+}
+
+void MainFrame::OnFilterChanged(wxCommandEvent& event)
+{
+	wxMessageBox(_T("Filter changed"));
 }
 
 int MainFrame::SortCompFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)

@@ -52,6 +52,7 @@ class MainFrame: public wxFrame
         void OnCheckDatasClicked(wxCommandEvent &event);
         void OnDatasInfosClicked(wxCommandEvent &event);
         void OnShashPosChanged(wxSplitterEvent &event);
+        void OnFilterChanged(wxCommandEvent &event);
         void OnUpdateUI_Save(wxUpdateUIEvent &event);
         void OnUpdateUI_PdfTree(wxUpdateUIEvent &event);
         void OnUpdateUI_Backward(wxUpdateUIEvent& event);
