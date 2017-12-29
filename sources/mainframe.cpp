@@ -1016,6 +1016,10 @@ void MainFrame::OnFilterChanged(wxCommandEvent& event)
 			m_lstItems->Select(lSel, true);
 			m_lstItems->EnsureVisible(lSel);
 		}
+        else
+        {
+            UpdateItemDetails();
+        }
 	}
 
 	m_lstItems->Thaw();

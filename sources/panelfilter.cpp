@@ -57,6 +57,8 @@ void PanelFilter::CreateControls()
 		szrMain->Add(szrStb, 0, wxALL|wxEXPAND, 5);
 
 	SetSizer(szrMain);
+
+	m_optSearch[2]->SetValue(true);
 }
 
 void PanelFilter::ConnectControls()
