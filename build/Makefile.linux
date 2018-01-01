@@ -19,6 +19,9 @@ DEP_SRC_FILES = $(OBJ_SRC_FILES:$(BASE_OBJDIR)/$(CPP_SRCDIR)/%.o=$(BASE_OBJDIR)/
 CPP_PDF_FILES = $(wildcard $(BASE_SRCDIR)/$(PDF_SRCDIR)/src/*.cpp)
 OBJ_PDF_FILES = $(CPP_PDF_FILES:$(BASE_SRCDIR)/$(PDF_SRCDIR)/src/%.cpp=$(BASE_OBJDIR)/$(PDF_SRCDIR)/%.o)
 
+LNG_SRC_FILES = $(wildcard ./bin/langs/*/*.po)
+LNG_CMP_FILES = $(LNG_SRC_FILES:%.po=%.mo)
+
 LIBS = `wx-config --libs` -lfontconfig
 
 all : $(EXEC_NAME)
@@ -38,6 +41,8 @@ prebuild :
 
 libpdf: $(wxPdfDocLib)
 
+locales: $(LNG_CMP_FILES)
+
 -include $(DEP_SRC_FILES)
 
 $(wxPdfDocLib): $(OBJ_PDF_FILES)
@@ -55,5 +60,9 @@ $(BASE_OBJDIR)/$(CPP_SRCDIR)/%.o: $(BASE_SRCDIR)/$(CPP_SRCDIR)/%.cpp $(BASE_SRCD
 $(BASE_OBJDIR)/$(PDF_SRCDIR)/%.o: $(BASE_SRCDIR)/$(PDF_SRCDIR)/src/%.cpp
 	@echo Compiling $<
 	@g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+bin/langs/%.mo: bin/langs/%.po
+	@echo Compiling language file $< to $@
+	msgfmt $< -o $@
 
 .PHONY: clean minclean
