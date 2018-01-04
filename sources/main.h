@@ -15,7 +15,6 @@ class MyApp : public wxApp
 #ifdef __WXMAC__
         virtual void MacOpenFiles(const wxArrayString& fileNames);
 #endif // __WXMAC
-        wxLocale m_locale;
         wxSingleInstanceChecker *m_pSnglInstChkr;
 };
 

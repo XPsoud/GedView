@@ -20,6 +20,7 @@ SettingsManager::SettingsManager()
 #endif // __WXDEBUG__
     m_bInitialized=false;
     m_bModified=false;
+    m_locale=NULL;
 }
 
 SettingsManager::~SettingsManager()
@@ -27,6 +28,7 @@ SettingsManager::~SettingsManager()
 #ifdef __WXDEBUG__
     wxPrintf(_T("Destroying a \"SettingsManager\" object\n"));
 #endif // __WXDEBUG__
+    wxDELETE(m_locale);
 }
 
 SettingsManager& SettingsManager::Get()
@@ -41,11 +43,9 @@ void SettingsManager::Initialize()
 {
 #ifdef __WXDEBUG__
     wxPrintf(_T("Initializing the SettingsManager\n"));
-#endif // ENABLE_DEBUG_MSG
+#endif // __WXDEBUG__
     // Full path of the application
-    wxFileName fname(wxStandardPaths::Get().GetExecutablePath());
-    fname.Normalize();
-    m_sAppPath=fname.GetPath(wxPATH_GET_VOLUME|wxPATH_GET_SEPARATOR);
+    m_sAppPath = wxPathOnly(wxStandardPaths::Get().GetExecutablePath());
     if (!m_sAppPath.EndsWith(wxFileName::GetPathSeparator()))
         m_sAppPath.Append(wxFileName::GetPathSeparator());
 #ifndef __WXMAC__
@@ -54,17 +54,29 @@ void SettingsManager::Initialize()
     if (wxFileExists(m_sAppPath + m_szSettingsFName))
     {
         m_sSettingsPath=m_sAppPath;
+        m_sLngPath=m_sAppPath;
     }
     else
     {
+        if (wxDirExists(m_sAppPath + _T("langs")))
+        {
+            m_sLngPath=m_sAppPath;
+        }
+        else
+        {
+            m_sLngPath=wxStandardPaths::Get().GetResourcesDir();
+        }
 #endif // ndef __WXMAC__
-    // Path for the settings file (platform dependant)
-    m_sSettingsPath=wxStandardPaths::Get().GetUserDataDir();
-    if (!m_sSettingsPath.EndsWith(wxFileName::GetPathSeparator()))
-        m_sSettingsPath.Append(wxFileName::GetPathSeparator());
+        // Path for the settings file (platform dependant)
+        m_sSettingsPath=wxStandardPaths::Get().GetUserDataDir();
 #ifndef __WXMAC__
     }
 #endif // ndef __WXMAC__
+    if (!m_sSettingsPath.EndsWith(wxFileName::GetPathSeparator()))
+        m_sSettingsPath.Append(wxFileName::GetPathSeparator());
+    if (!m_sLngPath.EndsWith(wxFileName::GetPathSeparator()))
+        m_sLngPath.Append(wxFileName::GetPathSeparator());
+    m_sLngPath.Append(_T("langs"));
     // Default position and size of the main window
     m_iStartPos=wxCENTER_ON_SCREEN;
     m_ptStartPos=wxDefaultPosition;
@@ -455,4 +467,38 @@ void SettingsManager::SetProhibitI18N(bool value)
 		m_bProhibI18N=value;
 		m_bModified=true;
 	}
+}
+
+void SettingsManager::SetLocale()
+{
+    if (m_locale!=NULL)
+    {
+        wxDELETE(m_locale);
+    }
+    bool bI18N=(m_bProhibI18N==false);
+    // Easter egg for debugging purpose
+    if (wxGetKeyState(WXK_SHIFT))
+        bI18N=!bI18N;
+    if (bI18N)
+    {
+        wxString sDir=m_sLngPath;
+        int lng=wxLocale::GetSystemLanguage();
+        if (lng!=wxLANGUAGE_ENGLISH)
+        {
+            m_locale=new wxLocale();
+            m_locale->AddCatalogLookupPathPrefix(m_sLngPath);
+            wxLogNull logNo; // Avoid displaying error msgbox if language isn't supported
+            if (m_locale->Init(lng, wxLOCALE_LOAD_DEFAULT))
+            {
+                m_locale->AddCatalog(_T("GedView"));
+#ifdef __WXGTK__
+        	    m_locale->AddCatalog(_T("wxStd")); // Don't know yet why it isn't loaded automatically :-/
+#endif // __WXGTK__
+            }
+            else
+            {
+                wxDELETE(m_locale);
+            }
+        }
+    }
 }

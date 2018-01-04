@@ -54,6 +54,7 @@ class SettingsManager
 		// Prohibit translations and transaltions related stuff
 		bool GetProhibitI18N() { return m_bProhibI18N; }
 		void SetProhibitI18N(bool value);
+        void SetLocale();
 		// Misc
 		RecentsList& GetRecentsList() { return m_recents; }
     protected:
@@ -67,9 +68,10 @@ class SettingsManager
         static SettingsManager m_instance;
         // Misc vars
         bool m_bInitialized, m_bModified;
-        wxString m_sAppPath, m_sSettingsPath;
+        wxString m_sAppPath, m_sSettingsPath, m_sLngPath;
         static const wxChar* m_szSettingsFName;
         RecentsList m_recents;
+        wxLocale *m_locale;
         // Settings vars
         wxString m_sPassword;
         bool m_bCompSettings, m_bCompDatas;

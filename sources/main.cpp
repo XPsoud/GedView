@@ -22,27 +22,7 @@ bool MyApp::OnInit()
     // Read the settings file
     settings.ReadSettings();
     // Initialize the local if possible (and if wanted)
-    // Easter egg for debugging purpose
-    bool bI18N=(settings.GetProhibitI18N()==false);
-    if (wxGetKeyState(WXK_SHIFT))
-        bI18N=!bI18N;
-    if (bI18N)
-    {
-#ifdef __WXMAC__
-        wxString sDir=wxStandardPaths::Get().GetResourcesDir();
-#else
-        wxString sDir=settings.GetAppPath();
-#endif // __WXMAC__
-        if (!sDir.EndsWith(wxFileName::GetPathSeparator()))
-            sDir.Append(wxFileName::GetPathSeparator());
-        sDir.Append(_T("langs"));
-        m_locale.AddCatalogLookupPathPrefix(sDir);
-        m_locale.Init(wxLANGUAGE_DEFAULT, wxLOCALE_LOAD_DEFAULT);
-        m_locale.AddCatalog(_T("GedView"));
-#ifdef __WXGTK__
-        m_locale.AddCatalog(_T("wxStd")); // Don't know yet why it isn't loaded automatically :-/
-#endif // __WXGTK__
-    }
+    settings.SetLocale();
 
     // Check for single instance
     m_pSnglInstChkr=NULL;
