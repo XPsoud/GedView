@@ -1,14 +1,15 @@
 CFLAGS = `wx-config --cppflags` -DwxDEBUG_LEVEL=0
+WX_REL = $(shell wx-config --release)
 BASE_SRCDIR = .
 CPP_SRCDIR = sources
 PDF_SRCDIR = wxpdfdoc
 OUTPUT_DIR = bin
-wxPdfDocLib = build/wxpdfdoc/libPdfDocument.a
 
 EXEC_NAME = $(BASE_SRCDIR)/$(OUTPUT_DIR)/GedView
 INCLUDES = -I$(BASE_SRCDIR)/$(PDF_SRCDIR)/include
 
-BASE_OBJDIR = build
+BASE_OBJDIR = build/wx-$(WX_REL)
+wxPdfDocLib = $(BASE_OBJDIR)/libPdfDocument.a
 SRC_OBJDIR = $(BASE_OBJDIR)/$(CPP_SRCDIR)
 PDF_OBJDIR = $(BASE_OBJDIR)/$(PDF_SRCDIR)
 

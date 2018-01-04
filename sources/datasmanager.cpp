@@ -1351,6 +1351,7 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
     wxStopWatch sw;
     sw.Start();
     wxWindowDisabler disableAll;
+#if wxCHECK_VERSION(3, 1, 0)
     wxBusyInfo info(
                     wxBusyInfoFlags()
                     .Parent(wxTheApp->GetTopWindow())
@@ -1360,7 +1361,10 @@ bool DatasManager::CompareWithGedFile(const wxString& filename)
                     .Background(*wxBLACK)
                     .Transparency(3*wxALPHA_OPAQUE/5)
                     );
-
+#else
+    wxBusyInfo info(_("Comparing datas") + _T(" - ") + _("Please wait..."), wxTheApp->GetTopWindow());
+#endif
+    wxTheApp->Yield();
     wxArrayString arsSrc, arsCmp;
     m_arsCompAdded.Clear();
     m_arsCompModified.Clear();
