@@ -253,6 +253,16 @@ void MainFrame::ConnectControls()
     Bind(wxEVT_UPDATE_UI, &MainFrame::OnUpdateUI_Save, this, wxID_FLTRPNL);
 }
 
+void MainFrame::UpdateTitle(const wxString& fname)
+{
+    wxString sTitle=wxGetApp().GetVersionString(true);
+    if (!fname.IsEmpty())
+    {
+        sTitle << _T(" - ") << fname;
+    }
+    SetTitle(sTitle);
+}
+
 void MainFrame::UpdateList()
 {
     m_lstItems->DeleteAllItems();
@@ -622,8 +632,10 @@ void MainFrame::OnOpenGedFileClicked(wxCommandEvent& event)
     if (!m_datas.ReadGedFile(sFName))
     {
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        UpdateTitle();
         return;
     }
+    UpdateTitle(sFName);
     m_settings.GetRecentsList().SetLastUsed(sFName);
     m_arsHistory.Clear();
     m_iHistPos=-1;
@@ -650,9 +662,11 @@ void MainFrame::OnReopenGedFileClicked(wxCommandEvent& event)
 	if (!m_datas.ReadGedFile(sFile))
     {
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        UpdateTitle();
         return;
     }
     m_settings.GetRecentsList().SetLastUsed(sFile);
+    UpdateTitle(sFile);
     m_arsHistory.Clear();
     m_iHistPos=-1;
     m_bHistClicked=false;
@@ -674,10 +688,12 @@ void MainFrame::OnAutoOpenGedFile(wxCommandEvent& event)
     if (!m_datas.ReadGedFile(sFName))
     {
         wxMessageBox(_("An error occurred while reading the ged file !"), _("Error"), wxICON_EXCLAMATION|wxCENTER|wxOK);
+        UpdateTitle();
         return;
     }
     m_settings.GetRecentsList().SetLastUsed(sFName);
     wxSetWorkingDirectory(wxPathOnly(sFName));
+    UpdateTitle(sFName);
     m_arsHistory.Clear();
     m_iHistPos=-1;
     m_bHistClicked=false;

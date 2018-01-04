@@ -21,6 +21,7 @@ class MainFrame: public wxFrame
         // Misc functions
         void CreateControls();
         void ConnectControls();
+        void UpdateTitle(const wxString& fname=wxEmptyString);
         void UpdateList();
         void UpdateListItem(long item);
         void UpdateItemDetails();
