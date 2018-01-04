@@ -6,13 +6,13 @@
 #define VERSION_REV     1
 // Add "201" before the number below to obtain
 // the complete date in format : YYYYMMJJ
-#define VERSION_BUILD   71228
+#define VERSION_BUILD   80104
 
 #define PRODUCTNAME "GedView"
 #define DESCRIPTION "GedView Application"
 #define wDESCRIPTION _("GedView Application")
 
-#define COPYRIGHT "Copyright (c) X.P. 2017"
-#define SMALLCOPYRIGHT "(c) X.P. 2017"
+#define COPYRIGHT "Copyright (c) X.P. 2018"
+#define SMALLCOPYRIGHT "(c) X.P. 2018"
 
 #endif // __APPVERSION_H_INCLUDED__

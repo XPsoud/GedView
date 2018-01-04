@@ -1,0 +1,13 @@
+Source: gedview
+Section: misc
+Priority: optional
+Maintainer: Xaviou <x.psoud@gmail.com>
+Build-Depends: debhelper (>= 7.4.11~)
+Homepage: https://wxstuff.xaviou.fr
+Standards-Version: 3.9.8
+
+Package: gedview
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Viewer utility for use with GedCom files
+

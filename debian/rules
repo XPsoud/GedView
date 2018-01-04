@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	$(MAKE) locales
+	install -D -m 0755 $$(pwd)/bin/GedView $$(pwd)/debian/gedview/usr/bin/GedView
+	install -D -m 0755 $$(pwd)/debian/gedview.desktop $$(pwd)/debian/gedview/usr/share/applications/gedview.desktop
+	install -D $$(pwd)/debian/gedview.png $$(pwd)/debian/gedview/usr/share/gedview/icons/gedview.png
+	install -D $$(pwd)/bin/langs/fr/GedView.mo $$(pwd)/debian/gedview/usr/share/GedView/langs/fr/GedView.mo
+	install -D $$(pwd)/bin/langs/fr/wxStd.mo $$(pwd)/debian/gedview/usr/share/GedView/langs/fr/wxStd.mo

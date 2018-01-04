@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=GedView
+GenericName=GedView utility
+Exec=GedView
+Icon=/usr/share/gedview/icons/gedview.png
+Terminal=false
+X-MultipleArgs=false
+Categories=Misc;
+StartupNotify=false
+Comment=Viewer utility for use with GedCom files
+Comment[fr]=Utilitaire de visualisation pour fichiers GedCom
+
