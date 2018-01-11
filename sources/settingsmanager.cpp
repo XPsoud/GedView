@@ -48,6 +48,8 @@ void SettingsManager::Initialize()
     m_sAppPath = wxPathOnly(wxStandardPaths::Get().GetExecutablePath());
     if (!m_sAppPath.EndsWith(wxFileName::GetPathSeparator()))
         m_sAppPath.Append(wxFileName::GetPathSeparator());
+    // Translations files path
+    m_sLngPath=wxStandardPaths::Get().GetResourcesDir();
 #ifndef __WXMAC__
     // Windows and Linux : switch to portable mode if the
     // settings file is present in the application folder
@@ -62,10 +64,7 @@ void SettingsManager::Initialize()
         {
             m_sLngPath=m_sAppPath;
         }
-        else
-        {
-            m_sLngPath=wxStandardPaths::Get().GetResourcesDir();
-        }
+#else
 #endif // ndef __WXMAC__
         // Path for the settings file (platform dependant)
         m_sSettingsPath=wxStandardPaths::Get().GetUserDataDir();
