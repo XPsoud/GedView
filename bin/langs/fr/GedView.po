@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: GedView\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-28 18:38+0100\n"
-"PO-Revision-Date: 2017-12-28 18:38+0100\n"
+"PO-Revision-Date: 2018-01-11 14:27+0100\n"
 "Last-Translator: Xaviou <x.psoud@gmail.com>\n"
 "Language-Team: Xaviou <x.psoud@gmail.com>\n"
 "Language: fr_FR\n"
@@ -287,7 +287,7 @@ msgstr " => %d Erreurs"
 #: sources/dlgcheckdatas.cpp:201
 msgid "- Checking death date / marriage date and children birth"
 msgstr ""
-"- Vérirication de la date de décès / date de mariage et naissance des enfants"
+"- Vérification de la date de décès / date de mariage et naissance des enfants"
 
 #: sources/dlgcheckdatas.cpp:244
 #, c-format
